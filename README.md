@@ -13,10 +13,12 @@ The complete neural network runs in WebGPU; local observations, Sheaf-GBP,
 force allocation, and collision-checked physics run in a browser worker.
 Rendering and controls stay on the main thread. Both players share one clock.
 
-The game appears first. You can practice while approximately **65 MB** of
+The game appears first and stays still while approximately **65 MB** of
 losslessly compressed graph data and model assets load automatically. Graph
 chunks are checked and cached when browser storage permits. Starting the real
-race resets both players. This is automatic web loading, not zero download.
+race resets both players. **Run** is disabled until ready; there is no practice
+mode and no automatic start. GPU details records page-to-model-ready and
+page-to-Run-ready seconds. This is automatic web loading, not zero download.
 
 Use an up-to-date desktop Chrome or Edge with WebGPU and hardware acceleration.
 A discrete GPU is strongly recommended. Some dual-GPU laptops select their
@@ -29,10 +31,10 @@ The race always runs at the original **3.30× simulation rate**. There is no
 throughput-dependent slow motion. Fast GPUs stream real inference with a
 128-tick lookahead. Slow GPUs compute this seed's full fly run locally first,
 clearly labelled **local precomputation**, then race at full speed. That fallback
-is not real-time inference; practice remains available during preparation.
+is not real-time inference; both arenas stay at the starting pose during preparation.
 An unexpected streaming underrun explicitly pauses and prepares the remainder,
-rather than silently altering the clock. Unsupported/no-WebGPU devices retain
-full-speed human practice, but cannot race the neural flies. No CPU neural
+instead of silently altering the clock. Unsupported/no-WebGPU devices show
+an unavailable message and cannot start a race. No CPU neural
 surrogate is claimed. Mobile/touch play is not validated.
 
 ## What is actually simulated

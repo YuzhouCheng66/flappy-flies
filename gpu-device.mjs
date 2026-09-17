@@ -5,7 +5,7 @@ export function adapterInfo(adapter){
  return {...Object.fromEntries(['vendor','architecture','device','description'].map(k=>[k,info[k]||''])),fallback:!!(info.isFallbackAdapter??adapter.isFallbackAdapter)};
 }
 export async function selectAdapter(gpu){
- if(!gpu)throw Error('WebGPU unavailable. Human practice works; neural races need WebGPU.');
+ if(!gpu)throw Error('WebGPU unavailable. Use a browser with hardware WebGPU to race.');
  const candidates=[];
  for(const preference of ['high-performance',undefined]){
   const adapter=await gpu.requestAdapter({...preference?{powerPreference:preference}:{},forceFallbackAdapter:false});
@@ -19,6 +19,6 @@ export async function selectAdapter(gpu){
  // request order. We never label an integrated adapter as an NVIDIA device.
  const rank=c=>/nvidia/i.test(c.info.vendor)?2:1;
  usable.sort((a,b)=>rank(b)-rank(a));
- if(!usable.length)throw Error('No hardware WebGPU adapter with sufficient memory. Human practice is available.');
+ if(!usable.length)throw Error('No hardware WebGPU adapter with sufficient memory for the neural race.');
  return {adapter:usable[0].adapter,info:usable[0].info,candidates:candidates.map(({info,request})=>({...info,request}))};
 }

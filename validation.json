@@ -1,17 +1,17 @@
 {
-  "date": "2026-09-17T16:06:36.112Z",
+  "date": "2026-09-17T16:25:17.028Z",
   "kernel": "tile16",
   "decisionInterval": 1,
   "checkpoint": "d6e98e76ba8f8d45406cd40934a7fa6f9049565a137cb9df35a4b44925f717c3",
   "sourceHashEncoding": "SHA-256 of UTF-8 source with LF newlines",
   "sourceHashes": {
     "gpu-model.mjs": "e2b2a2486592bd1a4cbc6175c39f7dfd9bf126fa05f33a0f48f0b516b7cd9743",
-    "gpu-device.mjs": "3cb5c93b4907d547d92364f115c412a56acf6f286819d3e0f03e18ea4aa72aec",
+    "gpu-device.mjs": "ab4dc6677aa0028215cfbe0042a96392f91f6d1b2d3e56b9ff14ba208e0b47e9",
     "engine.mjs": "62cf529302e38a7dad408682ada5607f48519ece5b86a5cd6e2dab26d431e165",
     "graph-loader.mjs": "27cdfa81b23efaeed4ad3a935b36d6280de0f2183dcbeb2178eae4f66570831f",
     "race.js": "c89916e3b5ffa73790e776b706d0f46e752174b5104fd27d54b51a2da8df3b37",
     "race-clock.mjs": "1599b49596c678b2cf7ebfae3c40ac497b8f74e5f996401b197dd557c856d23a",
-    "game.mjs": "d8d9c724b858c12c1ea0029b028bd608948c61e7ee7c4125737e9c75f3ecac23",
+    "game.mjs": "8dbd9aafa9cc90f27db0494434b802e34987448d3b69702bc62232b0f3a944ef",
     "contracts.js": "4fdfc09846d08c138322b79705522a5c9f4a3197a1e116d926aeed3ffd9db88c"
   },
   "graph": {
@@ -936,7 +936,7 @@
     "streamingAdmissionHeadroom": 1.5384615384615383,
     "lookaheadTicks": 128,
     "slowDeviceFallback": "Explicit local full-course precomputation before full-speed play; NOT real-time inference.",
-    "noWebGPUFallback": "Full-speed human practice only; no neural CPU surrogate.",
+    "noWebGPUFallback": "Race unavailable; Run stays disabled. No practice mode or CPU neural surrogate.",
     "browserUI": {
       "runtime": "Actual Codex in-app Chromium game UI, Intel gen-12lp hardware WebGPU",
       "seed": 91000,
