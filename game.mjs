@@ -201,6 +201,17 @@ function drawFly(x,y,angle,active){
  ctx.fillStyle='#132334';ctx.beginPath();ctx.arc(0,-4.5,3,0,Math.PI*2);ctx.fill();
  if(active){ctx.strokeStyle='#b9ffeaa0';ctx.lineWidth=.8;ctx.beginPath();ctx.arc(0,0,14,0,Math.PI*2);ctx.stroke();}ctx.restore();
 }
+// Decorative carrier, not an extra collider or force-producing agent.
+function drawCarrier(screen,q){
+ const vertices=description.rectangles.flat(),bottom=Math.min(...vertices.map(p=>p[1]));
+ const foot=vertices.filter(p=>Math.abs(p[1]-bottom)<1e-6),anchor=screen(C.transform([foot.reduce((s,p)=>s+p[0],0)/foot.length,bottom],q));
+ ctx.save();ctx.translate(...anchor);ctx.rotate(-q[2]);const z=Math.max(.8,Math.min(1.45,W/1150));ctx.scale(z,z);
+ ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#182333';ctx.lineWidth=2.2;
+ // Both raised hands touch the underside of the load.
+ ctx.beginPath();ctx.moveTo(-6,0);ctx.lineTo(-4,7);ctx.lineTo(0,10);ctx.lineTo(4,7);ctx.lineTo(6,0);
+ ctx.moveTo(0,10);ctx.lineTo(0,16);ctx.moveTo(-5,22);ctx.lineTo(0,16);ctx.lineTo(5,22);ctx.stroke();
+ ctx.beginPath();ctx.arc(0,5,3,0,Math.PI*2);ctx.fillStyle='#ffe29b';ctx.fill();ctx.lineWidth=1.4;ctx.stroke();ctx.restore();
+}
 function brainPanel(box,a,b){
  const dpr=Math.min(devicePixelRatio,2),key=[box.x,box.y,box.w,box.h,dpr,!!a.brain].join(':'),now=performance.now();
  if(key!==brainPaintKey||(a.brain&&now-brainPaintAt>=1000/30)){
@@ -266,7 +277,8 @@ function drawWorld(box,q,viewCamera,isFlies,t){
   const head=[p0[0]+d[0]*phase+n[0]*2,p0[1]+d[1]*phase+n[1]*2],tail=[p0[0]+d[0]*Math.max(0,phase-.36)+n[0]*2,p0[1]+d[1]*Math.max(0,phase-.36)+n[1]*2];
   ctx.shadowColor='#00ff88';ctx.shadowBlur=8;line(tail,head,`rgba(0,225,105,${.12+event.strength*.55})`,1.8);path([head,[head[0]-unit[0]*5+n[0]*2.5,head[1]-unit[1]*5+n[1]*2.5],[head[0]-unit[0]*5-n[0]*2.5,head[1]-unit[1]*5-n[1]*2.5]]);ctx.fillStyle='#30ff97dd';ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#008e5e90';ctx.lineWidth=.65;ctx.stroke();
  }
- if(isFlies)handles.forEach((p,i)=>drawFly(p[0],p[1],-q[2]+Math.atan2(description.handles[i][1],description.handles[i][0])+Math.PI/2,i===0));ctx.restore();
+ if(isFlies)handles.forEach((p,i)=>drawFly(p[0],p[1],-q[2]+Math.atan2(description.handles[i][1],description.handles[i][0])+Math.PI/2,i===0));
+ else drawCarrier(screen,q);ctx.restore();
  // Fixed stage indicators, not a scrubber: all state comes from physics.
  const mapX=20,mapY=H-15,mapW=Math.min(220,split-40),count=course.wall_x.length;line([mapX,mapY],[mapX+mapW,mapY],'#397b9690',2);
  for(let i=0;i<count;i++){const x=mapX+i*mapW/(count-1||1);ctx.fillStyle=i<(isFlies?latest.stage:race.stage)?'#ffffff':'#7852d1';ctx.beginPath();ctx.arc(x,mapY,4,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#ffffffe0';ctx.lineWidth=1;ctx.stroke();}

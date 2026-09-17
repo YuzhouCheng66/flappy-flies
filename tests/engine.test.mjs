@@ -52,6 +52,18 @@ test('Race pauses, awards first arrival, and ignores future prefetched winners',
  R.advance(race,d,new Set(),.1,10);assert.equal(race.winner,null);R.advance(race,d,new Set(),.1,.15);assert.equal(race.winner,'flies');
  const final=JSON.stringify(race);R.advance(race,d,new Set(['KeyD']),1);assert.equal(JSON.stringify(race),final);
 });
+test('Human docking accepts 15 degree alignment but rejects larger errors',()=>{
+ const d=engine.reset(91000),goal=d.layout.goals.at(-1);
+ for(const [degrees,expected] of [[12,'you'],[-12,'you'],[20,null],[-20,null]]){
+  const r=R.create(d);r.state=[goal[0],goal[1],goal[2]+degrees*Math.PI/180,0,0,0];
+  assert.equal(C.collides(r.state,d),false);R.advance(r,d,new Set(),.45);assert.equal(r.winner,expected);
+ }
+});
+test('Human rotation is slower and stops promptly on release',()=>{
+ const d=engine.reset(91000),r=R.create(d);R.advance(r,d,new Set(['KeyQ']),.3);
+ assert.ok(r.state[5]>.39&&r.state[5]<=.4);const before=r.state[2];
+ R.advance(r,d,new Set(),.15);assert.ok(Math.abs(r.state[5])<.012);assert.ok(Math.abs(r.state[2]-before)<.018);
+});
 const fixture=new URL('../model/parity.json',import.meta.url);
 test('Independent Python fixtures: local sensors, directed GBP and physics',{skip:!fs.existsSync(fixture)},()=>{
  const rows=JSON.parse(fs.readFileSync(fixture)).rows;let stats=null;const errors=Array(27).fill(0);let force=0,state=0;

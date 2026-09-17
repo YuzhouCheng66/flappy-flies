@@ -3,7 +3,7 @@
  'use strict';
  const C=typeof module==='object'?require('./contracts.js'):root.CargoContracts;
  const KEYS=new Set(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowLeft','ArrowDown','ArrowRight','KeyQ','KeyE']);
- const SETTINGS=Object.freeze({gravity:.24,speed:.40,turnSpeed:1.1,drag:8,turnDrag:10,step:1/120,dockHold:.4});
+ const SETTINGS=Object.freeze({gravity:.24,speed:.40,turnSpeed:.40,drag:8,turnDrag:24,step:1/120,dockHold:.4,dockAngle:Math.PI/12});
  const angle=x=>Math.atan2(Math.sin(x),Math.cos(x));
  function inputs(keys){
   let x=Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft'));
@@ -52,7 +52,7 @@
   }
   r.state[2]=angle(r.state[2]);
   const goal=d.layout.goals.at(-1),v=r.state;
-  const near=Math.hypot(v[0]-goal[0],v[1]-goal[1])<=.03&&Math.abs(angle(v[2]-goal[2]))<=.05&&Math.hypot(v[3],v[4])<=.05&&Math.abs(v[5])<=.08;
+  const near=Math.hypot(v[0]-goal[0],v[1]-goal[1])<=.03&&Math.abs(angle(v[2]-goal[2]))<=s.dockAngle&&Math.hypot(v[3],v[4])<=.05&&Math.abs(v[5])<=.08;
   r.dock=near?r.dock+dt:0;
   const rear=Math.min(...d.rectangles.flat().map(p=>C.transform(p,v)[0]));
   r.stage=d.layout.wall_x.filter((_,i)=>rear>Math.max(...d.colliders[2*i].map(p=>p[0]))).length;
