@@ -13,11 +13,12 @@ test('Race speed never depends on inference time or display frame rate',()=>{
  assert.ok(Math.abs(TICK_BUDGET_MS-24.2424242424)<1e-8);
  assert.equal(canStream(5),true);assert.equal(canStream(130),false);assert.equal(canStream(0),false);
 });
-test('Request hardware WebGPU, prefer exposed discrete GPU, never claim one not returned',async()=>{
+test('Request hardware WebGPU and select measured performance, never vendor branding',async()=>{
  const fake=vendor=>({info:{vendor},limits:{maxStorageBufferBindingSize:134217728,maxBufferSize:268435456}}),requests=[];
- const result=await selectAdapter({requestAdapter:async opts=>{requests.push(opts);return fake(opts.powerPreference?'intel':'nvidia');}});
+ const result=await selectAdapter({requestAdapter:async opts=>{requests.push(opts);return fake(opts.powerPreference?'intel':'nvidia');}},{measure:async(_,info)=>info.vendor==='intel'?100:5});
  assert.equal(requests[0].powerPreference,'high-performance');assert.equal(requests[0].forceFallbackAdapter,false);assert.equal(result.info.vendor,'nvidia');
  const intel=await selectAdapter({requestAdapter:async()=>fake('intel')});assert.equal(intel.info.vendor,'intel');assert.equal(intel.candidates.length,1);
+ const amd=await selectAdapter({requestAdapter:async opts=>fake(opts.powerPreference?'amd':'nvidia')},{measure:async(_,info)=>info.vendor==='amd'?4:9});assert.equal(amd.info.vendor,'amd');
  await assert.rejects(()=>selectAdapter(undefined),/WebGPU unavailable/);
  await assert.rejects(()=>selectAdapter({requestAdapter:async()=>({...fake('software'),isFallbackAdapter:true})}),/No hardware/);
 });

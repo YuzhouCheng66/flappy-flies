@@ -2,11 +2,48 @@
 
 [**Play in your browser →**](https://yuzhoucheng.com/flappy-flies/)
 
-Race eight connectome-based flies carrying a T through four narrow gates.
+Race eight connectome-based flies carrying a T through **30 selected courses**, with
+one to five gates and progressively tighter docking.
 **WASD / arrows** move; **Q / E** rotate. **Switch** swaps the two views.
-**Random** makes a new course; **Run**, **Pause**, and **Reset** control the race.
+**Run** / **Pause** control the race. Only **YOU WIN** unlocks the next level;
+losing briefly shows the result, then resets the same course to its stationary
+start. Press **Run** to retry. Progress is saved in this browser.
+Early docking is forgiving: 0.18 m / 30° with a 0.10 s hold. These tighten
+linearly to 0.03 m / 3.5° and 0.40 s at level 30. Flies start 20% slower than
+the calibrated replay pace and linearly return to that pace by level 30;
+player movement speed is unchanged.
 
-## Runs on your computer
+## Campaign mode (default in this source build)
+
+Player physics runs live locally; flies replay curated, collision-audited
+**full-model rollouts**, including synchronized neural activity and real GBP
+message strengths. Only the current level is fetched (0.45–2.74 MB compressed).
+No WebGPU adapter, neural weights or graph download is needed for this mode.
+The source 100-level library totals approximately 159 MB, **not** a startup
+download. The game selects 30 of those recordings, preserving their identities.
+Replay pacing is calibrated per course; this is not a claim of faster neural
+inference or altered physical model performance. Curated success is not a
+population success-rate estimate.
+
+Click **01–08** below the CNS to pin any fly's 2,048 sampled neuron states,
+including during play. Selection persists across retries and level changes.
+Each fly has its own authentic recording; additional traces load on demand
+and do not pause the race. The eight lower bars show whole-CNS RMS values.
+All additional traces were re-recorded using each course's original full model,
+with zero pose difference against every original recorded frame.
+The two anatomical labels are **Brain** and **Ventral nerve cord**.
+
+This local build does not itself update the public URL above. Deployment is a
+separate step. `node tools/build.mjs` validates and packages the 30 selected files;
+their generation must be completed under `local-results/campaign/` first.
+
+There are two single-wall tutorials, then six two-wall, seven three-wall,
+seven four-wall and eight five-wall courses. The last visited unlocked level
+is remembered; every earlier level can be entered. Loss always retries the
+current course. Loopback-only `?try=28`, `?try=29`, and `?try=30` allow independent
+hard-course playtests without reading or changing campaign progression.
+
+## Optional live full-model mode (`?mode=live`)
 
 No account, installation, Python server, cloud GPU, or recorded fly trajectory.
 The complete neural network runs in WebGPU; local observations, Sheaf-GBP,

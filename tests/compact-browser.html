@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>Compact recurrent candidate validation</title>
+<style>body{font:16px monospace;background:#10192a;color:#cef6e3;padding:24px}button,input{font:inherit;padding:10px}pre{white-space:pre-wrap}</style>
+<h1>Compact local GRU + real Sheaf-GBP · NOT full connectome</h1>
+<button id="init">Initialize compact candidate</button><button id="run" disabled>Run held-out seeds</button><input id="seeds" value="97000,97001,97002,97003,97004,97005,97006,97007,97008,97009,97010,97011,97012,97013,97014,97015,97016,97017,97018,97019" size="85" aria-label="Seeds">
+<pre id="status">Ready</pre><pre id="results"></pre>
+<script type="module">
+const worker=new Worker('./compact-worker.mjs',{type:'module'}),reports=[],$=id=>document.getElementById(id);
+worker.onmessage=async({data})=>{if(data.status){$('status').textContent=data.status;return;}data.runtime='actual browser compact local GRU';reports.push(data);$('results').textContent=JSON.stringify(reports,null,2);$('status').textContent=data.error?'ERROR':data.type+' complete';if(data.type==='init')$('run').disabled=false;await fetch('/test-report',{method:'POST',body:JSON.stringify(data)});};
+$('init').onclick=()=>{$('init').disabled=true;worker.postMessage({type:'init',model:new URLSearchParams(location.search).get('model')});};$('run').onclick=()=>{$('run').disabled=true;worker.postMessage({type:'run',seeds:$('seeds').value.split(',').map(Number)});};
+</script>

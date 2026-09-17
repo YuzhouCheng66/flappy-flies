@@ -1,0 +1,37 @@
+<!doctype html><meta charset="utf-8"><title>Full connectome precision audit</title>
+<style>body{font:15px monospace;background:#10192a;color:#cef6e3;padding:24px}button,input,select{font:inherit;padding:10px}pre{white-space:pre-wrap}</style>
+<h1>Full connectome: FP32 accumulation / FP16 storage</h1>
+<p>Original graph and controller. Real browser WebGPU; no browser or OS settings changed.</p>
+<label>Kernel <select id="kernel"><option>tile16</option><option>tile8</option><option>tile4</option><option>tile32</option><option>segmented</option><option>subgroup</option><option>row8</option><option>pair4</option><option>pair8</option><option>pair16</option></select></label>
+<label>State precision <select id="precision"><option>f32</option><option>f16</option><option>packed16</option></select></label>
+<label>Memory layout <select id="layout"><option>original</option><option>source-frequency</option></select></label>
+<label>Seeds <input id="seeds" placeholder="Leave blank for parity and timing only" size="45"></label>
+<button id="run">Run audit</button><button id="sweep">Kernel sweep</button><button id="advanced">Memory sweep</button><button id="subgroups">Subgroup sweep</button><button id="wide">Wide subgroup sweep</button><button id="repeat">Repeat finalists</button><button id="paired">Paired rollout smoke test</button><button id="stop">Stop worker</button>
+<pre id="status">Ready</pre><pre id="results"></pre>
+<script type="module">
+const $=id=>document.getElementById(id);let worker;
+const busy=value=>{for(const id of ['run','sweep','advanced','subgroups','wide','repeat','paired'])$(id).disabled=value;};
+$('stop').onclick=()=>{worker?.terminate();$('status').textContent='Stopped';busy(false);};
+function run(sweep=false){
+ worker?.terminate();worker=new Worker('./precision-worker.mjs',{type:'module'});busy(true);let failed=false;
+ const options={kernel:$('kernel').value,precision:$('precision').value,memoryLayout:$('layout').value,seeds:$('seeds').value.split(',').map(s=>s.trim()).filter(Boolean).map(Number)};
+ if(sweep)options.suite=['tile4','tile8','segmented','subgroup'].flatMap(kernel=>['f32','f16'].map(precision=>({kernel,precision})));
+ if(sweep==='memory')options.suite=[{kernel:'row8',precision:'f32'},{kernel:'pair8',precision:'f32'},{kernel:'tile16',precision:'packed16'},{kernel:'segmented',precision:'packed16'},...['f32','f16','packed16'].map(precision=>({kernel:'segmented',precision,memoryLayout:'source-frequency'})),{kernel:'pair8',precision:'packed16',memoryLayout:'source-frequency'}];
+ if(sweep==='subgroups')options.suite=[8,16].flatMap(subgroupSize=>['f32','f16','packed16'].map(precision=>({kernel:'subgroup',precision,subgroupSize})));
+ if(sweep==='wide')options.suite=[8,16].flatMap(subgroupRows=>['f32','packed16'].map(precision=>({kernel:'subgroup',precision,subgroupRows})));
+ if(sweep==='repeat'){const configs=[{kernel:'tile16',precision:'f32'},{kernel:'segmented',precision:'f32'},{kernel:'segmented',precision:'packed16'}];options.suite=[...configs,...[...configs].reverse()];}
+ if(sweep==='paired')options.suite=[{kernel:'tile16',precision:'f32',seeds:[92000,92001]},{kernel:'segmented',precision:'packed16',seeds:[92000,92001]}];
+ const auditId=crypto.randomUUID();
+ worker.onmessage=async({data})=>{
+  if(data.type==='progress'){$('status').textContent=JSON.stringify(data);return;}
+  if(data.type==='idle'){busy(false);$('status').textContent=failed?'Complete with errors — see results':'Complete';worker.terminate();return;}
+  if(data.type==='error')failed=true;
+  const row={...data,runtime:'actual browser Worker',userAgent:navigator.userAgent,auditId,time:new Date().toISOString()};
+  $('results').textContent+=JSON.stringify(row)+'\n';
+  await fetch('/test-report',{method:'POST',body:JSON.stringify(row)});
+ };
+ worker.onerror=e=>{$('status').textContent=e.message;busy(false);};
+ worker.postMessage(options);
+};
+$('run').onclick=()=>run();$('sweep').onclick=()=>run(true);$('advanced').onclick=()=>run('memory');$('subgroups').onclick=()=>run('subgroups');$('wide').onclick=()=>run('wide');$('repeat').onclick=()=>run('repeat');$('paired').onclick=()=>run('paired');
+</script>

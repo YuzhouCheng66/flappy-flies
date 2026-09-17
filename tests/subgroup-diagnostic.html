@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>Subgroup feature probe</title>
+<h1>Minimal subgroup-size-control probe</h1><button id="run">Probe advertised feature</button><pre id="results"></pre>
+<script type="module">
+document.getElementById('run').onclick=async()=>{
+ const results=[];
+ for(const size of [8,16]){
+  const row={size};let device;
+  try{
+   const a=await navigator.gpu.requestAdapter({powerPreference:'high-performance'});
+   row.adapterRange=[a.info.subgroupMinSize,a.info.subgroupMaxSize];row.advertised=a.features.has('subgroup-size-control');
+   device=await a.requestDevice({requiredFeatures:['subgroups','subgroup-size-control']});row.deviceRange=[device.adapterInfo.subgroupMinSize,device.adapterInfo.subgroupMaxSize];
+   const buffer=device.createBuffer({size:256,usage:GPUBufferUsage.STORAGE|GPUBufferUsage.COPY_SRC}),read=device.createBuffer({size:256,usage:GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST});
+   const code=`enable subgroups; enable subgroup_size_control; @group(0) @binding(0) var<storage,read_write> out:array<u32>; @subgroup_size(${size}) @compute @workgroup_size(64) fn main(@builtin(global_invocation_id) i:vec3<u32>){out[i.x]=subgroupAdd(1u);}`;
+   const module=device.createShaderModule({code}),pipe=await device.createComputePipelineAsync({layout:'auto',compute:{module,entryPoint:'main'}});
+   const group=device.createBindGroup({layout:pipe.getBindGroupLayout(0),entries:[{binding:0,resource:{buffer}}]}),enc=device.createCommandEncoder(),pass=enc.beginComputePass();pass.setPipeline(pipe);pass.setBindGroup(0,group);pass.dispatchWorkgroups(1);pass.end();enc.copyBufferToBuffer(buffer,0,read,0,256);device.queue.submit([enc.finish()]);await read.mapAsync(GPUMapMode.READ);row.passed=[...new Uint32Array(read.getMappedRange())].every(x=>x===size);read.unmap();
+  }catch(error){row.error=error.message;}finally{device?.destroy();}results.push(row);
+ }
+ const report={type:'minimal-subgroup-probe',time:new Date().toISOString(),userAgent:navigator.userAgent,results};document.getElementById('results').textContent=JSON.stringify(report,null,2);await fetch('/test-report',{method:'POST',body:JSON.stringify(report)});
+};
+</script>

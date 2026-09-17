@@ -28,8 +28,9 @@ export function observe(state,layout,stage,context,meta){
   const world=transform(handle,state),offset=world.map((v,i)=>S(v,state[i]));
   const velocity=[S(state[3],M(state[5],offset[1])),A(state[4],M(state[5],offset[0]))];
   const visible=layout.wall_x.map(x=>Math.abs(S(x,world[0]))<=cfg.wall_sensor_range&&A(A(x,cfg.wall_slab),.03)>=rear);
-  const order=layout.wall_x.map((x,i)=>({i,score:visible[i]?Math.abs(S(x,S(goal[0],1.05))):Infinity})).sort((a,b)=>a.score-b.score||a.i-b.i).slice(0,2).map(p=>p.i);
-  const vis=order.map(i=>+visible[i]),rx=order.map((i,k)=>M(D(S(layout.wall_x[i],world[0]),cfg.wall_sensor_range),vis[k])),ry=order.map((i,k)=>M(D(S(layout.gap_y[i],world[1]),cfg.world_y),vis[k])),half=order.map((i,k)=>M(D(D(layout.apertures[i],2),cfg.world_y),vis[k]));
+ const order=layout.wall_x.map((x,i)=>({i,score:visible[i]?Math.abs(S(x,S(goal[0],1.05))):Infinity})).sort((a,b)=>a.score-b.score||a.i-b.i).slice(0,2).map(p=>p.i);
+ while(order.length<2)order.push(-1);
+ const vis=order.map(i=>i<0?0:+visible[i]),rx=order.map((i,k)=>i<0?0:M(D(S(layout.wall_x[i],world[0]),cfg.wall_sensor_range),vis[k])),ry=order.map((i,k)=>i<0?0:M(D(S(layout.gap_y[i],world[1]),cfg.world_y),vis[k])),half=order.map((i,k)=>i<0?0:M(D(D(layout.apertures[i],2),cfg.world_y),vis[k]));
   const gx=D(S(goal[0],world[0]),2.6),dir=Math.sign(gx);let numerator=0,denominator=0;
   for(let k=0;k<2;k++){const x=M(M(dir,rx[k]),cfg.wall_sensor_range),sig=D(1,A(1,F(Math.exp(-M(12,A(x,.22))))));const w=M(M(vis[k],sig),F(Math.exp(M(-1.5,Math.abs(x)))));denominator=A(denominator,w);numerator=A(numerator,M(w,D(M(ry[k],cfg.world_y),2.6)));}
   const base=[s,c,...handle,D(world[0],2.6),D(world[1],cfg.world_y),...velocity.map(v=>D(v,2)),gx,D(numerator,Math.max(1e-6,denominator)),...rx,...ry,...half,...vis];
@@ -107,14 +108,16 @@ export class Engine{
  constructor(meta,gpu,{decisionInterval=1}={}){this.meta=meta;this.gpu=gpu;this.decisionInterval=decisionInterval;this.reset(91000);}
  reset(seed){this.layout=layoutFor(seed,this.meta);this.walls=wallsFor(this.layout,this.meta.config);this.state=this.layout.initial.map(F);this.stage=this.tick=this.stable=this.contacts=this.stageStart=this.wireBytes=this.inferences=0;this.done=this.success=false;this.stats=null;this.neural=null;this.decisionTick=-Infinity;this.decisionStage=-1;this.context={hit:false,force:Array.from({length:8},()=>[0,0]),rejected:Array.from({length:8},()=>[0,0])};this.gpu?.reset();return this.description();}
  description(){return{...this.meta.description,layout:this.layout,colliders:this.walls,state:this.state,snapshot:this.snapshot()};}
- snapshot(){return{tick:this.tick,state:this.state,stage:this.stage,goal:this.layout.goals[Math.min(3,this.stage)],done:this.done,success:this.success,contacts:this.contacts};}
+ snapshot(){return{tick:this.tick,state:this.state,stage:this.stage,goal:this.layout.goals[Math.min(this.layout.goals.length-1,this.stage)],done:this.done,success:this.success,contacts:this.contacts};}
  async step(){if(this.done)return null;const obs=observe(this.state,this.layout,this.stage,this.context,this.meta);
   if(!this.neural||this.tick-this.decisionTick>=this.decisionInterval||this.stage!==this.decisionStage||this.context.hit){this.neural=await this.gpu.step(obs);this.decisionTick=this.tick;this.decisionStage=this.stage;this.inferences++;}
   const neural=this.neural,mean=twistToWrench(neural.twist,obs,this.meta),gbp=coordinate(mean,neural.precision,obs,this.meta,this.stats);this.stats=gbp.stats;
   const trans=transition(this.state,gbp.forces,this.walls,this.meta);this.state=trans.state;this.context=trans.context;this.tick++;this.contacts+=+trans.hit;
   if(clearance(this.state,this.walls,this.meta)<=0)throw Error('Collision authority rejected an accepted state');
   const goal=this.layout.goals[this.stage],q=this.state,atGoal=Math.hypot(q[0]-goal[0],q[1]-goal[1])<=.03&&Math.abs(wrap(q[2]-goal[2]))<=.05&&Math.hypot(q[3],q[4])<=.05&&Math.abs(q[5])<=.08;
-  this.stable=atGoal?this.stable+1:0;let changed=false;if(this.stable>=5){this.stage++;this.stable=0;changed=true;if(this.stage===4)this.done=this.success=true;else this.stageStart=this.tick;}
+  const intermediate=this.layout.intermediate_transition==='rear-clearance'&&this.stage<this.layout.goals.length-1;
+  const rearClear=intermediate&&Math.min(...this.meta.description.rectangles.flat().map(p=>transform(p,q)[0]))>this.layout.wall_x[this.stage]+this.meta.config.wall_slab+.03;
+  this.stable=atGoal?this.stable+1:0;let changed=false;if(rearClear||this.stable>=5){this.stage++;this.stable=0;changed=true;if(this.stage===this.layout.goals.length)this.done=this.success=true;else this.stageStart=this.tick;}
   if(this.tick-this.stageStart>=384)this.done=true;
   this.wireBytes+=gbp.sender.length*3*2*4*4+gbp.setup.length*14*4*4;
   this.last={obs,features:neural.features,mean,precision:neural.precision,forces:gbp.forces};

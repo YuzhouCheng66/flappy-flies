@@ -52,7 +52,8 @@
   }
   r.state[2]=angle(r.state[2]);
   const goal=d.layout.goals.at(-1),v=r.state;
-  const near=Math.hypot(v[0]-goal[0],v[1]-goal[1])<=.03&&Math.abs(angle(v[2]-goal[2]))<=s.dockAngle&&Math.hypot(v[3],v[4])<=.05&&Math.abs(v[5])<=.08;
+  const dockAngle=d.player_dock_angle??s.dockAngle;
+  const near=Math.hypot(v[0]-goal[0],v[1]-goal[1])<=(d.player_dock_radius??.03)&&Math.abs(angle(v[2]-goal[2]))<=dockAngle&&Math.hypot(v[3],v[4])<=(d.player_dock_speed??.05)&&Math.abs(v[5])<=(d.player_dock_turn_speed??.08);
   r.dock=near?r.dock+dt:0;
   const rear=Math.min(...d.rectangles.flat().map(p=>C.transform(p,v)[0]));
   r.stage=d.layout.wall_x.filter((_,i)=>rear>Math.max(...d.colliders[2*i].map(p=>p[0]))).length;
@@ -63,9 +64,10 @@
  function advance(r,d,keys,duration,flyFinish=Infinity){
   if(r.winner||duration<=0)return;
   const end=Math.min(r.time+duration,flyFinish);
+  const dockHold=d.player_dock_hold??SETTINGS.dockHold;
   while(r.time<end-1e-10){
-   const dt=Math.min(SETTINGS.step,end-r.time,r.dock>0?Math.max(1e-9,SETTINGS.dockHold-r.dock):Infinity);playerStep(r,d,keys,dt);r.time+=dt;
-   if(r.dock>=SETTINGS.dockHold-1e-9){finish(r,Math.abs(r.time-flyFinish)<1e-9?'draw':'you',r.time);return;}
+   const dt=Math.min(SETTINGS.step,end-r.time,r.dock>0?Math.max(1e-9,dockHold-r.dock):Infinity);playerStep(r,d,keys,dt);r.time+=dt;
+   if(r.dock>=dockHold-1e-9){finish(r,Math.abs(r.time-flyFinish)<1e-9?'draw':'you',r.time);return;}
   }
   if(flyFinish<=r.time+1e-9)finish(r,'flies',flyFinish);
  }

@@ -1,20 +1,50 @@
 'use strict'; // Browser-native module; no remote inference endpoint.
 import {api,client} from './client.mjs';
 import {RACE_SPEED,LOOKAHEAD_TICKS,canStream,raceDuration,TICK_BUDGET_MS} from './race-clock.mjs';
+import {highestUnlocked,unlockAfterRace,nextLevel,resumeLevel,canEnter} from './campaign-progress.mjs';
+import {COURSE_COUNT,previewLevel} from './campaign-selection.mjs';
+import {loadRecordedBrain} from './campaign-client.mjs';
 const canvas=document.getElementById('world'),mainContext=canvas.getContext('2d'),C=CargoContracts,R=CargoRace;
 let ctx=mainContext;
 const brainSurface=document.createElement('canvas'),brainContext=brainSurface.getContext('2d');
 let brainPaintAt=-Infinity,brainPaintKey='';
-const ui=Object.fromEntries(['run','reset','random','seed','status','passed','total'].map(k=>[k,document.getElementById(k)]));
+const ui=Object.fromEntries(['run','seed','status','passed','total'].map(k=>[k,document.getElementById(k)]));
 let W=innerWidth,H=innerHeight,description=null,generation=0,epoch=0;
 let frames=[],clock=0,running=false,busy=false,resetting=false,ended=false,lastTime=0,lastPaintTime=0,camera=-.5;
-let brainXY=[],brainEdges=[],brainOrder=[],latest=null,packetEvents=[],lastPacketTick=0,renderFault=false,terminalShown=false;
+let brainXY=[],brainEdges=[],brainOrder=[],brainAspect=1,latest=null,packetEvents=[],lastPacketTick=0,renderFault=false,terminalShown=false;
 let recorder=null,captureParts=[],captureIdentity=null,captureOutcome=null,captureFinishAt=null;
-let race=null,playerMain=false,playerCamera=-.5;
+let race=null,playerMain=false,playerCamera=-.5,retryTimer=null;
+let selectedBrain=0,brainRequest=0,brainLoading=false;
+const brainTraces=new Map(),brainButtons=document.getElementById('brain-select');
+function updateBrainButtons(){
+ for(const [i,button] of [...brainButtons.children].entries()){
+  button.setAttribute('aria-pressed',String(i===selectedBrain));button.setAttribute('aria-busy',String(i===selectedBrain&&brainLoading));
+  button.disabled=!client.campaign&&i>0;
+ }
+ if(!client.candidate)document.querySelector('#brainlabel span').textContent=`${String(selectedBrain+1).padStart(2,'0')} / 08${brainLoading?' · …':''}`;
+ brainPaintKey='';
+}
+async function selectBrain(agent){
+ selectedBrain=agent;const request=++brainRequest,d=description;brainLoading=agent>0&&!brainTraces.has(agent);updateBrainButtons();
+ if(!brainLoading||!d)return;
+ try{const values=await loadRecordedBrain(d,agent);if(description!==d||request!==brainRequest)return;brainTraces.set(agent,values);brainLoading=false;updateBrainButtons();}
+ catch(e){if(description!==d||request!==brainRequest)return;brainLoading=false;updateBrainButtons();ui.status.textContent=e.message;}
+}
+for(let i=0;i<8;i++){
+ const button=document.createElement('button');button.type='button';button.textContent=String(i+1).padStart(2,'0');button.setAttribute('aria-label',`Show CNS ${i+1}`);button.onclick=()=>selectBrain(i);brainButtons.append(button);
+}
+function brainActivity(frame){
+ if(selectedBrain===0)return frame.brain||[];
+ const values=brainTraces.get(selectedBrain);return values?Array.from(values.subarray(frame.tick*2048,(frame.tick+1)*2048),v=>v/32767):[];
+}
 let raceReady=false,computeMode='warming',samples=[],msPerTick=0,gpuInfo=null,rebuffering=false,playAudit=null;
 let gpuFailure='',prepareStartedAt=0,prepareSeconds=null;
 const startup={modelReadySeconds:null,firstRaceReadySeconds:null,graphNetworkBytes:null};
 const heldKeys=new Set(),victory=document.getElementById('victory'),switchButton=document.getElementById('switch');
+let unlocked=1,savedLevel=1;
+const testing=client.campaign&&previewLevel(location.search,location.hostname)!==null;
+try{unlocked=highestUnlocked(localStorage.getItem('flappy-flies.campaign30-unlocked.v1'));savedLevel=resumeLevel(localStorage.getItem('flappy-flies.campaign30-current.v1'),unlocked);}catch{}
+function updateLevelPicker(){if(client.campaign){ui.seed.max=testing?COURSE_COUNT:unlocked;ui.seed.title=testing?'Local course preview — progress is not saved':`Levels 1–${unlocked} unlocked. Win to unlock the next level.`;}}
 const recordButton=document.getElementById('record');
 // Reused code-native sprites avoid hundreds of expensive per-neuron shadow
 // blur passes each frame; measured node positions/activation remain unchanged.
@@ -22,9 +52,11 @@ const neuronGlow=['#64ffc6','#ff7cd2'].map(color=>{
  const sprite=document.createElement('canvas');sprite.width=sprite.height=40;const g=sprite.getContext('2d'),gradient=g.createRadialGradient(20,20,0,20,20,20);
  gradient.addColorStop(0,color);gradient.addColorStop(.15,color+'b0');gradient.addColorStop(1,color+'00');g.fillStyle=gradient;g.fillRect(0,0,40,40);return sprite;
 });
-const speed=RACE_SPEED,bufferTarget=LOOKAHEAD_TICKS;
+const speed=RACE_SPEED,bufferTarget=client.candidate?40:LOOKAHEAD_TICKS;
+const streamAudit=client.candidate?{underruns:0,maxBufferedTicks:0,startBufferedTicks:0,ticksAtStart:0,frameMs:[],controlMs:[]}:null;
 const gpuBadge=document.querySelector('.live'),gpuDetails=document.getElementById('gpu-details');
 function showGPU(){
+ if(client.campaign){gpuBadge.textContent=`${testing?'TRY':'LEVEL'} ${description?.campaign?.level||1} / ${COURSE_COUNT}`;gpuDetails.textContent=`${COURSE_COUNT} selected full-model courses.\nFlies, neural activity and GBP packets: recorded model rollouts.\nPlayer: live local keyboard physics.\nOnly the selected course is downloaded; no GPU or model download required.\n${prepareSeconds===null?'':`Course ready: ${prepareSeconds.toFixed(2)} s\n`}Playback pacing is calibrated per level, not a claim of faster model physics.`;return;}
  const adapter=gpuInfo?.adapter||{},name=adapter.device||[adapter.vendor,adapter.architecture].filter(Boolean).join(' ')||'Detecting';
  gpuBadge.textContent=`WebGPU · ${adapter.vendor||'checking'}`;
  gpuDetails.textContent=`Device: ${name}\nBackend: WebGPU compute shaders${gpuInfo?.kernel?' · '+gpuInfo.kernel:''}\nHigh-performance GPU requested; browser/OS decides exposed adapters.\n${msPerTick?`Control: ${msPerTick.toFixed(1)} ms/tick · budget ${TICK_BUDGET_MS.toFixed(1)} ms\n`:''}Race: fixed ${speed.toFixed(2)}× · ${computeMode==='stream'?'live inference':computeMode==='prepared'?'local precomputation (not real-time inference)':'warming up'}\nNo server inference; no downloaded trajectories.`;
@@ -32,15 +64,17 @@ function showGPU(){
  if(prepareSeconds!==null)gpuDetails.textContent+=`\nCurrent course preparation: ${prepareSeconds.toFixed(2)} s`;
  if(startup.firstRaceReadySeconds!==null)gpuDetails.textContent+=`\nPage → first Run ready: ${startup.firstRaceReadySeconds.toFixed(2)} s`;
  if(startup.graphNetworkBytes!==null)gpuDetails.textContent+=`\nGraph fetched outside app cache: ${(startup.graphNetworkBytes/1e6).toFixed(2)} MB (HTTP cache may still apply; other assets excluded)`;
+ if(client.candidate){gpuBadge.textContent='COMPACT · RESEARCH';gpuDetails.textContent=`Compact local GRU + actual Sheaf-GBP\nNOT the full fly connectome · research preview\nCheckpoint: ${gpuInfo?.modelHash||client.candidate}\nControl: ${msPerTick.toFixed(2)} ms/tick · budget ${TICK_BUDGET_MS.toFixed(2)} ms\nRace: fixed ${speed.toFixed(2)}× · ${computeMode}\nPage → Run ready: ${startup.firstRaceReadySeconds?.toFixed(3)??'pending'} s\nShort buffer: ${streamAudit.startBufferedTicks} ticks at ready; max ${streamAudit.maxBufferedTicks.toFixed(1)}\nUnderruns: ${streamAudit.underruns}`;}
 }
 function makeRaceReady(){
  if(raceReady)return;raceReady=true;running=false;clock=0;race=R.create(description);playerCamera=camera;heldKeys.clear();
  prepareSeconds=(performance.now()-prepareStartedAt)/1000;startup.firstRaceReadySeconds??=performance.now()/1000;
- ui.run.disabled=false;ui.run.textContent='Run';ui.status.textContent='Ready';showGPU();
+ if(streamAudit){streamAudit.startBufferedTicks=frames.at(-1).tick;streamAudit.ticksAtStart=frames.at(-1).tick;}
+ ui.run.disabled=false;ui.run.textContent='Run';ui.status.textContent=client.campaign?`${testing?'Try':'Level'} ${description.campaign.level} / ${COURSE_COUNT}`:'Ready';showGPU();
 }
 function stageSplit(){return W*.60;}
 function panels(){const split=stageSplit(),top=92,bottom=H-36,gap=12,right=split+6,w=W-right-14,bh=(bottom-top-gap)*.46;return{main:{x:14,y:top,w:split-26,h:bottom-top},brain:{x:right,y:top,w,h:bh},mini:{x:right,y:top+bh+gap,w,h:bottom-top-bh-gap}};}
-function resize(){W=innerWidth;H=innerHeight;const dpr=Math.min(devicePixelRatio,2);canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);document.documentElement.style.setProperty('--stage-split',`${stageSplit()}px`);}
+function resize(){W=innerWidth;H=innerHeight;const dpr=Math.min(devicePixelRatio,2);canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);document.documentElement.style.setProperty('--stage-split',`${stageSplit()}px`);const box=panels().brain;Object.assign(brainButtons.style,{left:`${box.x+21}px`,top:`${box.y+box.h-25}px`,width:`${box.w-42}px`});}
 addEventListener('resize',resize);resize();
 function stop(message){running=false;heldKeys.clear();ui.run.disabled=!raceReady;ui.run.textContent=raceReady?'Run':gpuFailure?'Unavailable':'Loading…';ui.status.textContent=message;if(recorder?.state==='recording')recorder.pause();}
 function finishCapture(){if(recorder&&recorder.state!=='inactive'){captureOutcome={success:!!latest?.success,stage:latest?.stage||0,winner:race?.winner};recorder.stop();}}
@@ -66,28 +100,43 @@ function toggleCapture(){
 }
 recordButton.onclick=toggleCapture;
 function setDescription(d){
+ if(streamAudit)Object.assign(streamAudit,{underruns:0,maxBufferedTicks:0,startBufferedTicks:0,ticksAtStart:0,frameMs:[],controlMs:[]});
  raceReady=false;computeMode='warming';samples=[];msPerTick=0;rebuffering=false;playAudit=null;
  prepareStartedAt=performance.now();prepareSeconds=null;
  description=d;camera=d.state[0]+.5;clock=d.snapshot.tick;packetEvents=[];lastPacketTick=0;frames=[d.snapshot];latest=frames[0];ended=d.snapshot.done;renderFault=false;terminalShown=false;captureFinishAt=null;
- race=R.create(d);playerCamera=camera;heldKeys.clear();victory.hidden=true;document.getElementById('again').disabled=false;
+ race=R.create(d);playerCamera=camera;heldKeys.clear();victory.hidden=true;document.getElementById('again').disabled=false;document.getElementById('again').hidden=false;
  ui.total.textContent=String(d.layout.wall_x.length).padStart(2,'0');ui.passed.textContent=String(d.snapshot.stage).padStart(2,'0');
  // Orthographic camera rotation of measured 3-D coordinates: oblique view,
  // not a deformation of anatomy to match a decorative silhouette.
  const xyz=d.brain_coordinates_3d||[],xy=xyz.length?xyz.map(p=>{
-  const yaw=.56,tilt=.94,roll=-.20,c=Math.cos(yaw),s=Math.sin(yaw),ct=Math.cos(tilt),st=Math.sin(tilt);
+  const yaw=.56,tilt=.94,roll=-2.15,c=Math.cos(yaw),s=Math.sin(yaw),ct=Math.cos(tilt),st=Math.sin(tilt);
   const x=c*p[0]-s*p[2],z=s*p[0]+c*p[2],y=ct*p[1]+st*z;
   return[Math.cos(roll)*x-Math.sin(roll)*y,Math.sin(roll)*x+Math.cos(roll)*y,-st*p[1]+ct*z];
  }):(d.brain_coordinates||[]).map(p=>[...p,0]);brainXY=[];
  if(xy.length){let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity,zmin=Infinity,zmax=-Infinity;for(const p of xy){xmin=Math.min(xmin,p[0]);xmax=Math.max(xmax,p[0]);ymin=Math.min(ymin,p[1]);ymax=Math.max(ymax,p[1]);zmin=Math.min(zmin,p[2]);zmax=Math.max(zmax,p[2]);}const extent=Math.max(xmax-xmin,ymax-ymin);brainXY=xy.map(p=>[(p[0]-(xmin+xmax)/2)/extent,(p[1]-(ymin+ymax)/2)/extent,(p[2]-zmin)/(zmax-zmin||1)]);}
  brainEdges=d.brain_edges||[];brainOrder=brainXY.map((_,i)=>i).sort((i,j)=>brainXY[i][2]-brainXY[j][2]);
+ brainTraces.clear();selectBrain(selectedBrain);
+ brainAspect=brainXY.length?Math.max(...brainXY.map(p=>p[1]))-Math.min(...brainXY.map(p=>p[1])):1;
+ if(client.candidate){brainXY=Array.from({length:128},(_,i)=>[((i%16)-7.5)/18,(Math.floor(i/16)-3.5)/18,0]);brainEdges=[];brainOrder=brainXY.map((_,i)=>i);document.getElementById('brainlabel').innerHTML='LOCAL GRU <span>01 / 08</span><small>128 measured memory activations · NOT connectome</small>';document.getElementById('brainlabel').title='Actual compact-model GRU hidden state; grid layout, not anatomical brain coordinates.';document.querySelector('footer span').textContent='RESEARCH · compact local recurrent agents × Sheaf-GBP';}
  ui.run.disabled=true;ui.run.textContent=gpuFailure?'Unavailable':'Loading…';ui.status.textContent=gpuFailure||(client.ready?'Preparing…':'Loading fly brain…');
 }
-async function reset(seed=Number(ui.seed.value)){
+async function reset(seed=description?.campaign?.level??Number(ui.seed.value)){
+ if(client.campaign&&!canEnter(seed,testing?COURSE_COUNT:unlocked)){ui.seed.value=description?.campaign?.level||savedLevel;ui.status.textContent=`Choose a level from 1 to ${testing?COURSE_COUNT:unlocked}`;return;}
  if(resetting)return;finishCapture();resetting=true;epoch++;running=false;heldKeys.clear();ui.run.disabled=true;ui.run.textContent='Run';ui.status.textContent='Resetting…';
- try{const data=await api('/api/reset',{seed});generation=data.generation;setDescription(data.description);}
+ clearTimeout(retryTimer);retryTimer=null;
+ const started=performance.now();
+ try{const data=await api('/api/reset',{seed});installSession(data,started);}
  catch(e){ui.status.textContent=e.message;}finally{resetting=false;}
 }
+function installSession(data,started=performance.now()){
+ generation=data.generation;setDescription(data.description);
+ if(client.campaign){prepareStartedAt=started;frames=data.frames.slice();ended=true;computeMode='campaign';ui.seed.value=description.campaign.level;
+  if(!testing){savedLevel=description.campaign.level;try{localStorage.setItem('flappy-flies.campaign30-current.v1',String(savedLevel));}catch{}}
+  updateLevelPicker();brainPaintKey='';makeRaceReady();}
+}
 async function prefetch(){
+ if(client.campaign)return;
+ if(client.candidate&&rebuffering)return;
  if(!client.ready||busy||resetting||document.hidden||race?.winner||ended||!description)return;
  if(computeMode==='stream'&&!rebuffering&&frames.at(-1).tick-clock>=bufferTarget)return;
  busy=true;const current=generation,requestEpoch=epoch,after=frames.at(-1).tick;
@@ -96,12 +145,14 @@ async function prefetch(){
   if(requestEpoch!==epoch||race?.winner)return;
   if(data.stale||data.generation!==current)throw Error('Session changed · Reset');
   msPerTick=msPerTick ? .8*msPerTick+.2*data.msPerTick : data.msPerTick;
+  if(streamAudit)streamAudit.controlMs.push(data.msPerTick);
   if(computeMode==='warming'){
    samples.push(data.msPerTick);
-   if(samples.length>=4){const sorted=samples.slice(1).sort((a,b)=>a-b);computeMode=canStream(sorted.at(-1))?'stream':'prepared';}
+   if(samples.length>=(client.candidate?2:4)){const sorted=samples.slice(1).sort((a,b)=>a-b);computeMode=canStream(sorted.at(-1))?'stream':'prepared';if(client.candidate&&computeMode!=='stream')throw Error('Candidate too slow for live play; full-course preparation disabled');}
   }
   showGPU();
   C.validateBatch(after,data.frames,description);frames.push(...data.frames);
+  if(streamAudit)streamAudit.maxBufferedTicks=Math.max(streamAudit.maxBufferedTicks,frames.at(-1).tick-clock);
   for(const f of data.frames){
    if(!f.natural)continue;
    const energy=f.natural.map((sweep,s)=>sweep.map((vec,j)=>Math.sqrt(vec.reduce((v,h,k)=>v+h*h/Math.max(f.precision[s][j][k],1e-8),0)/3)));
@@ -109,17 +160,16 @@ async function prefetch(){
    f.packets=[];for(let s=0;s<energy.length;s++)f.sender.forEach((u,j)=>f.packets.push({at:f.tick-1+s/energy.length,u,v:f.receiver[j],strength:Math.sqrt(energy[s][j]/scale)}));
   }ended=data.done;
   if(!raceReady){
-   if(ended||(computeMode==='stream'&&data.frames.at(-1).tick>=64))makeRaceReady();
+   if(ended||(computeMode==='stream'&&data.frames.at(-1).tick>=(client.candidate?24:64)))makeRaceReady();
    else if(computeMode==='prepared')ui.status.textContent=`Preparing · ${Math.round((performance.now()-prepareStartedAt)/1000)} s · ${data.frames.at(-1)?.stage||0}/4`;
   }
   if(rebuffering&&ended){rebuffering=false;ui.run.disabled=false;ui.run.textContent='Run';ui.status.textContent='Buffer ready · resume at full speed';}
  }catch(e){if(requestEpoch===epoch)stop(e.message);}finally{busy=false;}
 }
-ui.run.onclick=()=>{if(!description||!raceReady||resetting||renderFault||rebuffering)return;if(race?.winner){reset();return;}running=!running;ui.run.textContent=running?'Pause':'Run';ui.status.textContent='';if(running){lastTime=performance.now();playAudit={wall:lastTime,sim:race.time};if(recorder?.state==='paused')recorder.resume();prefetch();}else{heldKeys.clear();if(recorder?.state==='recording')recorder.pause();}};
-ui.reset.onclick=()=>reset();ui.random.onclick=()=>{ui.seed.value=Math.floor(Math.random()*1000000);reset();};
-ui.seed.addEventListener('change',()=>reset());
+ui.run.onclick=()=>{if(!description||!raceReady||resetting||renderFault||rebuffering)return;if(race?.winner){reset();return;}running=!running;ui.run.textContent=running?'Pause':'Run';ui.status.textContent='';if(running){lastTime=performance.now();playAudit={wall:lastTime,sim:race.time};if(streamAudit)streamAudit.ticksAtStart=frames.at(-1).tick;if(recorder?.state==='paused')recorder.resume();prefetch();}else{heldKeys.clear();if(recorder?.state==='recording')recorder.pause();}};
+ui.seed.addEventListener('change',()=>reset(Number(ui.seed.value)));
 switchButton.onclick=()=>{playerMain=!playerMain;switchButton.setAttribute('aria-pressed',String(playerMain));};
-document.getElementById('again').onclick=()=>{document.getElementById('again').disabled=true;reset();};
+document.getElementById('again').onclick=()=>{document.getElementById('again').disabled=true;reset(client.campaign?nextLevel(description.campaign.level,race?.winner):Number(ui.seed.value));};
 addEventListener('keydown',e=>{
  if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName))return;
  if(R.KEYS.has(e.code)){e.preventDefault();if(running&&!race?.winner)heldKeys.add(e.code);}
@@ -213,7 +263,7 @@ function drawCarrier(screen,q){
  ctx.beginPath();ctx.arc(0,5,3,0,Math.PI*2);ctx.fillStyle='#ffe29b';ctx.fill();ctx.lineWidth=1.4;ctx.stroke();ctx.restore();
 }
 function brainPanel(box,a,b){
- const dpr=Math.min(devicePixelRatio,2),key=[box.x,box.y,box.w,box.h,dpr,!!a.brain].join(':'),now=performance.now();
+ const dpr=Math.min(devicePixelRatio,2),key=[box.x,box.y,box.w,box.h,dpr,selectedBrain,brainLoading,!!a.brain].join(':'),now=performance.now();
  if(key!==brainPaintKey||(a.brain&&now-brainPaintAt>=1000/30)){
   const width=Math.ceil(box.w*dpr),height=Math.ceil(box.h*dpr);
   if(brainSurface.width!==width||brainSurface.height!==height){brainSurface.width=width;brainSurface.height=height;}
@@ -226,9 +276,9 @@ function brainPanel(box,a,b){
 function paintBrainPanel(box,a,b){
  const {x,y,w,h}=box;if(w<90||h<100)return;
  const panel=ctx.createLinearGradient(x,y,x+w,y+h);panel.addColorStop(0,'#30236a');panel.addColorStop(1,'#171f51');ctx.fillStyle=panel;rounded(x,y,w,h,18);ctx.fill();ctx.strokeStyle='#c2acff99';ctx.lineWidth=1.5;ctx.stroke();line([x+22,y+63],[x+w-22,y+63],'#a695ff45');
- const previous=a.brain||[],mix=Math.min(1,Math.max(0,clock-a.tick));
- const rates=previous.map((v,i)=>v+((b.brain?.[i]??v)-v)*mix),scale=Math.min(w*.95,(h-82)*1.18),bx=x+w*.50,by=y+55+(h-91)*.46,max=Math.max(.03,...rates.map(Math.abs));
- ctx.save();rounded(x+5,y+55,w-10,Math.max(1,h-91),12);ctx.clip();
+ const previous=brainActivity(a),next=brainActivity(b),mix=Math.min(1,Math.max(0,clock-a.tick));
+ const rates=previous.map((v,i)=>v+((next[i]??v)-v)*mix),scale=client.candidate?Math.min(w*.95,(h-82)*1.18):Math.max(1,Math.min(w-34,(h-119)/Math.max(.01,brainAspect))),bx=x+w*.50,by=y+68+(h-119)*.5,max=Math.max(.03,...rates.map(Math.abs));
+ ctx.save();rounded(x+5,y+66,w-10,Math.max(1,h-105),12);ctx.clip();
  // Measured pair connectivity, NOT invented morphology. Batch paths by
  // activity to keep 4,804 true graph links inexpensive at display frame rate.
  const palettes=['#6dc8ff','#ae87ff','#ff89ce','#91f7d3'];
@@ -237,13 +287,28 @@ function paintBrainPanel(box,a,b){
   const [px,py,depth]=brainXY[i],value=rates[i]||0,amp=Math.min(1,Math.abs(value)/max),change=Math.min(1,Math.abs(value-(previous[i]||0))*40),nx=bx+px*scale,ny=by+py*scale;
   ctx.fillStyle=rates.length?(value>=0?`rgba(125,244,226,${.35+amp*.65})`:`rgba(255,154,215,${.35+amp*.65})`):'#b4bcdfaa';
   if(change>.06){const glow=2+change*3;ctx.globalAlpha=.15+change*.25;ctx.drawImage(neuronGlow[value>=0?0:1],nx-glow,ny-glow,glow*2,glow*2);ctx.globalAlpha=1;}
-  ctx.beginPath();ctx.arc(nx,ny,.35+depth*.3+amp*.65,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(nx,ny,client.candidate?1.5+amp*3:.35+depth*.3+amp*.65,0,Math.PI*2);ctx.fill();
  }
  ctx.restore();
+ if(!client.candidate&&brainXY.length&&h>170){
+  // Anatomical regions, not neuron activity labels. Curved, open arrowheads
+  // stay outside the header and remain visible in canvas video recordings.
+  const arrow=(sx,sy,cx,cy,ex,ey)=>{
+   ctx.beginPath();ctx.moveTo(sx,sy);ctx.quadraticCurveTo(cx,cy,ex,ey);ctx.stroke();
+   const angle=Math.atan2(ey-cy,ex-cx),r=5;
+   ctx.beginPath();ctx.moveTo(ex-r*Math.cos(angle-.55),ey-r*Math.sin(angle-.55));ctx.lineTo(ex,ey);ctx.lineTo(ex-r*Math.cos(angle+.55),ey-r*Math.sin(angle+.55));ctx.stroke();
+  };
+  ctx.save();ctx.strokeStyle='#d5c9ff';ctx.fillStyle='#eee7ff';ctx.lineWidth=1.3;ctx.lineCap='round';ctx.lineJoin='round';ctx.font=`italic ${Math.min(15,Math.max(11,w*.035))}px "Segoe UI", sans-serif`;ctx.textAlign='left';
+  ctx.fillText('Brain',x+20,y+h-42);
+  arrow(x+58,y+h-46,x+75,y+h-69,bx-scale*.30,by+scale*.10);
+  ctx.textAlign='right';ctx.fillText('Ventral nerve cord',x+w-17,y+80);
+  arrow(x+w-35,y+87,x+w-9,by-8,bx+scale*.35,by);
+  ctx.restore();
+ }
  const rms=a.brain_rms||[],barW=(w-48)/8;
  for(let i=0;i<8;i++){
   const bx=x+24+i*barW,base=y+h-20;ctx.fillStyle='#1e384a';rounded(bx,base-14,barW-6,14,3);ctx.fill();
-  const v=Math.min(14,(rms[i]||0)*240);ctx.fillStyle='#77d8bd';rounded(bx,base-v,barW-6,v,Math.min(3,v/2));ctx.fill();ctx.fillStyle='#81a9ae';ctx.font='8px "Segoe UI"';ctx.textAlign='center';ctx.fillText(String(i+1).padStart(2,'0'),bx+(barW-6)/2,base+12);
+  const v=Math.min(14,(rms[i]||0)*240);ctx.fillStyle='#77d8bd';rounded(bx,base-v,barW-6,v,Math.min(3,v/2));ctx.fill();ctx.fillStyle=i===selectedBrain?'#ffffff':'#81a9ae';ctx.font='8px "Segoe UI"';ctx.textAlign='center';if(recorder)ctx.fillText(String(i+1).padStart(2,'0'),bx+(barW-6)/2,base+12);
  }ctx.textAlign='left';
 }
 function drawWorld(box,q,viewCamera,isFlies,t){
@@ -290,19 +355,33 @@ function announceWinner(t){
  if(!race?.winner||terminalShown)return;
  terminalShown=true;running=false;heldKeys.clear();ui.run.textContent='Again';ui.status.textContent='';
  document.getElementById('winner').textContent=race.winner==='you'?'YOU WIN':race.winner==='flies'?'FLIES WIN':'PHOTO FINISH';
- victory.dataset.winner=race.winner;victory.hidden=false;document.getElementById('again').focus({preventScroll:true});
- if(playAudit){const wall=(performance.now()-playAudit.wall)/1000,sim=race.time-playAudit.sim;gpuDetails.textContent+=`\nLast uninterrupted play: ${wall.toFixed(2)} wall seconds → ${sim.toFixed(2)} simulation seconds (${(sim/wall).toFixed(2)}×).`;}
+ if(client.campaign){
+  if(!testing){unlocked=unlockAfterRace(unlocked,description.campaign.level,race.winner);
+  try{localStorage.setItem('flappy-flies.campaign30-unlocked.v1',String(unlocked));}catch{}}
+  updateLevelPicker();document.getElementById('again').textContent=race.winner==='you'&&description.campaign.level<COURSE_COUNT?'Next level':'Try again';
+ }
+ victory.dataset.winner=race.winner;victory.hidden=false;
+ const retry=race.winner!=='you';document.getElementById('again').hidden=retry;
+ if(retry){
+  ui.run.disabled=true;
+  const finishedRace=race,finishedEpoch=epoch,level=description.campaign?.level??description.layout.seed;
+  retryTimer=setTimeout(()=>{retryTimer=null;if(race===finishedRace&&epoch===finishedEpoch)reset(level);},1400);
+ }else document.getElementById('again').focus({preventScroll:true});
+ if(playAudit){const wall=(performance.now()-playAudit.wall)/1000,sim=race.time-playAudit.sim;gpuDetails.textContent+=`\nLast uninterrupted play: ${wall.toFixed(2)} wall seconds → ${sim.toFixed(2)} simulation seconds (${(sim/wall).toFixed(2)}×).`;
+  if(streamAudit){const percentile=(xs,p)=>[...xs].sort((a,b)=>a-b)[Math.min(xs.length-1,Math.floor(xs.length*p))];const report={type:'rendered-game-streaming',modelHash:gpuInfo.modelHash,seed:description.layout.seed,winner:race.winner,startupSeconds:startup.firstRaceReadySeconds,readyBufferTicks:streamAudit.startBufferedTicks,ticksAtRun:streamAudit.ticksAtStart,ticksComputedDuringPlay:frames.at(-1).tick-streamAudit.ticksAtStart,maxBufferedTicks:streamAudit.maxBufferedTicks,underruns:streamAudit.underruns,wallSeconds:wall,simulationSeconds:sim,speedRatio:sim/wall,frameMedianMs:percentile(streamAudit.frameMs,.5),frameP95Ms:percentile(streamAudit.frameMs,.95),controlBatchMedianMs:percentile(streamAudit.controlMs,.5),controlBatchP95Ms:percentile(streamAudit.controlMs,.95)};gpuDetails.textContent+='\n'+JSON.stringify(report,null,2);fetch('/test-report',{method:'POST',body:JSON.stringify(report)}).catch(()=>{});}
+ }
  if(recorder)captureFinishAt=t+1200;
 }
 function draw(t){
  requestAnimationFrame(draw);const dt=Math.max(0,(t-lastTime)/1000)||0;lastTime=t;
  if(running&&description&&!race.winner&&raceReady){
+  if(streamAudit)streamAudit.frameMs.push(dt*1000);
   const last=frames.at(-1),flyFinish=(frames.find(f=>f.success)?.tick??Infinity)*description.dt;
   // Never convert slow compute into slow motion. An unexpected GPU deadline
   // miss is an explicit pause, then local preparation of the remaining race.
   const ceiling=ended?(last.success?last.tick:Infinity):Math.max(0,last.tick-2);
   const next=clock+raceDuration(dt)/description.dt;
-  if(next>ceiling&&!ended){stop('GPU deadline missed · preparing remaining course');computeMode='prepared';rebuffering=true;ui.run.disabled=true;showGPU();}
+  if(next>ceiling&&!ended){if(client.candidate){streamAudit.underruns++;stop('Live-inference deadline missed · research test failed');ui.run.disabled=true;rebuffering=true;}else{stop('GPU deadline missed · preparing remaining course');computeMode='prepared';rebuffering=true;ui.run.disabled=true;}showGPU();}
   else R.advance(race,description,heldKeys,raceDuration(dt),flyFinish);
   clock=race.time/description.dt;
   while(frames.length>2&&frames[1].tick<=clock)frames.shift();
@@ -330,15 +409,24 @@ function draw(t){
   // Recorded pixels identify actual model inference, not a teacher replay or
   // a claim that this experimental checkpoint has passed the final test set.
   ctx.fillStyle='#253471';ctx.font='800 18px "Segoe UI"';ctx.fillText('FLAPPY FLIES',28,48);
-  ctx.fillStyle='#efdcff';ctx.font='10px "Segoe UI"';ctx.fillText('MALE CNS · 01 / 08',boxes.brain.x+14,boxes.brain.y+22);
-  ctx.fillStyle='#a9a0d7';ctx.font='9px "Segoe UI"';ctx.fillText('165,122 neurons / fly',boxes.brain.x+14,boxes.brain.y+39);
-  ctx.fillStyle='#276d8f';ctx.font='10px "Segoe UI"';ctx.fillText('8 fly neural cores × Sheaf-GBP',28,H-24);
+  ctx.fillStyle='#efdcff';ctx.font='10px "Segoe UI"';ctx.fillText(client.candidate?'LOCAL GRU · 01 / 08':`MALE CNS · ${String(selectedBrain+1).padStart(2,'0')} / 08`,boxes.brain.x+14,boxes.brain.y+22);
+  ctx.fillStyle='#a9a0d7';ctx.font='9px "Segoe UI"';ctx.fillText(client.candidate?'128 memory units · NOT full connectome':'165,122 neurons / fly',boxes.brain.x+14,boxes.brain.y+39);
+  ctx.fillStyle='#276d8f';ctx.font='10px "Segoe UI"';ctx.fillText(client.candidate?'Compact recurrent agents × Sheaf-GBP':'8 fly neural cores × Sheaf-GBP',28,H-24);
   ctx.font='8px "Segoe UI"';ctx.fillText(`RECORDED MODEL INFERENCE · EXPERIMENTAL · ${captureIdentity.checkpoint}`,28,H-10);
   if(race.winner){ctx.fillStyle='#322354b0';ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff6b1';ctx.textAlign='center';ctx.font=`900 ${Math.min(W*.1,90)}px "Segoe UI"`;ctx.fillText(document.getElementById('winner').textContent,W/2,H/2);ctx.textAlign='left';}
  }
  if(captureFinishAt!==null&&t>=captureFinishAt){captureFinishAt=null;finishCapture();}
 }
 async function init(){
+ if(client.campaign){
+  document.querySelector('#gpu-info summary').textContent='About';
+  document.getElementById('again').textContent='Next level';
+  ui.run.textContent='Run';ui.status.textContent='Opening level 1…';
+  const started=performance.now();
+  try{installSession(await api('init',{seed:savedLevel}),started);}catch(e){ui.status.textContent=e.message;}
+  return;
+ }
+ ui.seed.min=0;ui.seed.max=2147483647;ui.seed.value=91000;ui.seed.setAttribute('aria-label','Map seed');document.getElementById('level-caption').textContent='Seed';
  client.onProgress=p=>{if(p.phase==='adapter'){gpuInfo={adapter:p.adapter,candidates:p.candidates};showGPU();}else{startup.graphNetworkBytes=p.networkBytes;ui.status.textContent=`Loading fly brain · ${Math.round(100*p.received/p.total)}%`;}};
  client.onReady=async info=>{startup.modelReadySeconds=performance.now()/1000;gpuInfo=info;showGPU();await reset();gpuBadge.classList.add('ready');};
  client.onError=message=>{client.ready=false;raceReady=false;gpuFailure=message;stop(message);gpuBadge.textContent='WebGPU unavailable';gpuDetails.textContent=message+'\nNeural racing requires hardware WebGPU. No substitute AI or fake neural activity is shown.';};

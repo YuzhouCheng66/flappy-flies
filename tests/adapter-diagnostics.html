@@ -1,0 +1,19 @@
+<!doctype html><meta charset="utf-8"><title>WebGPU adapter diagnostics</title>
+<style>body{font:15px monospace;background:#10192a;color:#cef6e3;padding:24px}button{font:inherit;padding:10px}pre{white-space:pre-wrap}</style>
+<h1>Actual browser GPU selection</h1><p>Standard API probes only. No settings changed. Results are saved only to this localhost.</p>
+<button id="run">Inspect GPU selection</button><pre id="status">Ready</pre><pre id="results"></pre>
+<script type="module">
+import {inspectAdapters} from './adapter-diagnostics.mjs';
+document.getElementById('run').onclick=async()=>{
+ const button=document.getElementById('run'),status=document.getElementById('status'),display=document.getElementById('results');button.disabled=true;status.textContent='Inspecting main thread and worker…';
+ try{
+  const windowResult=await inspectAdapters('window'),webgl=[];
+  for(const powerPreference of ['high-performance','default']){
+   const canvas=document.createElement('canvas'),gl=canvas.getContext('webgl2',{powerPreference});
+   if(gl){const debug=gl.getExtension('WEBGL_debug_renderer_info');webgl.push({powerPreference,renderer:debug?gl.getParameter(debug.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER)});gl.getExtension('WEBGL_lose_context')?.loseContext();}else webgl.push({powerPreference,available:false});
+  }
+  const worker=new Worker('./adapter-diagnostics-worker.mjs',{type:'module'});const workerResult=await new Promise((resolve,reject)=>{worker.onmessage=e=>resolve(e.data);worker.onerror=e=>reject(Error(e.message));worker.postMessage('run');});worker.terminate();
+  const report={type:'browser-adapter-comparison',window:windowResult,worker:workerResult,webgl};display.textContent=JSON.stringify(report,null,2);status.textContent='Complete';await fetch('/test-report',{method:'POST',body:JSON.stringify(report)});
+ }catch(error){status.textContent='Error: '+error.message;}finally{button.disabled=false;}
+};
+</script>

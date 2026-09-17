@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {chooseMeasuredBackend} from '../backend-selector.mjs';
+const root=new URL('../',import.meta.url),read=name=>fs.readFileSync(new URL(name,root));
+const plan=JSON.parse(read('local-results/compact/frozen-evaluation.json'));
+const all=read('local-results/browser.jsonl').toString().trim().split('\n').map(x=>JSON.parse(x));
+const rows=all.filter(x=>x.type==='rollout'&&x.modelHash===plan.checkpoint_sha256&&x.seed>=plan.test_seeds.first&&x.seed<=plan.test_seeds.last);
+if(rows.length!==100||new Set(rows.map(x=>x.seed)).size!==100)throw Error('Expected exactly the frozen 100 seeds, without duplicates');
+const success=rows.filter(x=>x.success).length,n=rows.length,z=1.959963984540054,p=success/n,d=1+z*z/n;
+const centre=(p+z*z/(2*n))/d,radius=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n))/d;
+const percentile=(a,p)=>[...a].sort((a,b)=>a-b)[Math.min(a.length-1,Math.floor(a.length*p))];
+const performance={medianMs:percentile(rows.map(r=>r.controlMedianMs),.5),p95Ms:Math.max(...rows.map(r=>r.controlP95Ms))};
+const full=all.findLast(r=>r.type==='parity'&&r.kernel==='segmented'&&r.runtime==='actual browser WebGPU'),wasm=all.findLast(r=>r.type==='parity'&&r.runtime==='actual browser WASM SIMD');
+const candidates=[{id:'full segmented WebGPU',validated:false,meanMs:full.seconds*1000/full.ticks,reason:'Full-step mean exceeds sustained throughput budget; complete percentile trace unavailable'},{id:'full WASM SIMD + 8 workers',validated:false,medianMs:percentile(wasm.timings,.5),p95Ms:percentile(wasm.timings,.95),reason:'Too slow, closed-loop acceptance not attempted'},{id:'compact CPU + live GBP',validated:success>=90,...performance}];
+const selection=chooseMeasuredBackend(candidates);
+const report={scope:'Local research audit, not production deployment or mainstream-device coverage',checkpoint:plan.checkpoint_sha256,episodes:n,success,successRate:p,wilson95:[centre-radius,centre+radius],failureSeeds:rows.filter(r=>!r.success).map(r=>({seed:r.seed,stage:r.stage,ticks:r.ticks})),minimumAcceptedClearance:Math.min(...rows.map(r=>r.minClearance)),...performance,candidates,measuredFeasibleBackend:selection?.id??null,renderedGames:all.filter(r=>r.type==='rendered-game-streaming'&&r.modelHash===plan.checkpoint_sha256),sourceHashes:Object.fromEntries(['compact-model.mjs','engine.mjs','game.mjs','client.mjs','inference-worker.mjs','tests/compact-worker.mjs'].map(name=>[name,createHash('sha256').update(read(name)).digest('hex')]))};
+fs.writeFileSync(new URL('local-results/compact/acceptance.json',root),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));

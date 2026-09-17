@@ -4,7 +4,7 @@ export function adapterInfo(adapter){
  const info=adapter.info||{};
  return {...Object.fromEntries(['vendor','architecture','device','description'].map(k=>[k,info[k]||''])),fallback:!!(info.isFallbackAdapter??adapter.isFallbackAdapter)};
 }
-export async function selectAdapter(gpu){
+export async function selectAdapter(gpu,{measure}={}){
  if(!gpu)throw Error('WebGPU unavailable. Use a browser with hardware WebGPU to race.');
  const candidates=[];
  for(const preference of ['high-performance',undefined]){
@@ -15,10 +15,9 @@ export async function selectAdapter(gpu){
  }
  const required=25563197*4;
  const usable=candidates.filter(c=>!c.info.fallback&&c.adapter.limits.maxStorageBufferBindingSize>=required&&c.adapter.limits.maxBufferSize>=required);
- // Prefer an exposed NVIDIA device; otherwise preserve high-performance
- // request order. We never label an integrated adapter as an NVIDIA device.
- const rank=c=>/nvidia/i.test(c.info.vendor)?2:1;
- usable.sort((a,b)=>rank(b)-rank(a));
+ // Never infer speed from the vendor. Keep the browser's high-performance
+ // request first unless the caller actually measured this workload.
+ if(measure){for(const c of usable)c.measuredMs=await measure(c.adapter,c.info);usable.sort((a,b)=>(Number.isFinite(a.measuredMs)&&a.measuredMs>0?a.measuredMs:Infinity)-(Number.isFinite(b.measuredMs)&&b.measuredMs>0?b.measuredMs:Infinity));}
  if(!usable.length)throw Error('No hardware WebGPU adapter with sufficient memory for the neural race.');
- return {adapter:usable[0].adapter,info:usable[0].info,candidates:candidates.map(({info,request})=>({...info,request}))};
+ return {adapter:usable[0].adapter,info:usable[0].info,candidates:candidates.map(({info,request,measuredMs})=>({...info,request,...Number.isFinite(measuredMs)?{measuredMs}:{}}))};
 }

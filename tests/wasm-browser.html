@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8"><title>Full-model WASM validation</title>
+<style>body{font:16px monospace;background:#10192a;color:#cef6e3;padding:24px}button,input{font:inherit;padding:10px}pre{white-space:pre-wrap}</style>
+<h1>Full-model WASM SIMD + Workers</h1>
+<button id="init">Initialize CPU</button><input id="threads" type="number" min="1" max="8" value="8" aria-label="Worker count">
+<button id="parity" disabled>Python parity</button><button id="run" disabled>Run seeds</button><input id="seeds" value="91000" aria-label="Seeds">
+<pre id="status">Ready</pre><pre id="results"></pre>
+<script type="module">
+const worker=new Worker('./wasm-worker.mjs',{type:'module'}),reports=[],$=id=>document.getElementById(id);
+worker.onmessage=async({data})=>{if(data.progress){$('status').textContent=`Loading ${Math.round(data.progress.received/data.progress.total*100)}%`;return;}if(data.status){$('status').textContent=data.status;return;}data.runtime='actual browser WASM SIMD';reports.push(data);$('results').textContent=JSON.stringify(reports,null,2);$('status').textContent=data.error?'ERROR':data.type+' complete';$('parity').disabled=$('run').disabled=false;await fetch('/test-report',{method:'POST',body:JSON.stringify(data)});};
+$('init').onclick=()=>{$('init').disabled=true;worker.postMessage({type:'init',threads:Number($('threads').value)});};
+$('parity').onclick=()=>{worker.postMessage({type:'parity'});$('parity').disabled=$('run').disabled=true;};
+$('run').onclick=()=>{worker.postMessage({type:'run',seeds:$('seeds').value.split(',').map(Number)});$('parity').disabled=$('run').disabled=true;};
+</script>
