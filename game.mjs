@@ -1,13 +1,17 @@
 'use strict'; // Browser-native module; no remote inference endpoint.
 import {api,client} from './client.mjs';
-const canvas=document.getElementById('world'),ctx=canvas.getContext('2d'),C=CargoContracts,R=CargoRace;
+import {RACE_SPEED,LOOKAHEAD_TICKS,canStream,raceDuration,TICK_BUDGET_MS} from './race-clock.mjs';
+const canvas=document.getElementById('world'),mainContext=canvas.getContext('2d'),C=CargoContracts,R=CargoRace;
+let ctx=mainContext;
+const brainSurface=document.createElement('canvas'),brainContext=brainSurface.getContext('2d');
+let brainPaintAt=-Infinity,brainPaintKey='';
 const ui=Object.fromEntries(['run','reset','random','seed','status','passed','total'].map(k=>[k,document.getElementById(k)]));
 let W=innerWidth,H=innerHeight,description=null,generation=0,epoch=0;
-let frames=[],clock=0,running=false,busy=false,resetting=false,ended=false,lastTime=0,camera=-.5;
-let brainXY=[],brainEdges=[],brainOrder=[],latest=null,packetEvents=[],renderFault=false,terminalShown=false;
+let frames=[],clock=0,running=false,busy=false,resetting=false,ended=false,lastTime=0,lastPaintTime=0,camera=-.5;
+let brainXY=[],brainEdges=[],brainOrder=[],latest=null,packetEvents=[],lastPacketTick=0,renderFault=false,terminalShown=false;
 let recorder=null,captureParts=[],captureIdentity=null,captureOutcome=null,captureFinishAt=null;
 let race=null,playerMain=false,playerCamera=-.5;
-let playbackSpeed=3.30;
+let raceReady=false,computeMode='warming',samples=[],msPerTick=0,gpuInfo=null,rebuffering=false,playAudit=null;
 const heldKeys=new Set(),victory=document.getElementById('victory'),switchButton=document.getElementById('switch');
 const recordButton=document.getElementById('record');
 // Reused code-native sprites avoid hundreds of expensive per-neuron shadow
@@ -16,15 +20,25 @@ const neuronGlow=['#64ffc6','#ff7cd2'].map(color=>{
  const sprite=document.createElement('canvas');sprite.width=sprite.height=40;const g=sprite.getContext('2d'),gradient=g.createRadialGradient(20,20,0,20,20,20);
  gradient.addColorStop(0,color);gradient.addColorStop(.15,color+'b0');gradient.addColorStop(1,color+'00');g.fillStyle=gradient;g.fillRect(0,0,40,40);return sprite;
 });
-const speed=3.30,bufferTarget=64;
+const speed=RACE_SPEED,bufferTarget=LOOKAHEAD_TICKS;
+const gpuBadge=document.querySelector('.live'),gpuDetails=document.getElementById('gpu-details');
+function showGPU(){
+ const adapter=gpuInfo?.adapter||{},name=adapter.device||[adapter.vendor,adapter.architecture].filter(Boolean).join(' ')||'Detecting';
+ gpuBadge.textContent=`WebGPU · ${adapter.vendor||'checking'}`;
+ gpuDetails.textContent=`Device: ${name}\nBackend: WebGPU compute shaders${gpuInfo?.kernel?' · '+gpuInfo.kernel:''}\nHigh-performance GPU requested; browser/OS decides exposed adapters.\n${msPerTick?`Control: ${msPerTick.toFixed(1)} ms/tick · budget ${TICK_BUDGET_MS.toFixed(1)} ms\n`:''}Race: fixed ${speed.toFixed(2)}× · ${computeMode==='stream'?'live inference':computeMode==='prepared'?'local precomputation (not real-time inference)':'warming up'}\nNo server inference; no downloaded trajectories.`;
+}
+function makeRaceReady(){
+ if(raceReady)return;raceReady=true;running=false;clock=0;race=R.create(description);playerCamera=camera;heldKeys.clear();
+ ui.run.textContent='Run';ui.status.textContent=computeMode==='stream'?'Ready · full-speed race':'Locally prepared · Run for full-speed race';
+}
 function stageSplit(){return W*.60;}
 function panels(){const split=stageSplit(),top=92,bottom=H-36,gap=12,right=split+6,w=W-right-14,bh=(bottom-top-gap)*.46;return{main:{x:14,y:top,w:split-26,h:bottom-top},brain:{x:right,y:top,w,h:bh},mini:{x:right,y:top+bh+gap,w,h:bottom-top-bh-gap}};}
 function resize(){W=innerWidth;H=innerHeight;const dpr=Math.min(devicePixelRatio,2);canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);document.documentElement.style.setProperty('--stage-split',`${stageSplit()}px`);}
 addEventListener('resize',resize);resize();
-function stop(message){running=false;heldKeys.clear();ui.run.textContent='Run';ui.status.textContent=message;if(recorder?.state==='recording')recorder.pause();}
+function stop(message){running=false;heldKeys.clear();ui.run.textContent=raceReady?'Run':'Practice';ui.status.textContent=message;if(recorder?.state==='recording')recorder.pause();}
 function finishCapture(){if(recorder&&recorder.state!=='inactive'){captureOutcome={success:!!latest?.success,stage:latest?.stage||0,winner:race?.winner};recorder.stop();}}
 function toggleCapture(){
- if(recorder){finishCapture();return;}if(!client.ready||!description||race?.winner||!window.MediaRecorder)return;
+ if(recorder){finishCapture();return;}if(!raceReady||!description||race?.winner||!window.MediaRecorder)return;
  const mime=['video/mp4;codecs=avc1.42001E','video/webm;codecs=vp9','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
  if(!mime){ui.status.textContent='Video recording is unavailable in this browser';return;}
  const stream=canvas.captureStream(30);captureParts=[];captureOutcome=null;captureFinishAt=null;
@@ -45,7 +59,8 @@ function toggleCapture(){
 }
 recordButton.onclick=toggleCapture;
 function setDescription(d){
- description=d;camera=d.state[0]+.5;clock=d.snapshot.tick;packetEvents=[];frames=[d.snapshot];latest=frames[0];ended=d.snapshot.done;renderFault=false;terminalShown=false;captureFinishAt=null;
+ raceReady=false;computeMode='warming';samples=[];msPerTick=0;rebuffering=false;playAudit=null;
+ description=d;camera=d.state[0]+.5;clock=d.snapshot.tick;packetEvents=[];lastPacketTick=0;frames=[d.snapshot];latest=frames[0];ended=d.snapshot.done;renderFault=false;terminalShown=false;captureFinishAt=null;
  race=R.create(d);playerCamera=camera;heldKeys.clear();victory.hidden=true;document.getElementById('again').disabled=false;
  ui.total.textContent=String(d.layout.wall_x.length).padStart(2,'0');ui.passed.textContent=String(d.snapshot.stage).padStart(2,'0');
  // Orthographic camera rotation of measured 3-D coordinates: oblique view,
@@ -57,7 +72,7 @@ function setDescription(d){
  }):(d.brain_coordinates||[]).map(p=>[...p,0]);brainXY=[];
  if(xy.length){let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity,zmin=Infinity,zmax=-Infinity;for(const p of xy){xmin=Math.min(xmin,p[0]);xmax=Math.max(xmax,p[0]);ymin=Math.min(ymin,p[1]);ymax=Math.max(ymax,p[1]);zmin=Math.min(zmin,p[2]);zmax=Math.max(zmax,p[2]);}const extent=Math.max(xmax-xmin,ymax-ymin);brainXY=xy.map(p=>[(p[0]-(xmin+xmax)/2)/extent,(p[1]-(ymin+ymax)/2)/extent,(p[2]-zmin)/(zmax-zmin||1)]);}
  brainEdges=d.brain_edges||[];brainOrder=brainXY.map((_,i)=>i).sort((i,j)=>brainXY[i][2]-brainXY[j][2]);
- ui.run.disabled=false;ui.run.textContent=client.ready?'Run':'Practice';ui.status.textContent=client.ready?'':'Practice while the full fly brain loads';
+ ui.run.disabled=false;ui.run.textContent='Practice';ui.status.textContent=client.ready?'Warming up your GPU · Practice now':'Practice while the full fly brain loads';
 }
 async function reset(seed=Number(ui.seed.value)){
  if(resetting)return;finishCapture();resetting=true;epoch++;running=false;heldKeys.clear();ui.run.disabled=true;ui.run.textContent='Run';ui.status.textContent='Resetting…';
@@ -65,26 +80,34 @@ async function reset(seed=Number(ui.seed.value)){
  catch(e){ui.status.textContent=e.message;}finally{resetting=false;}
 }
 async function prefetch(){
- if(!client.ready||busy||resetting||!running||race?.winner||ended||!description||frames.at(-1).tick-clock>bufferTarget)return;
+ if(!client.ready||busy||resetting||document.hidden||race?.winner||ended||!description)return;
+ if(computeMode==='stream'&&!rebuffering&&frames.at(-1).tick-clock>=bufferTarget)return;
  busy=true;const current=generation,requestEpoch=epoch,after=frames.at(-1).tick;
  try{
   const data=await api('/api/step',{generation:current,after_tick:after,count:8});
   if(requestEpoch!==epoch||race?.winner)return;
   if(data.stale||data.generation!==current)throw Error('Session changed · Reset');
-  // Slow hardware changes only the shared display clock, never physics dt,
-  // neural updates, graph size or the player's chance against the flies.
-  if(data.msPerTick)playbackSpeed=Math.min(speed,description.dt*1000/data.msPerTick*.72);
-  document.querySelector('.live').title=`Full network on your GPU · ${Math.round(data.msPerTick||0)} ms / control tick`;
+  msPerTick=msPerTick ? .8*msPerTick+.2*data.msPerTick : data.msPerTick;
+  if(computeMode==='warming'){
+   samples.push(data.msPerTick);
+   if(samples.length>=4){const sorted=samples.slice(1).sort((a,b)=>a-b);computeMode=canStream(sorted.at(-1))?'stream':'prepared';}
+  }
+  showGPU();
   C.validateBatch(after,data.frames,description);frames.push(...data.frames);
   for(const f of data.frames){
    if(!f.natural)continue;
    const energy=f.natural.map((sweep,s)=>sweep.map((vec,j)=>Math.sqrt(vec.reduce((v,h,k)=>v+h*h/Math.max(f.precision[s][j][k],1e-8),0)/3)));
    const scale=Math.max(1e-8,...energy.flat());
-   for(let s=0;s<energy.length;s++)f.sender.forEach((u,j)=>packetEvents.push({at:f.tick-1+s/energy.length,u,v:f.receiver[j],strength:Math.sqrt(energy[s][j]/scale)}));
+   f.packets=[];for(let s=0;s<energy.length;s++)f.sender.forEach((u,j)=>f.packets.push({at:f.tick-1+s/energy.length,u,v:f.receiver[j],strength:Math.sqrt(energy[s][j]/scale)}));
   }ended=data.done;
+  if(!raceReady){
+   if(ended||(computeMode==='stream'&&data.frames.at(-1).tick>=64))makeRaceReady();
+   else if(computeMode==='prepared')ui.status.textContent=`Preparing locally · gate ${data.frames.at(-1)?.stage||0}/4 · Practice now`;
+  }
+  if(rebuffering&&ended){rebuffering=false;ui.run.disabled=false;ui.run.textContent='Run';ui.status.textContent='Buffer ready · resume at full speed';}
  }catch(e){if(requestEpoch===epoch)stop(e.message);}finally{busy=false;}
 }
-ui.run.onclick=()=>{if(!description||resetting||renderFault)return;if(race?.winner){reset();return;}running=!running;ui.run.textContent=running?'Pause':client.ready?'Run':'Practice';if(client.ready)ui.status.textContent='';if(running){if(recorder?.state==='paused')recorder.resume();prefetch();}else{heldKeys.clear();if(recorder?.state==='recording')recorder.pause();}};
+ui.run.onclick=()=>{if(!description||resetting||renderFault||rebuffering)return;if(race?.winner){reset();return;}running=!running;ui.run.textContent=running?'Pause':raceReady?'Run':'Practice';if(raceReady)ui.status.textContent='';if(running){lastTime=performance.now();if(raceReady)playAudit={wall:lastTime,sim:race.time};if(recorder?.state==='paused')recorder.resume();prefetch();}else{heldKeys.clear();if(recorder?.state==='recording')recorder.pause();}};
 ui.reset.onclick=()=>reset();ui.random.onclick=()=>{ui.seed.value=Math.floor(Math.random()*1000000);reset();};
 ui.seed.addEventListener('change',()=>reset());
 switchButton.onclick=()=>{playerMain=!playerMain;switchButton.setAttribute('aria-pressed',String(playerMain));};
@@ -171,6 +194,17 @@ function drawFly(x,y,angle,active){
  if(active){ctx.strokeStyle='#b9ffeaa0';ctx.lineWidth=.8;ctx.beginPath();ctx.arc(0,0,14,0,Math.PI*2);ctx.stroke();}ctx.restore();
 }
 function brainPanel(box,a,b){
+ const dpr=Math.min(devicePixelRatio,2),key=[box.x,box.y,box.w,box.h,dpr,!!a.brain].join(':'),now=performance.now();
+ if(key!==brainPaintKey||(a.brain&&now-brainPaintAt>=1000/30)){
+  const width=Math.ceil(box.w*dpr),height=Math.ceil(box.h*dpr);
+  if(brainSurface.width!==width||brainSurface.height!==height){brainSurface.width=width;brainSurface.height=height;}
+  brainContext.setTransform(1,0,0,1,0,0);brainContext.clearRect(0,0,width,height);brainContext.setTransform(dpr,0,0,dpr,-box.x*dpr,-box.y*dpr);
+  ctx=brainContext;try{paintBrainPanel(box,a,b);}finally{ctx=mainContext;}
+  brainPaintAt=now;brainPaintKey=key;
+ }
+ ctx.drawImage(brainSurface,box.x,box.y,box.w,box.h);
+}
+function paintBrainPanel(box,a,b){
  const {x,y,w,h}=box;if(w<90||h<100)return;
  const panel=ctx.createLinearGradient(x,y,x+w,y+h);panel.addColorStop(0,'#30236a');panel.addColorStop(1,'#171f51');ctx.fillStyle=panel;rounded(x,y,w,h,18);ctx.fill();ctx.strokeStyle='#c2acff99';ctx.lineWidth=1.5;ctx.stroke();line([x+22,y+63],[x+w-22,y+63],'#a695ff45');
  const previous=a.brain||[],mix=Math.min(1,Math.max(0,clock-a.tick));
@@ -237,31 +271,38 @@ function announceWinner(t){
  terminalShown=true;running=false;heldKeys.clear();ui.run.textContent='Again';ui.status.textContent='';
  document.getElementById('winner').textContent=race.winner==='you'?'YOU WIN':race.winner==='flies'?'FLIES WIN':'PHOTO FINISH';
  victory.dataset.winner=race.winner;victory.hidden=false;document.getElementById('again').focus({preventScroll:true});
+ if(playAudit){const wall=(performance.now()-playAudit.wall)/1000,sim=race.time-playAudit.sim;gpuDetails.textContent+=`\nLast uninterrupted play: ${wall.toFixed(2)} wall seconds → ${sim.toFixed(2)} simulation seconds (${(sim/wall).toFixed(2)}×).`;}
  if(recorder)captureFinishAt=t+1200;
 }
 function draw(t){
- requestAnimationFrame(draw);const dt=Math.min((t-lastTime)/1000,.06)||0;lastTime=t;
- if(running&&description&&!race.winner&&!client.ready){R.advance(race,description,heldKeys,dt*speed);if(race.winner){race.winner=null;running=false;ui.run.textContent='Practice';}clock=0;}
- if(running&&description&&!race.winner&&client.ready){
+ requestAnimationFrame(draw);const dt=Math.max(0,(t-lastTime)/1000)||0;lastTime=t;
+ if(running&&description&&!race.winner&&!raceReady){R.advance(race,description,heldKeys,raceDuration(dt));if(race.winner){race.winner=null;running=false;ui.run.textContent='Practice';}clock=0;}
+ if(running&&description&&!race.winner&&raceReady){
   const last=frames.at(-1),flyFinish=(frames.find(f=>f.success)?.tick??Infinity)*description.dt;
-  // A timed-out model stays still while the player may finish. Otherwise both
-  // stop at the buffer boundary; network latency cannot give either a head start.
+  // Never convert slow compute into slow motion. An unexpected GPU deadline
+  // miss is an explicit pause, then local preparation of the remaining race.
   const ceiling=ended?(last.success?last.tick:Infinity):Math.max(0,last.tick-2);
-  const next=Math.min(clock+dt*playbackSpeed/description.dt,ceiling);
-  R.advance(race,description,heldKeys,Math.max(0,next-clock)*description.dt,flyFinish??Infinity);
+  const next=clock+raceDuration(dt)/description.dt;
+  if(next>ceiling&&!ended){stop('GPU deadline missed · preparing remaining course');computeMode='prepared';rebuffering=true;ui.run.disabled=true;showGPU();}
+  else R.advance(race,description,heldKeys,raceDuration(dt),flyFinish);
   clock=race.time/description.dt;
   while(frames.length>2&&frames[1].tick<=clock)frames.shift();
  }
- prefetch();backdrop();if(!description)return;
+ prefetch();
+ // Idle preparation does not need sixty copies of an unchanged scene. Input
+ // and race physics still update on every animation callback when playing.
+ if(!running&&!recorder&&t-lastPaintTime<100)return;lastPaintTime=t;
+ backdrop();if(!description)return;
  const a=frames[0],b=frames[1]||a,alpha=Math.min(1,Math.max(0,(clock-a.tick)/Math.max(1,b.tick-a.tick)));
  let q=C.interpolate(a,b,alpha);latest=alpha>=1?b:a;
  if(C.collides(q,description)){q=a.state;if(!renderFault){renderFault=true;stop('Render collision audit · Reset');}}
  announceWinner(t);
- recordButton.disabled=!recorder&&(!client.ready||!description||race.winner||!window.MediaRecorder);
+ recordButton.disabled=!recorder&&(!raceReady||!description||race.winner||!window.MediaRecorder);
  ui.passed.textContent=String(latest.stage).padStart(2,'0');
  // Freeze the cameras as well as both bodies at the finish line.
  if(!race.winner){camera+=(q[0]+.5-camera)*(1-Math.exp(-dt*6));playerCamera+=(race.state[0]+.5-playerCamera)*(1-Math.exp(-dt*6));}
  packetEvents=packetEvents.filter(e=>clock-e.at<3);
+ if(raceReady)for(const frame of frames.slice(0,4))if(frame.tick>lastPacketTick&&frame.tick-1<=clock){packetEvents.push(...(frame.packets||[]));lastPacketTick=frame.tick;}
  const boxes=panels();
  drawWorld(playerMain?boxes.mini:boxes.main,q,camera,true,t);
  drawWorld(playerMain?boxes.main:boxes.mini,race.state,playerCamera,false,t);
@@ -279,9 +320,9 @@ function draw(t){
  if(captureFinishAt!==null&&t>=captureFinishAt){captureFinishAt=null;finishCapture();}
 }
 async function init(){
- client.onProgress=p=>{ui.status.textContent=`Fly brain ${Math.round(100*p.received/p.total)}% · practice now · cached next visit`;};
- client.onReady=async()=>{await reset();ui.status.textContent='Your GPU is ready · Run to race';document.querySelector('.live').classList.add('ready');};
- client.onError=message=>{stop(message+' · Practice is still available');};
+ client.onProgress=p=>{if(p.phase==='adapter'){gpuInfo={adapter:p.adapter,candidates:p.candidates};showGPU();}else ui.status.textContent=`Fly brain ${Math.round(100*p.received/p.total)}% · practice now · cached next visit`;};
+ client.onReady=async info=>{gpuInfo=info;showGPU();await reset();gpuBadge.classList.add('ready');};
+ client.onError=message=>{client.ready=false;raceReady=false;stop(message+' · Practice is still available');ui.run.textContent='Practice';gpuBadge.textContent='CPU · Practice';gpuDetails.textContent=message+'\nPlayer physics runs locally. Neural racing is unavailable; no substitute AI or fake neural activity is shown.';};
  try{const data=await api('init');generation=data.generation;setDescription(data.description);}
  catch(e){ui.status.textContent=e.message;}
 }

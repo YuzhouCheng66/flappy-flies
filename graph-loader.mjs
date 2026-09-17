@@ -47,7 +47,7 @@ export async function loadGraph(manifestUrl,{onProgress=()=>{},signal,useCache=t
  const response=await fetch(manifestUrl,{signal});if(!response.ok)throw Error('Graph manifest unavailable');
  const manifest=await response.json();
  if(manifest.schema!==SCHEMA||manifest.pruned_edges!==0||!manifest.lossless||!Number.isInteger(manifest.neurons)||!Number.isInteger(manifest.edges)||manifest.neurons<1||manifest.edges<0||manifest.neurons>1000000||manifest.edges>40000000)throw Error('Unsupported graph manifest');
- const crow=new Uint32Array(manifest.neurons+1),col=new Uint32Array(manifest.edges),weights=new Float32Array(manifest.edges);
+ const crow=new Uint32Array(manifest.neurons+1),col=new Uint32Array(manifest.edges),weights=new Float32Array(manifest.edges),counts=new Uint16Array(manifest.edges);
  let cache=null,row=0,edge=0,received=0,networkBytes=0;
  if(useCache&&typeof caches!=='undefined'){try{cache=await caches.open('flappy-flies-graph-v1');}catch{/* Cache denial must not break inference. */}}
  for(const entry of manifest.chunks){
@@ -64,9 +64,9 @@ export async function loadGraph(manifestUrl,{onProgress=()=>{},signal,useCache=t
   }
   if(decoded.neurons!==manifest.neurons||edge+decoded.edges>manifest.edges)throw Error('Graph shape mismatch');
   for(let i=0;i<=decoded.rows;i++)crow[row+i]=edge+decoded.crow[i];
-  col.set(decoded.col,edge);weights.set(decoded.weights,edge);row+=decoded.rows;edge+=decoded.edges;
+  col.set(decoded.col,edge);weights.set(decoded.weights,edge);counts.set(decoded.counts,edge);row+=decoded.rows;edge+=decoded.edges;
   received+=bytes.byteLength;onProgress({received,total:manifest.graph_download_bytes,networkBytes,rowsReady:row});
  }
  if(row!==manifest.neurons||edge!==manifest.edges||received!==manifest.graph_download_bytes)throw Error('Incomplete graph');
- return{crow,col,weights,manifest,networkBytes};
+ return{crow,col,weights,counts,manifest,networkBytes};
 }

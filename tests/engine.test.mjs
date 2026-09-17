@@ -3,8 +3,24 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {Engine,observe,coordinate,transition,clearance,layoutFor} from '../engine.mjs';
 import {createRequire} from 'node:module';
+import {RACE_SPEED,raceDuration,canStream,TICK_BUDGET_MS} from '../race-clock.mjs';
+import {selectAdapter} from '../gpu-device.mjs';
 const require=createRequire(import.meta.url),C=require('../contracts.js'),R=require('../race.js');
 const meta=JSON.parse(fs.readFileSync(new URL('../model/model.json',import.meta.url))),engine=new Engine(meta,null);
+test('Race speed never depends on inference time or display frame rate',()=>{
+ assert.equal(RACE_SPEED,3.3);assert.equal(raceDuration(10),33);
+ assert.equal(raceDuration(.2),.66); // no 60 ms render-frame clamp
+ assert.ok(Math.abs(TICK_BUDGET_MS-24.2424242424)<1e-8);
+ assert.equal(canStream(5),true);assert.equal(canStream(130),false);assert.equal(canStream(0),false);
+});
+test('Request hardware WebGPU, prefer exposed discrete GPU, never claim one not returned',async()=>{
+ const fake=vendor=>({info:{vendor},limits:{maxStorageBufferBindingSize:134217728,maxBufferSize:268435456}}),requests=[];
+ const result=await selectAdapter({requestAdapter:async opts=>{requests.push(opts);return fake(opts.powerPreference?'intel':'nvidia');}});
+ assert.equal(requests[0].powerPreference,'high-performance');assert.equal(requests[0].forceFallbackAdapter,false);assert.equal(result.info.vendor,'nvidia');
+ const intel=await selectAdapter({requestAdapter:async()=>fake('intel')});assert.equal(intel.info.vendor,'intel');assert.equal(intel.candidates.length,1);
+ await assert.rejects(()=>selectAdapter(undefined),/WebGPU unavailable/);
+ await assert.rejects(()=>selectAdapter({requestAdapter:async()=>({...fake('software'),isFallbackAdapter:true})}),/No hardware/);
+});
 test('The exact frozen full-network identity is retained',()=>{
  assert.equal(meta.neurons,165122);assert.equal(meta.agents,8);assert.equal(meta.neural_steps,4);
  assert.equal(meta.checkpoint_sha256,'d6e98e76ba8f8d45406cd40934a7fa6f9049565a137cb9df35a4b44925f717c3');

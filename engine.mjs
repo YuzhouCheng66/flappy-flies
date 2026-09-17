@@ -104,11 +104,13 @@ export function layoutFor(seed,meta){
  return{seed,difficulty:'rotation',apertures,gap_y,wall_x,initial,goals:wall_x.map((x,i)=>[x+1.05,gap_y[i],0])};
 }
 export class Engine{
- constructor(meta,gpu){this.meta=meta;this.gpu=gpu;this.reset(91000);}
- reset(seed){this.layout=layoutFor(seed,this.meta);this.walls=wallsFor(this.layout,this.meta.config);this.state=this.layout.initial.map(F);this.stage=this.tick=this.stable=this.contacts=this.stageStart=this.wireBytes=0;this.done=this.success=false;this.stats=null;this.context={hit:false,force:Array.from({length:8},()=>[0,0]),rejected:Array.from({length:8},()=>[0,0])};this.gpu?.reset();return this.description();}
+ constructor(meta,gpu,{decisionInterval=1}={}){this.meta=meta;this.gpu=gpu;this.decisionInterval=decisionInterval;this.reset(91000);}
+ reset(seed){this.layout=layoutFor(seed,this.meta);this.walls=wallsFor(this.layout,this.meta.config);this.state=this.layout.initial.map(F);this.stage=this.tick=this.stable=this.contacts=this.stageStart=this.wireBytes=this.inferences=0;this.done=this.success=false;this.stats=null;this.neural=null;this.decisionTick=-Infinity;this.decisionStage=-1;this.context={hit:false,force:Array.from({length:8},()=>[0,0]),rejected:Array.from({length:8},()=>[0,0])};this.gpu?.reset();return this.description();}
  description(){return{...this.meta.description,layout:this.layout,colliders:this.walls,state:this.state,snapshot:this.snapshot()};}
  snapshot(){return{tick:this.tick,state:this.state,stage:this.stage,goal:this.layout.goals[Math.min(3,this.stage)],done:this.done,success:this.success,contacts:this.contacts};}
- async step(){if(this.done)return null;const obs=observe(this.state,this.layout,this.stage,this.context,this.meta),neural=await this.gpu.step(obs),mean=twistToWrench(neural.twist,obs,this.meta),gbp=coordinate(mean,neural.precision,obs,this.meta,this.stats);this.stats=gbp.stats;
+ async step(){if(this.done)return null;const obs=observe(this.state,this.layout,this.stage,this.context,this.meta);
+  if(!this.neural||this.tick-this.decisionTick>=this.decisionInterval||this.stage!==this.decisionStage||this.context.hit){this.neural=await this.gpu.step(obs);this.decisionTick=this.tick;this.decisionStage=this.stage;this.inferences++;}
+  const neural=this.neural,mean=twistToWrench(neural.twist,obs,this.meta),gbp=coordinate(mean,neural.precision,obs,this.meta,this.stats);this.stats=gbp.stats;
   const trans=transition(this.state,gbp.forces,this.walls,this.meta);this.state=trans.state;this.context=trans.context;this.tick++;this.contacts+=+trans.hit;
   if(clearance(this.state,this.walls,this.meta)<=0)throw Error('Collision authority rejected an accepted state');
   const goal=this.layout.goals[this.stage],q=this.state,atGoal=Math.hypot(q[0]-goal[0],q[1]-goal[1])<=.03&&Math.abs(wrap(q[2]-goal[2]))<=.05&&Math.hypot(q[3],q[4])<=.05&&Math.abs(q[5])<=.08;

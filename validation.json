@@ -1,12 +1,17 @@
 {
-  "date": "2026-09-17T15:22:55.550Z",
+  "date": "2026-09-17T16:06:36.112Z",
+  "kernel": "tile16",
+  "decisionInterval": 1,
   "checkpoint": "d6e98e76ba8f8d45406cd40934a7fa6f9049565a137cb9df35a4b44925f717c3",
   "sourceHashEncoding": "SHA-256 of UTF-8 source with LF newlines",
   "sourceHashes": {
-    "gpu-model.mjs": "74d54579a63206a7446f1baa943a1f3b226d0e2d63a13dbb2636191aad03b5a4",
-    "engine.mjs": "10e762619a8a202553c9aabf1a6054a92e9b854016172a07adc894b8f4c6da14",
-    "graph-loader.mjs": "cfaa216e41452ef007ce7e72e6d7e4d0f666cd9bcf892d810c11734ba7b8b7f0",
+    "gpu-model.mjs": "e2b2a2486592bd1a4cbc6175c39f7dfd9bf126fa05f33a0f48f0b516b7cd9743",
+    "gpu-device.mjs": "3cb5c93b4907d547d92364f115c412a56acf6f286819d3e0f03e18ea4aa72aec",
+    "engine.mjs": "62cf529302e38a7dad408682ada5607f48519ece5b86a5cd6e2dab26d431e165",
+    "graph-loader.mjs": "27cdfa81b23efaeed4ad3a935b36d6280de0f2183dcbeb2178eae4f66570831f",
     "race.js": "c89916e3b5ffa73790e776b706d0f46e752174b5104fd27d54b51a2da8df3b37",
+    "race-clock.mjs": "1599b49596c678b2cf7ebfae3c40ac497b8f74e5f996401b197dd557c856d23a",
+    "game.mjs": "d8d9c724b858c12c1ea0029b028bd608948c61e7ee7c4125737e9c75f3ecac23",
     "contracts.js": "4fdfc09846d08c138322b79705522a5c9f4a3197a1e116d926aeed3ffd9db88c"
   },
   "graph": {
@@ -17,55 +22,33 @@
   },
   "nativeDawn": {
     "runtime": "webgpu 0.6.1 / D3D12 / RTX 4080 Laptop",
+    "meanControlMilliseconds": 5.520046291662497,
     "sealedPythonLayouts": {
       "successes": 20,
       "episodes": 20,
-      "minimumAcceptedSATClearance": 0.000019550323486328125,
+      "minimumAcceptedSATClearance": 0.00005555152893066406,
       "acceptedPenetrations": 0,
       "episodesDetail": [
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 769,
           "seed": 92000,
-          "ticks": 785,
-          "success": true,
-          "stage": 4,
-          "contacts": 5,
-          "minClearance": 0.00002518296241760254,
-          "maxAngle": 1.167124629020691,
-          "seconds": 12.285420400000001,
-          "state": [
-            8.248680114746094,
-            0.17367620766162872,
-            -0.012816176749765873,
-            0.013078995980322361,
-            0.01473735086619854,
-            0.011033081449568272
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92001,
           "ticks": 769,
           "success": true,
           "stage": 4,
-          "contacts": 2,
-          "minClearance": 0.0038079023361206055,
-          "maxAngle": 1.1265519857406616,
-          "seconds": 12.263367699999998,
+          "contacts": 6,
+          "minClearance": 0.00010216236114501953,
+          "maxAngle": 1.1530296802520752,
+          "seconds": 4.210096599999999,
           "state": [
-            8.244543075561523,
-            -0.11680695414543152,
-            -0.0013023687060922384,
-            0.00864937249571085,
-            0.003129169112071395,
-            0.0026486264541745186
+            8.240039825439453,
+            0.13988518714904785,
+            -0.0073049720376729965,
+            0.008090694434940815,
+            0.010109065100550652,
+            0.013753680512309074
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -77,21 +60,53 @@
         },
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 775,
+          "seed": 92001,
+          "ticks": 775,
+          "success": true,
+          "stage": 4,
+          "contacts": 2,
+          "minClearance": 0.00044155120849609375,
+          "maxAngle": 1.1170932054519653,
+          "seconds": 4.266576200000001,
+          "state": [
+            8.244945526123047,
+            -0.11623339354991913,
+            -0.0020543064456433058,
+            0.005484776571393013,
+            0.002293909201398492,
+            -0.0012622115900740027
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 773,
           "seed": 92002,
           "ticks": 773,
           "success": true,
           "stage": 4,
           "contacts": 0,
-          "minClearance": 0.0027314424514770508,
-          "maxAngle": 1.1540310382843018,
-          "seconds": 12.455996200000001,
+          "minClearance": 0.0008405447006225586,
+          "maxAngle": 1.1523338556289673,
+          "seconds": 4.169070699999998,
           "state": [
-            8.247380256652832,
-            -0.09085923433303833,
-            -0.005027840845286846,
-            0.004714954644441605,
-            0.0002815780753735453,
-            0.0020807054825127125
+            8.247605323791504,
+            -0.09395673871040344,
+            -0.007178639527410269,
+            0.006430269684642553,
+            0.0009132223785854876,
+            0.002576247090473771
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -103,21 +118,53 @@
         },
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 758,
           "seed": 92003,
+          "ticks": 758,
+          "success": true,
+          "stage": 4,
+          "contacts": 4,
+          "minClearance": 0.00006330013275146484,
+          "maxAngle": 1.1743348836898804,
+          "seconds": 4.125562299999998,
+          "state": [
+            8.24626350402832,
+            0.15689538419246674,
+            -0.011271264404058456,
+            0.010206682607531548,
+            0.03790006786584854,
+            -0.006521805189549923
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 766,
+          "seed": 92004,
           "ticks": 766,
           "success": true,
           "stage": 4,
-          "contacts": 4,
-          "minClearance": 0.0005178451538085938,
-          "maxAngle": 1.1501456499099731,
-          "seconds": 12.4854254,
+          "contacts": 6,
+          "minClearance": 0.00015157461166381836,
+          "maxAngle": 1.1775543689727783,
+          "seconds": 4.1899077,
           "state": [
-            8.249226570129395,
-            0.16910451650619507,
-            -0.0015111571410670877,
-            0.007062928285449743,
-            0.0017872320022433996,
-            0.0008769556297920644
+            8.241037368774414,
+            0.17140059173107147,
+            -0.004956607241183519,
+            0.010586842894554138,
+            0.047234758734703064,
+            -0.005947011057287455
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -129,47 +176,24 @@
         },
         {
           "type": "rollout",
-          "seed": 92004,
-          "ticks": 768,
-          "success": true,
-          "stage": 4,
-          "contacts": 5,
-          "minClearance": 0.00006335973739624023,
-          "maxAngle": 1.178270697593689,
-          "seconds": 12.471689699999995,
-          "state": [
-            8.2391939163208,
-            0.16966865956783295,
-            0.0008941258420236409,
-            0.008527006022632122,
-            0.007245225831866264,
-            0.014333471655845642
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 772,
           "seed": 92005,
-          "ticks": 770,
+          "ticks": 772,
           "success": true,
           "stage": 4,
           "contacts": 5,
-          "minClearance": 0.00017660856246948242,
-          "maxAngle": 1.167220115661621,
-          "seconds": 12.150231999999988,
+          "minClearance": 0.00007045269012451172,
+          "maxAngle": 1.1671433448791504,
+          "seconds": 4.299075099999998,
           "state": [
-            8.247109413146973,
-            0.11883790045976639,
-            -0.0013311001239344478,
-            0.015123868361115456,
-            0.004238591529428959,
-            0.004080901388078928
+            8.243988990783691,
+            0.10959958285093307,
+            -0.007279764860868454,
+            0.007127599325031042,
+            0.00947105884552002,
+            0.008990872651338577
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -181,21 +205,24 @@
         },
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 762,
           "seed": 92006,
-          "ticks": 767,
+          "ticks": 762,
           "success": true,
           "stage": 4,
           "contacts": 5,
-          "minClearance": 0.00007343292236328125,
-          "maxAngle": 1.1688522100448608,
-          "seconds": 12.239025999999997,
+          "minClearance": 0.0005067586898803711,
+          "maxAngle": 1.1785863637924194,
+          "seconds": 4.1570334,
           "state": [
-            8.247392654418945,
-            0.10799095779657364,
-            -0.005244435276836157,
-            0.009817399084568024,
-            0.02284618839621544,
-            0.0005593916866928339
+            8.238943099975586,
+            0.11122690886259079,
+            -0.00828629732131958,
+            0.008926144801080227,
+            0.04553370550274849,
+            -0.00623491033911705
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -207,21 +234,24 @@
         },
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 770,
           "seed": 92007,
-          "ticks": 769,
+          "ticks": 770,
           "success": true,
           "stage": 4,
           "contacts": 4,
-          "minClearance": 0.000060051679611206055,
-          "maxAngle": 1.200679898262024,
-          "seconds": 12.749700800000006,
+          "minClearance": 0.0018074512481689453,
+          "maxAngle": 1.1748734712600708,
+          "seconds": 4.210854399999996,
           "state": [
-            8.242515563964844,
-            0.16452793776988983,
-            -0.006143438164144754,
-            0.01723589189350605,
-            0.02359473891556263,
-            0.002396779367700219
+            8.242114067077637,
+            0.15780891478061676,
+            -0.004305372945964336,
+            0.016841335222125053,
+            0.027937501668930054,
+            0.00055699422955513
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -233,99 +263,24 @@
         },
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 776,
           "seed": 92008,
-          "ticks": 775,
-          "success": true,
-          "stage": 4,
-          "contacts": 2,
-          "minClearance": 0.0011882781982421875,
-          "maxAngle": 1.135305404663086,
-          "seconds": 12.637190199999997,
-          "state": [
-            8.244987487792969,
-            -0.12564785778522491,
-            0.001218601013533771,
-            0.0030791745521128178,
-            0.0005201166495680809,
-            0.004369713366031647
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92009,
-          "ticks": 769,
-          "success": true,
-          "stage": 4,
-          "contacts": 0,
-          "minClearance": 0.004645586013793945,
-          "maxAngle": 1.1018245220184326,
-          "seconds": 12.713440900000002,
-          "state": [
-            8.24425983428955,
-            -0.1263253092765808,
-            -0.0004867380775976926,
-            0.0011295736767351627,
-            0.00213452335447073,
-            -0.0004270050849299878
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92010,
-          "ticks": 770,
-          "success": true,
-          "stage": 4,
-          "contacts": 2,
-          "minClearance": 0.0018191635608673096,
-          "maxAngle": 1.132561206817627,
-          "seconds": 12.368204499999992,
-          "state": [
-            8.241738319396973,
-            -0.11701912432909012,
-            -0.005824053194373846,
-            0.0016069139819592237,
-            0.005188158713281155,
-            0.006991093512624502
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92011,
           "ticks": 776,
           "success": true,
           "stage": 4,
           "contacts": 2,
-          "minClearance": 0.002556324005126953,
-          "maxAngle": 1.1267261505126953,
-          "seconds": 12.665230299999996,
+          "minClearance": 0.00014337897300720215,
+          "maxAngle": 1.1445767879486084,
+          "seconds": 4.2661296,
           "state": [
-            8.24394702911377,
-            -0.12161926925182343,
-            0.002869965974241495,
-            0.0001381465990561992,
-            0.00482947425916791,
-            -0.003965590614825487
+            8.248360633850098,
+            -0.11441139131784439,
+            -0.005494425073266029,
+            0.03082454763352871,
+            0.0097022894769907,
+            0.01940765790641308
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -337,21 +292,24 @@
         },
         {
           "type": "rollout",
-          "seed": 92012,
-          "ticks": 757,
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 767,
+          "seed": 92009,
+          "ticks": 767,
           "success": true,
           "stage": 4,
           "contacts": 0,
-          "minClearance": 0.0013741850852966309,
-          "maxAngle": 1.0991125106811523,
-          "seconds": 12.421388000000006,
+          "minClearance": 0.004641503095626831,
+          "maxAngle": 1.1068772077560425,
+          "seconds": 4.227607899999995,
           "state": [
-            8.238409996032715,
-            0.11549708247184753,
-            -0.0033433628268539906,
-            0.006239158101379871,
-            0.004920183215290308,
-            0.015890181064605713
+            8.24235725402832,
+            -0.13589994609355927,
+            -0.004869398660957813,
+            0.007937321439385414,
+            0.009291484020650387,
+            -0.004531392827630043
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -363,177 +321,285 @@
         },
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 774,
+          "seed": 92010,
+          "ticks": 774,
+          "success": true,
+          "stage": 4,
+          "contacts": 3,
+          "minClearance": 0.0014357566833496094,
+          "maxAngle": 1.123245120048523,
+          "seconds": 4.237271300000001,
+          "state": [
+            8.245898246765137,
+            -0.10815679281949997,
+            -0.0027121345046907663,
+            0.009219366125762463,
+            -0.00019594610785134137,
+            0.002229242119938135
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 778,
+          "seed": 92011,
+          "ticks": 778,
+          "success": true,
+          "stage": 4,
+          "contacts": 2,
+          "minClearance": 0.00018596649169921875,
+          "maxAngle": 1.1121159791946411,
+          "seconds": 4.321047200000001,
+          "state": [
+            8.24438190460205,
+            -0.13684827089309692,
+            -0.004595847334712744,
+            0.009695399552583694,
+            0.013190225698053837,
+            0.010411819443106651
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 763,
+          "seed": 92012,
+          "ticks": 763,
+          "success": true,
+          "stage": 4,
+          "contacts": 2,
+          "minClearance": 0.0013470649719238281,
+          "maxAngle": 1.1048709154129028,
+          "seconds": 4.266910499999998,
+          "state": [
+            8.240970611572266,
+            0.10288812220096588,
+            -0.008833752945065498,
+            0.009650240652263165,
+            0.03795371577143669,
+            0.005482812877744436
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 761,
           "seed": 92013,
+          "ticks": 761,
+          "success": true,
+          "stage": 4,
+          "contacts": 2,
+          "minClearance": 0.00027751922607421875,
+          "maxAngle": 1.1536201238632202,
+          "seconds": 4.2257376,
+          "state": [
+            8.2405424118042,
+            0.11656402796506882,
+            -0.0070225209929049015,
+            0.01259545423090458,
+            0.02496151067316532,
+            0.007878459990024567
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 777,
+          "seed": 92014,
+          "ticks": 777,
+          "success": true,
+          "stage": 4,
+          "contacts": 3,
+          "minClearance": 0.00005555152893066406,
+          "maxAngle": 1.1624184846878052,
+          "seconds": 4.250713300000003,
+          "state": [
+            8.24303150177002,
+            -0.10593754053115845,
+            -0.011830383911728859,
+            0.00608448451384902,
+            0.007119093090295792,
+            0.001347299199551344
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 780,
+          "seed": 92015,
+          "ticks": 780,
+          "success": true,
+          "stage": 4,
+          "contacts": 0,
+          "minClearance": 0.0021677017211914062,
+          "maxAngle": 1.1228333711624146,
+          "seconds": 4.346783299999996,
+          "state": [
+            8.242155075073242,
+            -0.15582911670207977,
+            -0.005393411032855511,
+            0.00048147235065698624,
+            0.007825206965208054,
+            -0.002435402711853385
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 764,
+          "seed": 92016,
+          "ticks": 764,
+          "success": true,
+          "stage": 4,
+          "contacts": 0,
+          "minClearance": 0.003161117434501648,
+          "maxAngle": 1.2281097173690796,
+          "seconds": 4.228778999999995,
+          "state": [
+            8.243880271911621,
+            0.10822492092847824,
+            -0.006048364564776421,
+            0.005677604116499424,
+            0.014918690547347069,
+            -0.004278132226318121
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 768,
+          "seed": 92017,
+          "ticks": 768,
+          "success": true,
+          "stage": 4,
+          "contacts": 4,
+          "minClearance": 0.00020194053649902344,
+          "maxAngle": 1.1445276737213135,
+          "seconds": 4.283819400000008,
+          "state": [
+            8.246532440185547,
+            0.1827559620141983,
+            -0.006250509060919285,
+            -0.0018150167306885123,
+            0.009036230854690075,
+            -0.00038292896351777017
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 761,
+          "seed": 92018,
+          "ticks": 761,
+          "success": true,
+          "stage": 4,
+          "contacts": 5,
+          "minClearance": 0.0006324052810668945,
+          "maxAngle": 1.1743333339691162,
+          "seconds": 4.2610708000000015,
+          "state": [
+            8.24661636352539,
+            0.1672167032957077,
+            -0.0036894234362989664,
+            0.016577793285250664,
+            0.033000264316797256,
+            0.002432009670883417
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 764,
+          "seed": 92019,
           "ticks": 764,
           "success": true,
           "stage": 4,
           "contacts": 4,
-          "minClearance": 0.0007778406143188477,
-          "maxAngle": 1.1613527536392212,
-          "seconds": 12.416513199999986,
+          "minClearance": 0.00013190507888793945,
+          "maxAngle": 1.1274465322494507,
+          "seconds": 4.212299400000004,
           "state": [
-            8.238693237304688,
-            0.11704327911138535,
-            -0.006084694527089596,
-            0.008699142374098301,
-            0.012553039006888866,
-            0.006750010419636965
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92014,
-          "ticks": 771,
-          "success": true,
-          "stage": 4,
-          "contacts": 2,
-          "minClearance": 0.0001995563507080078,
-          "maxAngle": 1.187002182006836,
-          "seconds": 13.205136800000007,
-          "state": [
-            8.241229057312012,
-            -0.11535100638866425,
-            -0.0016452071722596884,
-            0.005681218579411507,
-            0.0010921499924734235,
-            0.00924529880285263
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92015,
-          "ticks": 768,
-          "success": true,
-          "stage": 4,
-          "contacts": 0,
-          "minClearance": 0.002515554428100586,
-          "maxAngle": 1.1083431243896484,
-          "seconds": 13.121806099999986,
-          "state": [
-            8.243083953857422,
-            -0.15184231102466583,
-            -0.005001213867217302,
-            0.002214797306805849,
-            0.004507212433964014,
-            0.006561720743775368
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92016,
-          "ticks": 765,
-          "success": true,
-          "stage": 4,
-          "contacts": 0,
-          "minClearance": 0.0031648725271224976,
-          "maxAngle": 1.2281208038330078,
-          "seconds": 13.090322099999991,
-          "state": [
-            8.245701789855957,
-            0.11084508150815964,
-            -0.0028939705807715654,
-            0.01140050869435072,
-            0.009770418517291546,
-            -0.0006819390691816807
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92017,
-          "ticks": 774,
-          "success": true,
-          "stage": 4,
-          "contacts": 5,
-          "minClearance": 0.00018966197967529297,
-          "maxAngle": 1.1526068449020386,
-          "seconds": 13.153282600000006,
-          "state": [
-            8.247360229492188,
-            0.18063686788082123,
-            -0.00246299896389246,
-            0.03840027004480362,
-            0.025204727426171303,
-            0.019006257876753807
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92018,
-          "ticks": 787,
-          "success": true,
-          "stage": 4,
-          "contacts": 5,
-          "minClearance": 0.000019550323486328125,
-          "maxAngle": 1.1427890062332153,
-          "seconds": 13.367741700000014,
-          "state": [
-            8.249004364013672,
-            0.19374486804008484,
-            -0.013205919414758682,
-            0.01157858781516552,
-            0.01219280157238245,
-            0.01165282167494297
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 92019,
-          "ticks": 763,
-          "success": true,
-          "stage": 4,
-          "contacts": 4,
-          "minClearance": 0.00203096866607666,
-          "maxAngle": 1.1274040937423706,
-          "seconds": 13.10894849999997,
-          "state": [
-            8.244918823242188,
-            0.12945906817913055,
-            -0.00030538393184542656,
-            0.03510744124650955,
-            0.022148309275507927,
-            0.029713410884141922
+            8.241536140441895,
+            0.1410996913909912,
+            -0.007056501694023609,
+            0.023459261283278465,
+            0.009857544675469398,
+            -0.00009905242768581957
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -548,26 +614,29 @@
     "freshPortableLayouts": {
       "successes": 5,
       "episodes": 5,
-      "minimumAcceptedSATClearance": 0.00027638673782348633,
+      "minimumAcceptedSATClearance": 0.00018286705017089844,
       "acceptedPenetrations": 0,
       "episodesDetail": [
         {
           "type": "rollout",
-          "seed": 93000,
-          "ticks": 761,
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 771,
+          "seed": 1023,
+          "ticks": 771,
           "success": true,
           "stage": 4,
           "contacts": 2,
-          "minClearance": 0.0016815662384033203,
-          "maxAngle": 1.1767455339431763,
-          "seconds": 13.193041299999983,
+          "minClearance": 0.0015983283519744873,
+          "maxAngle": 1.1587527990341187,
+          "seconds": 4.301146599999993,
           "state": [
-            8.246223449707031,
-            0.17403346300125122,
-            -0.003318585455417633,
-            0.004387044347822666,
-            0.004869644995778799,
-            0.002892131917178631
+            8.245796203613281,
+            -0.14869846403598785,
+            -0.00661963876336813,
+            0.0011928534368053079,
+            0.002639123937115073,
+            -0.00023171083012130111
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -579,21 +648,24 @@
         },
         {
           "type": "rollout",
-          "seed": 93001,
-          "ticks": 764,
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 759,
+          "seed": 99172,
+          "ticks": 759,
           "success": true,
           "stage": 4,
-          "contacts": 4,
-          "minClearance": 0.00188523530960083,
-          "maxAngle": 1.1862342357635498,
-          "seconds": 13.293214199999987,
+          "contacts": 2,
+          "minClearance": 0.0010232925415039062,
+          "maxAngle": 1.1494472026824951,
+          "seconds": 4.207236900000003,
           "state": [
-            8.236480712890625,
-            0.1297992616891861,
-            -0.0016402553301304579,
-            0.003564633196219802,
-            0.008991061709821224,
-            0.01273768674582243
+            8.240226745605469,
+            0.1435924768447876,
+            -0.00531131261959672,
+            0.014716602861881256,
+            0.01624288223683834,
+            0.009636910632252693
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -605,47 +677,24 @@
         },
         {
           "type": "rollout",
-          "seed": 93002,
-          "ticks": 768,
-          "success": true,
-          "stage": 4,
-          "contacts": 4,
-          "minClearance": 0.0014431476593017578,
-          "maxAngle": 1.1809639930725098,
-          "seconds": 13.278591200000024,
-          "state": [
-            8.240897178649902,
-            0.156321182847023,
-            -0.00816322211176157,
-            0.013363427482545376,
-            0.023407259956002235,
-            0.004095158539712429
-          ],
-          "adapter": {
-            "vendor": "nvidia",
-            "architecture": "lovelace",
-            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-            "description": "D3D12 driver version 32.0.15.8142"
-          },
-          "runtime": "Dawn 0.6.1 native D3D12"
-        },
-        {
-          "type": "rollout",
-          "seed": 93003,
-          "ticks": 774,
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 765,
+          "seed": 654321,
+          "ticks": 765,
           "success": true,
           "stage": 4,
           "contacts": 5,
-          "minClearance": 0.00027638673782348633,
-          "maxAngle": 1.188415765762329,
-          "seconds": 13.55354820000002,
+          "minClearance": 0.0003705024719238281,
+          "maxAngle": 1.1745624542236328,
+          "seconds": 4.222707200000005,
           "state": [
-            8.236522674560547,
-            0.1354258954524994,
-            -0.0036824282724410295,
-            0.003941133618354797,
-            0.01069303322583437,
-            0.010080253705382347
+            8.244355201721191,
+            0.09222691506147385,
+            -0.010503667406737804,
+            0.002980110701173544,
+            0.036830026656389236,
+            -0.007053554058074951
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -657,21 +706,53 @@
         },
         {
           "type": "rollout",
-          "seed": 93004,
-          "ticks": 760,
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 768,
+          "seed": 781031,
+          "ticks": 768,
           "success": true,
           "stage": 4,
-          "contacts": 0,
-          "minClearance": 0.00038361549377441406,
-          "maxAngle": 1.1405224800109863,
-          "seconds": 13.289433700000052,
+          "contacts": 2,
+          "minClearance": 0.00018286705017089844,
+          "maxAngle": 1.131879210472107,
+          "seconds": 4.245561600000001,
           "state": [
-            8.23528003692627,
-            0.1120363250374794,
-            -0.00527389720082283,
-            0.004318056162446737,
-            0.011751916259527206,
-            0.01574614644050598
+            8.240735054016113,
+            -0.10682166367769241,
+            -0.002276079962030053,
+            0.0023819096386432648,
+            0.005292847286909819,
+            0.004485963378101587
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 774,
+          "seed": 314159,
+          "ticks": 774,
+          "success": true,
+          "stage": 4,
+          "contacts": 2,
+          "minClearance": 0.0008069872856140137,
+          "maxAngle": 1.1564691066741943,
+          "seconds": 4.321572500000009,
+          "state": [
+            8.24409008026123,
+            -0.16136206686496735,
+            -0.008528120815753937,
+            0.016569528728723526,
+            0.00812186673283577,
+            -0.0032205036841332912
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -686,26 +767,29 @@
     "default": {
       "successes": 1,
       "episodes": 1,
-      "minimumAcceptedSATClearance": 0.00022834539413452148,
+      "minimumAcceptedSATClearance": 0.0006608664989471436,
       "acceptedPenetrations": 0,
       "episodesDetail": [
         {
           "type": "rollout",
+          "kernel": "tile16",
+          "decisionInterval": 1,
+          "inferences": 767,
           "seed": 91000,
-          "ticks": 775,
+          "ticks": 767,
           "success": true,
           "stage": 4,
           "contacts": 2,
-          "minClearance": 0.00022834539413452148,
-          "maxAngle": 1.1272855997085571,
-          "seconds": 12.2743792,
+          "minClearance": 0.0006608664989471436,
+          "maxAngle": 1.1513466835021973,
+          "seconds": 4.2469945000000004,
           "state": [
-            8.24449348449707,
-            -0.09629691392183304,
-            0.0009451576042920351,
-            0.010761437006294727,
-            0.002875938778743148,
-            0.004782533273100853
+            8.250917434692383,
+            -0.09085128456354141,
+            -0.0026122562121599913,
+            0.007969701662659645,
+            0.005962060298770666,
+            0.007780917454510927
           ],
           "adapter": {
             "vendor": "nvidia",
@@ -721,16 +805,16 @@
       "type": "parity",
       "ticks": 80,
       "feature": 1.7881393432617188e-7,
-      "mean": 0.0013980567455291748,
+      "mean": 0.0013981461524963379,
       "precision": 0.00003719329833984375,
       "timing": {
-        "wall": 13.72799999999961,
+        "wall": 4.276600000000144,
         "passes": [
           0,
-          3.080192,
-          3.080192,
-          3.145728,
-          3.080192,
+          0.917504,
+          0.851968,
+          0.917504,
+          0.851968,
           0,
           0.065536,
           0,
@@ -742,17 +826,20 @@
           0
         ]
       },
+      "kernel": "tile16",
+      "decisionInterval": 1,
       "adapter": {
         "vendor": "nvidia",
         "architecture": "lovelace",
         "device": "nvidia-geforce-rtx-4080-laptop-gpu",
-        "description": "D3D12 driver version 32.0.15.8142"
+        "description": "D3D12 driver version 32.0.15.8142",
+        "fallback": false
       },
       "runtime": "Dawn 0.6.1 native D3D12"
     }
   },
   "browser": {
-    "runtime": "Chrome / Intel gen-12lp",
+    "runtime": "Codex in-app Chromium / Intel gen-12lp / hardware WebGPU",
     "completedRollouts": [
       {
         "type": "rollout",
@@ -761,88 +848,365 @@
         "success": true,
         "stage": 4,
         "contacts": 2,
-        "minClearance": 0.0013421177864074707,
-        "maxAngle": 1.1471083164215088,
-        "seconds": 328.642,
+        "minClearance": 0.0006154775619506836,
+        "maxAngle": 1.1620683670043945,
+        "seconds": 89.69920000001788,
         "state": [
-          8.244166374206543,
-          -0.09224990010261536,
-          0.004537296015769243,
-          -0.0021023890003561974,
-          0.0025869596283882856,
-          0.001921076443977654
+          8.243931770324707,
+          -0.10495536029338837,
+          -0.0021524180192500353,
+          0.017540382221341133,
+          0.01302947849035263,
+          -0.004246891941875219
         ],
         "timing": {
-          "wall": 409.69999998807907,
+          "wall": 127,
           "passes": [
             0.196608,
-            90.701824,
-            97.779712,
-            100.073472,
-            94.830592,
+            28.442624,
+            32.702464,
+            31.588352,
+            27.459584,
             0,
-            0.65536,
-            0.32768,
-            0,
+            1.507328,
+            0.262144,
+            0.065536,
             0.393216,
-            0.589824,
-            0,
-            20.905984
+            0.524288,
+            0.720896,
+            0.32768,
+            0.131072
           ]
-        }
+        },
+        "kernel": "tile16",
+        "adapter": {
+          "vendor": "intel",
+          "architecture": "gen-12lp",
+          "device": "",
+          "description": "",
+          "fallback": false
+        },
+        "runtime": "actual browser WebGPU",
+        "decisionInterval": 1
       }
     ],
-    "interruptedRollouts": [
-      {
-        "type": "rollout",
-        "seed": 91000,
-        "ticks": 85,
-        "success": false,
-        "stage": 0,
-        "contacts": 0,
-        "minClearance": 0.0029850006103515625,
-        "maxAngle": 1.0025055408477783,
-        "seconds": 49.356,
-        "state": [
-          -0.0326717384159565,
-          -0.014371070079505444,
-          0.9779202938079834,
-          0.13525435328483582,
-          -0.0721745565533638,
-          0.01244752574712038
-        ],
-        "reason": "Explicitly stopped for kernel profiling, not a terminal failure"
-      }
-    ],
+    "interruptedRollouts": [],
     "parity": {
       "type": "parity",
       "ticks": 80,
-      "seconds": 43.52659999999404,
+      "seconds": 11.208800000011921,
       "features": 2.086162567138672e-7,
-      "means": 0.0013983547687530518,
+      "means": 0.0013973116874694824,
       "precisions": 0.00003707408905029297,
       "timing": {
-        "wall": 561.0999999940395,
+        "wall": 131.5,
         "passes": [
           0.196608,
-          133.300224,
-          132.907008,
-          137.166848,
-          131.792896,
+          31.78496,
+          31.391744,
+          31.719424,
+          31.195136,
           0,
           0.65536,
           0.32768,
+          0,
+          0.393216,
+          0.524288,
           0.065536,
           0.32768,
-          0.589824,
-          0,
-          22.60992
+          0.131072
         ]
-      }
+      },
+      "kernel": "tile16",
+      "adapter": {
+        "vendor": "intel",
+        "architecture": "gen-12lp",
+        "device": "",
+        "description": "",
+        "fallback": false
+      },
+      "runtime": "actual browser WebGPU",
+      "decisionInterval": 1
     }
   },
+  "pacing": {
+    "speed": 3.3,
+    "physicsDt": 0.08,
+    "tickBudgetMilliseconds": 24.242424242424242,
+    "streamingAdmissionHeadroom": 1.5384615384615383,
+    "lookaheadTicks": 128,
+    "slowDeviceFallback": "Explicit local full-course precomputation before full-speed play; NOT real-time inference.",
+    "noWebGPUFallback": "Full-speed human practice only; no neural CPU surrogate.",
+    "browserUI": {
+      "runtime": "Actual Codex in-app Chromium game UI, Intel gen-12lp hardware WebGPU",
+      "seed": 91000,
+      "mode": "local full-course preparation, then fixed-speed interactive race",
+      "winner": "flies",
+      "wallSeconds": 18.7,
+      "simulationSeconds": 61.68,
+      "measuredSimulationRate": 3.3,
+      "source": "Game's GPU details DOM after an uninterrupted Run-to-FLIES-WIN UI test",
+      "scope": "Clock and prepared-mode UI validation; not evidence of real-time Intel inference"
+    }
+  },
+  "rejectedExperiments": [
+    {
+      "decisionInterval": 2,
+      "reason": "Holding neural decisions damages closed-loop success; not enabled in the public game.",
+      "successes": 0,
+      "episodes": 3,
+      "minimumAcceptedSATClearance": 0.0007143169641494751,
+      "acceptedPenetrations": 0,
+      "episodesDetail": [
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 2,
+          "inferences": 341,
+          "seed": 91000,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 299,
+          "minClearance": 0.0030998699367046356,
+          "maxAngle": 1.2434403896331787,
+          "seconds": 8.0124435,
+          "state": [
+            -0.053674452006816864,
+            0.09458580613136292,
+            1.1988331079483032,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 2,
+          "inferences": 343,
+          "seed": 92000,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 302,
+          "minClearance": 0.007373776286840439,
+          "maxAngle": 1.207369089126587,
+          "seconds": 7.8804823,
+          "state": [
+            -0.0689476951956749,
+            -0.13605894148349762,
+            1.1770762205123901,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 2,
+          "inferences": 342,
+          "seed": 92001,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 300,
+          "minClearance": 0.0007143169641494751,
+          "maxAngle": 1.2348830699920654,
+          "seconds": 7.633980299999999,
+          "state": [
+            -0.05390572175383568,
+            0.09177393466234207,
+            1.19365656375885,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        }
+      ]
+    },
+    {
+      "decisionInterval": 4,
+      "reason": "Holding neural decisions damages closed-loop success; not enabled in the public game.",
+      "successes": 0,
+      "episodes": 5,
+      "minimumAcceptedSATClearance": 0.00014580413699150085,
+      "acceptedPenetrations": 0,
+      "episodesDetail": [
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 4,
+          "inferences": 319,
+          "seed": 91000,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 298,
+          "minClearance": 0.005442645400762558,
+          "maxAngle": 1.1466526985168457,
+          "seconds": 7.51424,
+          "state": [
+            -0.09238282591104507,
+            0.22248321771621704,
+            1.1268784999847412,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 4,
+          "inferences": 323,
+          "seed": 92000,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 303,
+          "minClearance": 0.00014580413699150085,
+          "maxAngle": 1.1251537799835205,
+          "seconds": 7.4990853999999985,
+          "state": [
+            -0.09921441227197647,
+            0.00511689530685544,
+            1.1028375625610352,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 4,
+          "inferences": 321,
+          "seed": 92001,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 300,
+          "minClearance": 0.0032293833792209625,
+          "maxAngle": 1.1421581506729126,
+          "seconds": 7.553816900000002,
+          "state": [
+            -0.09133994579315186,
+            0.23140928149223328,
+            1.1245601177215576,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 4,
+          "inferences": 319,
+          "seed": 92002,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 298,
+          "minClearance": 0.0012256540358066559,
+          "maxAngle": 1.1346321105957031,
+          "seconds": 7.403975099999999,
+          "state": [
+            -0.0937797874212265,
+            0.2370251566171646,
+            1.1157552003860474,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        },
+        {
+          "type": "rollout",
+          "kernel": "sell",
+          "decisionInterval": 4,
+          "inferences": 326,
+          "seed": 92003,
+          "ticks": 384,
+          "success": false,
+          "stage": 0,
+          "contacts": 307,
+          "minClearance": 0.00097602978348732,
+          "maxAngle": 1.112139105796814,
+          "seconds": 7.651504400000001,
+          "state": [
+            -0.09535437822341919,
+            -0.015588353388011456,
+            1.112139105796814,
+            0,
+            0,
+            0
+          ],
+          "adapter": {
+            "vendor": "nvidia",
+            "architecture": "lovelace",
+            "device": "nvidia-geforce-rtx-4080-laptop-gpu",
+            "description": "D3D12 driver version 32.0.15.8142"
+          },
+          "runtime": "Dawn 0.6.1 native D3D12"
+        }
+      ]
+    }
+  ],
   "limitations": [
     "Native Dawn is not browser end-to-end testing. Browser rollout evidence is listed separately.",
+    "The tested browser exposes only Intel despite high-performance requests. Browser NVIDIA real-time operation has not been verified on this machine.",
+    "Intel browser inference is faster than the initial kernel but still below real-time race throughput; preparation mode is used.",
     "Floating-point reductions vary across GPUs; rollout paths are not bitwise equal.",
     "A finite seed audit is not a guaranteed success rate on all random seeds or hardware.",
     "Collision certificates use conservative floating-point SAT, not formal exact arithmetic."

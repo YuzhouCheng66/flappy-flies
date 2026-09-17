@@ -20,10 +20,20 @@ race resets both players. This is automatic web loading, not zero download.
 
 Use an up-to-date desktop Chrome or Edge with WebGPU and hardware acceleration.
 A discrete GPU is strongly recommended. Some dual-GPU laptops select their
-Intel GPU despite the high-performance request; choosing the browser's
-high-performance GPU in the operating system can help. Slow GPUs slow the
-shared game clock, not the model or physics. Unsupported devices retain human
-practice but cannot race the neural flies. Mobile/touch play is not validated.
+Intel GPU despite the high-performance request. **GPU details** shows the actual
+adapter, inference time, and active mode; the website cannot force the OS to
+expose an NVIDIA device. Choosing the browser's high-performance GPU in the
+operating system may be necessary on such laptops.
+
+The race always runs at the original **3.30× simulation rate**. There is no
+throughput-dependent slow motion. Fast GPUs stream real inference with a
+128-tick lookahead. Slow GPUs compute this seed's full fly run locally first,
+clearly labelled **local precomputation**, then race at full speed. That fallback
+is not real-time inference; practice remains available during preparation.
+An unexpected streaming underrun explicitly pauses and prepares the remainder,
+rather than silently altering the clock. Unsupported/no-WebGPU devices retain
+full-speed human practice, but cannot race the neural flies. No CPU neural
+surrogate is claimed. Mobile/touch play is not validated.
 
 ## What is actually simulated
 
@@ -36,24 +46,35 @@ practice but cannot race the neural flies. Mobile/touch play is not validated.
 - Real message magnitudes drive the glowing packets. The neural panel displays
   sampled actual states at measured soma locations, not an animated fake brain.
 
-The selected V17 checkpoint and all graph edges are preserved. No teacher,
-route lookup, pruning, quantization, or remote inference is used during play.
+The selected V17 checkpoint and all graph edges are preserved. Degree-sorted
+work scheduling, losslessly packed column/count pairs, vectorized eight-fly
+state access, and cooperative 16-way sparse-row reduction accelerate the
+bottleneck. Float32 reduction order differs; numerical and closed-loop tests
+are required. Four neural updates still run on **every** physical control tick.
+No teacher, route lookup, pruning, quantization, or remote inference is used.
 This is a connectome-inspired rate model, not a biological-fidelity fly brain.
 
 ## Validation
 
-Release checks: **20/20** preserved Python courses and **5/5** new portable
-courses succeeded in native Dawn on the RTX 4080 Laptop; a full **1/1** Chrome
-course succeeded on Intel gen-12lp. All had zero accepted penetrations.
-Full neural inference measured approximately **14 ms/tick** on native 4080
-Dawn versus **400 ms/tick** in the tested Intel browser. These are different
-hardware/runtime measurements, not a browser-versus-native speed comparison.
+Optimized-kernel checks: **20/20** preserved Python courses, **5/5** new portable
+courses, and the default course succeeded in native Dawn on the RTX 4080 Laptop,
+with zero accepted penetrations. Complete control/physics averaged roughly
+**5.5 ms/tick** there, versus the **24.24 ms/tick** race budget. The Intel browser
+is substantially slower: its optimized full-course test succeeded **1/1**,
+zero accepted penetrations, at approximately **116 ms/control tick** without
+the game renderer. It uses the explicitly labelled preparation fallback;
+it is not claimed to meet real-time inference. In the actual game UI, after
+local preparation, the four-gate race completed in **18.70 wall seconds** for
+**61.68 simulated seconds**, confirming the original **3.30×** rate.
+These are different hardware and runtimes; see the separate browser evidence.
 
 See [machine-readable evidence](validation.json) for exact seeds, hardware,
 checkpoint/source hashes, parity errors, contact counts, and terminal states.
 Native Dawn tests and actual browser tests are reported separately. GPU
 floating-point differences can change trajectories; this is not bitwise
-cross-device equivalence or a guarantee for every random seed.
+cross-device equivalence or a guarantee for every random seed. Trials holding
+neural decisions for 2 or 4 physics ticks failed and were **not shipped** as a
+runtime mode. Optimizations do not skip decisions to obtain a misleading speedup.
 
 The Python reference layouts are preserved for seed 91000 and 92000–92019.
 Other seeds use documented Mulberry32 sampling over the same Twist ranges;
