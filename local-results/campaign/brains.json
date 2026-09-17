@@ -1,0 +1,1537 @@
+{
+  "schema": "flappy-brain-sidecars-v1",
+  "neuronsPerAgent": 2048,
+  "encoding": "int16-le / 32767",
+  "levels": {
+    "1": {
+      "recordingSha256": "1645218ab14870f7b5b85ff567a055521ba73b05086a4eee6f7e6ff4b6001f69",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 178,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259252734206932,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-001-02.bin.gz",
+          "bytes": 396699,
+          "sha256": "3d1256b3731a8d01ea8aef7bacbd54ed37327eb3cb0e38d468cdc2ec86c3ce03"
+        },
+        {
+          "agent": 3,
+          "file": "brain-001-03.bin.gz",
+          "bytes": 399545,
+          "sha256": "9013d7d009a5837fe3ff53ee2c2f347b6e4ce15583805ed395d27896448d7d73"
+        },
+        {
+          "agent": 4,
+          "file": "brain-001-04.bin.gz",
+          "bytes": 403657,
+          "sha256": "2c0b0786e8d3a1d5632def218a71fe7358caf4d4c9f46f30dbc46af8d082ff29"
+        },
+        {
+          "agent": 5,
+          "file": "brain-001-05.bin.gz",
+          "bytes": 397642,
+          "sha256": "ec7f6eb3e386c5fd86a68f1fd5119154d3c235c686dbeee51bb5de9e9e29c8f1"
+        },
+        {
+          "agent": 6,
+          "file": "brain-001-06.bin.gz",
+          "bytes": 396602,
+          "sha256": "32591f2e545e15e59b48803c69c3af5339a355c61d98e25e1bc4ec7ddcbb3134"
+        },
+        {
+          "agent": 7,
+          "file": "brain-001-07.bin.gz",
+          "bytes": 396347,
+          "sha256": "a63a9444b1050f2f441bfa70c9bbd38982a5ef34edd2fb0450db6ef9588b7c47"
+        },
+        {
+          "agent": 8,
+          "file": "brain-001-08.bin.gz",
+          "bytes": 397671,
+          "sha256": "fb23ba9781c665f6d5133137a351f931b02eeadb0654fbd1bf44b64f720750c4"
+        }
+      ]
+    },
+    "10": {
+      "recordingSha256": "d9d70408f87773b69f4559e2cb609f73881a0d63fba31b4367691d7a82c37798",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 177,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925409849062,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-010-02.bin.gz",
+          "bytes": 398373,
+          "sha256": "f530305689d2e9f91dcbecd45b890b21d9ae1c778f984a9119a9928a3e014cd4"
+        },
+        {
+          "agent": 3,
+          "file": "brain-010-03.bin.gz",
+          "bytes": 397835,
+          "sha256": "5265dad8d95ddbca2cb7c37cf252b565899e09b65b9cabd52958c182b70d19b9"
+        },
+        {
+          "agent": 4,
+          "file": "brain-010-04.bin.gz",
+          "bytes": 402181,
+          "sha256": "df866e99ba87155c6cd0e2546e44f465580bd5af040eeac31cc49d9d74647bd8"
+        },
+        {
+          "agent": 5,
+          "file": "brain-010-05.bin.gz",
+          "bytes": 397485,
+          "sha256": "de5e2bf55b638957c363a8c7337155d91ab44251a3f655ae076e3d4cb4146a2b"
+        },
+        {
+          "agent": 6,
+          "file": "brain-010-06.bin.gz",
+          "bytes": 395853,
+          "sha256": "eba846990f64585043592a192809e700496430d3d6670b10f1b7101513ff31ad"
+        },
+        {
+          "agent": 7,
+          "file": "brain-010-07.bin.gz",
+          "bytes": 397386,
+          "sha256": "c871d9619ac5af5e3633ef66ba4766da3b280c1c6f9e0718ffdca20916778ee3"
+        },
+        {
+          "agent": 8,
+          "file": "brain-010-08.bin.gz",
+          "bytes": 397265,
+          "sha256": "f251557c45d7e699699e7713abae2214fb37d75a71e308ad894ea52832e0fb32"
+        }
+      ]
+    },
+    "21": {
+      "recordingSha256": "7fdbbbc2573f2fd08f4e17f9a15ce093d71254931cbd3d03351bae23146721ae",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 365,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259253245813315,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-021-02.bin.gz",
+          "bytes": 849334,
+          "sha256": "b69617d6fb5f56c2faad9d9491eda1ef012edc012ce494f26524483ede3115b2"
+        },
+        {
+          "agent": 3,
+          "file": "brain-021-03.bin.gz",
+          "bytes": 864751,
+          "sha256": "b95970a07402d0d8cf157176a82002393af9734ee94fef9d14ec6fc7187fc217"
+        },
+        {
+          "agent": 4,
+          "file": "brain-021-04.bin.gz",
+          "bytes": 876340,
+          "sha256": "404ddaf5becff0e3fd1a983041eb628df6460e57fe5f9881bf26e2b09bfc78f8"
+        },
+        {
+          "agent": 5,
+          "file": "brain-021-05.bin.gz",
+          "bytes": 852504,
+          "sha256": "3dd627749b42b0be21a54f170a4a2acb470b6496a7007dfd62c864b69bc3a326"
+        },
+        {
+          "agent": 6,
+          "file": "brain-021-06.bin.gz",
+          "bytes": 857781,
+          "sha256": "ab1c3c7e8a3dce2688f8d218de36367513821b26f5ea4947d9a68b3aeafbb2c4"
+        },
+        {
+          "agent": 7,
+          "file": "brain-021-07.bin.gz",
+          "bytes": 855471,
+          "sha256": "a458c385e35d41a6798cdd2eba3df73c022430f89621604e74bafd926daf2c5e"
+        },
+        {
+          "agent": 8,
+          "file": "brain-021-08.bin.gz",
+          "bytes": 860188,
+          "sha256": "7795be163d49740f2225f57860411d3528267d745616cb309d7bf5066f643e03"
+        }
+      ]
+    },
+    "24": {
+      "recordingSha256": "696ade27921ed62ca82cb257ff5426eb07bbc0fbef6619d7c27e6034290ea491",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 371,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254126913195,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-024-02.bin.gz",
+          "bytes": 866960,
+          "sha256": "d0825e276fc1f3febdb207bbf7ec14b052ef0c89072839ce9051d0e4d97656a4"
+        },
+        {
+          "agent": 3,
+          "file": "brain-024-03.bin.gz",
+          "bytes": 879144,
+          "sha256": "31c798137da61a08eff041b0c9b7d1dff20ed1db3d924fa1d28c7779a819d670"
+        },
+        {
+          "agent": 4,
+          "file": "brain-024-04.bin.gz",
+          "bytes": 889728,
+          "sha256": "9181dde48490aad4a65ed3f669e16b7c24b118549d28d6600d6cd0aabf8fa0d0"
+        },
+        {
+          "agent": 5,
+          "file": "brain-024-05.bin.gz",
+          "bytes": 868581,
+          "sha256": "9b17bddcb75025baa83ba4c10aee290261f29c9034fa621c7700a0011d33d1e7"
+        },
+        {
+          "agent": 6,
+          "file": "brain-024-06.bin.gz",
+          "bytes": 872371,
+          "sha256": "ea92bfc660d12b288281010e0ee1b48252db54e79c8a4bce1846bbd5e6072217"
+        },
+        {
+          "agent": 7,
+          "file": "brain-024-07.bin.gz",
+          "bytes": 872455,
+          "sha256": "0f4e75e9e31d610a6ced36db9935a837e6ec47d20056c7d8716c4b0df29f47a1"
+        },
+        {
+          "agent": 8,
+          "file": "brain-024-08.bin.gz",
+          "bytes": 876840,
+          "sha256": "44329fd2e0d95331b70fa9d51590b0e7f10b3472d8497b3ecf236c1a91400fc3"
+        }
+      ]
+    },
+    "28": {
+      "recordingSha256": "02f829485f2dc7ea176a5d9581f51d619f459bc15ddbedab19786f356c797bea",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 374,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259252648939202,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-028-02.bin.gz",
+          "bytes": 869832,
+          "sha256": "d9313f3f9cbe083681ae02e7fc35bfe70308d82ec9b1a38edae25ad630481672"
+        },
+        {
+          "agent": 3,
+          "file": "brain-028-03.bin.gz",
+          "bytes": 882435,
+          "sha256": "49bad8cc4ae5529b1ffe752a7b5f79833c658aeb95dd958340515707d4189223"
+        },
+        {
+          "agent": 4,
+          "file": "brain-028-04.bin.gz",
+          "bytes": 891290,
+          "sha256": "58e11254e9eb6b381651f00d7527bdf259703f3136385e508e413ac3cd183cc1"
+        },
+        {
+          "agent": 5,
+          "file": "brain-028-05.bin.gz",
+          "bytes": 872969,
+          "sha256": "993e576ea2c3848fe32e3eb2e50aa55a99aef02f18db8bd069489fa934f896de"
+        },
+        {
+          "agent": 6,
+          "file": "brain-028-06.bin.gz",
+          "bytes": 875832,
+          "sha256": "c949700e4c6b2c0550f2ce6c42973ee119656c0db9b7c0ddc221a547feae915b"
+        },
+        {
+          "agent": 7,
+          "file": "brain-028-07.bin.gz",
+          "bytes": 877376,
+          "sha256": "41a609d4954f1b4dd091e058088312c2df9862f08b1554ceffd901933415e06d"
+        },
+        {
+          "agent": 8,
+          "file": "brain-028-08.bin.gz",
+          "bytes": 880777,
+          "sha256": "425806fd79b1dd3cb51282ca25a65f7c8fb5f37c082a655e0634899c1879e6bb"
+        }
+      ]
+    },
+    "32": {
+      "recordingSha256": "22f7ac4f629b46a662408ff32059d89b09f262807d543f180a45d70b81a50b1c",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 389,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259251710994168,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-032-02.bin.gz",
+          "bytes": 919140,
+          "sha256": "5abc9c7239a91f01e745454f4e6e0aa60e9c59a9603475a8895b0736e75ed0e7"
+        },
+        {
+          "agent": 3,
+          "file": "brain-032-03.bin.gz",
+          "bytes": 926770,
+          "sha256": "cfdf24b405c85a18872cf784da1cdd3014a4a321aa926790ab918cce51b6af8e"
+        },
+        {
+          "agent": 4,
+          "file": "brain-032-04.bin.gz",
+          "bytes": 936822,
+          "sha256": "dbc22f944c105af9300e227063e5fe17138239802f217055090eb36551ad417d"
+        },
+        {
+          "agent": 5,
+          "file": "brain-032-05.bin.gz",
+          "bytes": 921352,
+          "sha256": "efd28c603090e6a15a20da31d8d26aacf0d18e6f6af80ffc252547a92bbbee66"
+        },
+        {
+          "agent": 6,
+          "file": "brain-032-06.bin.gz",
+          "bytes": 922230,
+          "sha256": "5fad200be4a3ddcc09fd6aeff5b10197d4d047d7d7cf9271ec224e1854ac37c6"
+        },
+        {
+          "agent": 7,
+          "file": "brain-032-07.bin.gz",
+          "bytes": 923883,
+          "sha256": "3808e08a57c1dcccea12db163bbbe6303773a0c27144260df60ff5e7a2025e96"
+        },
+        {
+          "agent": 8,
+          "file": "brain-032-08.bin.gz",
+          "bytes": 926803,
+          "sha256": "ba2c0ed44529ab8d647639bf933d89d423ccf3cdc3c6285056b633bd1caa43d8"
+        }
+      ]
+    },
+    "36": {
+      "recordingSha256": "c7aceb2aeaeb92eeb48239a3e4ddbc539568a5cccf81ae86448b4321973d6069",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 381,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259252165755396,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-036-02.bin.gz",
+          "bytes": 894825,
+          "sha256": "051479d5cc8567da7332a022dde912ad1dddd3a7d1124cc8385a4fab1de81db4"
+        },
+        {
+          "agent": 3,
+          "file": "brain-036-03.bin.gz",
+          "bytes": 906656,
+          "sha256": "fde5c235a680a870d7afcb810756dbed9ad559e47a10135cfc6d7650080fd3a6"
+        },
+        {
+          "agent": 4,
+          "file": "brain-036-04.bin.gz",
+          "bytes": 915043,
+          "sha256": "b80f7db3d4d332832cfbc0c96f81429ff945866e1f64fcb01c674dd8ad3091b9"
+        },
+        {
+          "agent": 5,
+          "file": "brain-036-05.bin.gz",
+          "bytes": 895715,
+          "sha256": "ca34d0c07c839d6c26b69ebaf9a5b53f32d6c5e2bf5e38651a742b07a8457506"
+        },
+        {
+          "agent": 6,
+          "file": "brain-036-06.bin.gz",
+          "bytes": 897948,
+          "sha256": "7b8e044e9174a32fd84fccdce4ceee26ec4d436e2181a4afa20c7655938e852f"
+        },
+        {
+          "agent": 7,
+          "file": "brain-036-07.bin.gz",
+          "bytes": 899250,
+          "sha256": "4fd34e03d1cab1d33bc546c5c3b4204863593e766c3ad0e38bcc711582a4d84c"
+        },
+        {
+          "agent": 8,
+          "file": "brain-036-08.bin.gz",
+          "bytes": 902137,
+          "sha256": "a40a7ded8690729ad6bc534a9861486bc077cac8446f514baedf0e29e9417719"
+        }
+      ]
+    },
+    "40": {
+      "recordingSha256": "459238a46f3952eeec4e957ed37dc4042688e1857f8f076b03e3886216d5df21",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 380,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259253160545584,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-040-02.bin.gz",
+          "bytes": 892327,
+          "sha256": "07f7c8447c98c21ee9edb8297f3ca6f8522631691063fe29f65d807311bd1ea4"
+        },
+        {
+          "agent": 3,
+          "file": "brain-040-03.bin.gz",
+          "bytes": 902159,
+          "sha256": "de1937883f3dffef88eb116178e54fbe08a8a88408f2d92778e57f8bda74612c"
+        },
+        {
+          "agent": 4,
+          "file": "brain-040-04.bin.gz",
+          "bytes": 911502,
+          "sha256": "10895fca2f4f33b4fbfbf06bcd508f04fdbaaeeda00f59059a4a83c99351dd8a"
+        },
+        {
+          "agent": 5,
+          "file": "brain-040-05.bin.gz",
+          "bytes": 893598,
+          "sha256": "e1c5d08657d487707a3e3377cf2663dd1358fd7cb224c1ac94bf9b629cf4b81b"
+        },
+        {
+          "agent": 6,
+          "file": "brain-040-06.bin.gz",
+          "bytes": 896108,
+          "sha256": "46cf2b8619268df00c2b281bd9e55dd292e2ef4139984df340a3a5c82add9820"
+        },
+        {
+          "agent": 7,
+          "file": "brain-040-07.bin.gz",
+          "bytes": 898607,
+          "sha256": "8e1bda1a1859cc5112d7dcf8699c1aa4bcc0dc4df96b9b44f4ae4bc2bd2c0823"
+        },
+        {
+          "agent": 8,
+          "file": "brain-040-08.bin.gz",
+          "bytes": 900949,
+          "sha256": "eb1e8219114e0eec9fd0f5d9d4ceec4e2790f8c43674869545dd9a749d07c81f"
+        }
+      ]
+    },
+    "41": {
+      "recordingSha256": "997bfdeea2fc084f025728448f2f9d2f77dba464c68c3fbe799eeea1ecfe2235",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 578,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925407006804,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-041-02.bin.gz",
+          "bytes": 1381608,
+          "sha256": "991cbcfd849ef42fa1778d944de90586f07b733cb9e191985aeedab9a239b38b"
+        },
+        {
+          "agent": 3,
+          "file": "brain-041-03.bin.gz",
+          "bytes": 1405660,
+          "sha256": "921278d27b38cf069cf59e996f810060a638ffb33cee5d63bf73ab634294d38a"
+        },
+        {
+          "agent": 4,
+          "file": "brain-041-04.bin.gz",
+          "bytes": 1422107,
+          "sha256": "060ffe270b69dcb690cd6fa787aef9849ed5346e51057d775eff250267b346ee"
+        },
+        {
+          "agent": 5,
+          "file": "brain-041-05.bin.gz",
+          "bytes": 1385610,
+          "sha256": "6b42fcd73c8313fd23492d4da835f5b896ec7403ad8368161ef3b341ebefa3d0"
+        },
+        {
+          "agent": 6,
+          "file": "brain-041-06.bin.gz",
+          "bytes": 1393138,
+          "sha256": "373d486b914d92ec0f32aafbd4e4dd04ff0f37ec99ce96d288f2d4e150074d8c"
+        },
+        {
+          "agent": 7,
+          "file": "brain-041-07.bin.gz",
+          "bytes": 1393003,
+          "sha256": "6253b072de5fde16de353d4d11967ec402dad664ee45ea1461ebf7313a47419c"
+        },
+        {
+          "agent": 8,
+          "file": "brain-041-08.bin.gz",
+          "bytes": 1399599,
+          "sha256": "116d618199e8f8d0954d7cdede3cfa0f3f2c365d764c1bc105af7b1b8f8b50ef"
+        }
+      ]
+    },
+    "44": {
+      "recordingSha256": "5050c653ce2a6c19dfee27ccd3b4b51c12b5537b98a89c1a2498809a5f0a72ab",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 584,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.0000152592533879262,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-044-02.bin.gz",
+          "bytes": 1393042,
+          "sha256": "72340c68ccfeafd49829294235acec68382a04caced1116d677096b3a88a3775"
+        },
+        {
+          "agent": 3,
+          "file": "brain-044-03.bin.gz",
+          "bytes": 1413070,
+          "sha256": "5861c35ccebc09beb694555cbcf84758db3c15c9d0f3fc3e4a2875e44f8eb56d"
+        },
+        {
+          "agent": 4,
+          "file": "brain-044-04.bin.gz",
+          "bytes": 1428950,
+          "sha256": "9481cd6725fa2596c2cd1b93e19f2113355d730ff0655e2da51acbe4fe3ab680"
+        },
+        {
+          "agent": 5,
+          "file": "brain-044-05.bin.gz",
+          "bytes": 1395198,
+          "sha256": "d197c2238a24365a10818478bb84635169281f1a5168786c046b1d633c4ad614"
+        },
+        {
+          "agent": 6,
+          "file": "brain-044-06.bin.gz",
+          "bytes": 1401458,
+          "sha256": "b27fb90bd395b5cddf6e68fe7e60af93bfbc29bf5d7fc5f766ae606036b23082"
+        },
+        {
+          "agent": 7,
+          "file": "brain-044-07.bin.gz",
+          "bytes": 1403385,
+          "sha256": "e819041e3d9d21d0af12d0adff58a3a6d9e6934ffcf293f8824835b538fb68c9"
+        },
+        {
+          "agent": 8,
+          "file": "brain-044-08.bin.gz",
+          "bytes": 1409135,
+          "sha256": "61ffd16be56a4f3fcedea3386122219b63a56ba1ac659c716b4f99205f7b7530"
+        }
+      ]
+    },
+    "47": {
+      "recordingSha256": "42b7222a74468fe9b1248ca7be3c384374e4442f1a674acb2907c1681d38d479",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 586,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925435429381,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-047-02.bin.gz",
+          "bytes": 1399680,
+          "sha256": "9d499816a3dc6a0d9b78a3893b12f34ce13f0c72a57af7f834034d5c9cf7a486"
+        },
+        {
+          "agent": 3,
+          "file": "brain-047-03.bin.gz",
+          "bytes": 1424168,
+          "sha256": "9391867a7af1c64230eae555af1be5793a856eb86479b7bf19080503b79b846a"
+        },
+        {
+          "agent": 4,
+          "file": "brain-047-04.bin.gz",
+          "bytes": 1440831,
+          "sha256": "8ebe06d09bf10b15e12b5089b5fe6e68629a867d33c64df7f36e978eb9a316c4"
+        },
+        {
+          "agent": 5,
+          "file": "brain-047-05.bin.gz",
+          "bytes": 1404511,
+          "sha256": "f8c6af74fb798cf5c6d1c4350ec650278b5b4d0810200ffe5e53bd0318fa5b31"
+        },
+        {
+          "agent": 6,
+          "file": "brain-047-06.bin.gz",
+          "bytes": 1412456,
+          "sha256": "6c2711e95852160bcb6b6891bbf8033f2589eb951cccc56d073afe4fd35888bf"
+        },
+        {
+          "agent": 7,
+          "file": "brain-047-07.bin.gz",
+          "bytes": 1412708,
+          "sha256": "2d7dfb3c878b031daacdc9c40f3d8b96cd1b7f3ded55d560cc6e3c33ba22a9e4"
+        },
+        {
+          "agent": 8,
+          "file": "brain-047-08.bin.gz",
+          "bytes": 1419723,
+          "sha256": "37ea9c6c4e31ca8b5e39d56d656ea1b601bddb3ad58549af51496afd63b50a87"
+        }
+      ]
+    },
+    "50": {
+      "recordingSha256": "11e8ce72371b4eb0a8f0dbd5e3c198000d7e6d1b7114295fa75bfadc3d121e06",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 566,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259252904742393,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-050-02.bin.gz",
+          "bytes": 1353890,
+          "sha256": "4e07464b3ff1de5a940b397d741b40247592c207421dba4d0c8f093eb67edb53"
+        },
+        {
+          "agent": 3,
+          "file": "brain-050-03.bin.gz",
+          "bytes": 1377785,
+          "sha256": "1a24d26384ac6ee56d320119b86af428dae8e97de6194a1806eaf196cc98a175"
+        },
+        {
+          "agent": 4,
+          "file": "brain-050-04.bin.gz",
+          "bytes": 1391631,
+          "sha256": "e99eb89bc27d84791c6d06d62193c5fb0b89a585bc7dce3a541e02a9c2dcee9c"
+        },
+        {
+          "agent": 5,
+          "file": "brain-050-05.bin.gz",
+          "bytes": 1358572,
+          "sha256": "89fabf50b7f09b9f0758db1f108fc5932a171d05f64b47b689ecdc7eccfc5564"
+        },
+        {
+          "agent": 6,
+          "file": "brain-050-06.bin.gz",
+          "bytes": 1363965,
+          "sha256": "cf1b789cc8cf42171be33ef0d0a08f412935979a505b1572b028045c66060405"
+        },
+        {
+          "agent": 7,
+          "file": "brain-050-07.bin.gz",
+          "bytes": 1366557,
+          "sha256": "e73e4a959aeec98a1e08ca7eff194f2f127f2f5b5feb70e19473b44730c85362"
+        },
+        {
+          "agent": 8,
+          "file": "brain-050-08.bin.gz",
+          "bytes": 1372373,
+          "sha256": "31cb20d9633ce10428b541d4e20b6382c5af609981344c973b9d65b2093af38e"
+        }
+      ]
+    },
+    "53": {
+      "recordingSha256": "bed3e19d3f74cdbe74cd0d25bc09b678e6ed48768f802dc371e56e1aa59decb6",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 574,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254240603502,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-053-02.bin.gz",
+          "bytes": 1368930,
+          "sha256": "4b6e7e9d227237233a3ddb6a46f15a359baf47e18648ec9323c55a9edb15baef"
+        },
+        {
+          "agent": 3,
+          "file": "brain-053-03.bin.gz",
+          "bytes": 1388072,
+          "sha256": "214bc57a660e133c7c291430976426d34ea4f936f5914529e19f7d2a6413161b"
+        },
+        {
+          "agent": 4,
+          "file": "brain-053-04.bin.gz",
+          "bytes": 1404060,
+          "sha256": "670247dac262a6b20da2093c7fc9f701069d83cbbdaa1e78fb4c11157d2043d1"
+        },
+        {
+          "agent": 5,
+          "file": "brain-053-05.bin.gz",
+          "bytes": 1372693,
+          "sha256": "b89c7c8907e810482424ddcb825d6ea6344bf6b587b619e52e558a0ad5bbc717"
+        },
+        {
+          "agent": 6,
+          "file": "brain-053-06.bin.gz",
+          "bytes": 1377715,
+          "sha256": "c6524ec3cd5c91f6eaecd5a9635b973ca37f58fe85c2a74b27ca0d13a418f3ee"
+        },
+        {
+          "agent": 7,
+          "file": "brain-053-07.bin.gz",
+          "bytes": 1380813,
+          "sha256": "75fdfd5c83ef6d96a02c73b1297ffdfe873e68ce7f26d69907dba02cad675ecb"
+        },
+        {
+          "agent": 8,
+          "file": "brain-053-08.bin.gz",
+          "bytes": 1386667,
+          "sha256": "b6b91c3e2f45486a71fbc8c11fb9edd3c83dd1b0ab6ea34d88d0acb84ea101fc"
+        }
+      ]
+    },
+    "56": {
+      "recordingSha256": "935dda7aa00c9b5302c59a6096deb65077cef5d1c29b32704c4be1f0b2423088",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 568,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254155335772,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-056-02.bin.gz",
+          "bytes": 1352575,
+          "sha256": "028067a834f02da1006d5c067d674bccd9e535fd3ec3784dab7d1338f395bc05"
+        },
+        {
+          "agent": 3,
+          "file": "brain-056-03.bin.gz",
+          "bytes": 1374154,
+          "sha256": "e6a9fa76314c768fa120c7955ee42f305e25e350cabcdeb13d0881bed2b5fb8f"
+        },
+        {
+          "agent": 4,
+          "file": "brain-056-04.bin.gz",
+          "bytes": 1386932,
+          "sha256": "f7db39ce1d9d39800383be8421ddf8b3b6a29e3ad1367b0c78a1cb9b8513e4f0"
+        },
+        {
+          "agent": 5,
+          "file": "brain-056-05.bin.gz",
+          "bytes": 1356807,
+          "sha256": "65c3ba55cb3e69abc6de0a80490fc35fe71431da886d15850a2ad75b25218248"
+        },
+        {
+          "agent": 6,
+          "file": "brain-056-06.bin.gz",
+          "bytes": 1361613,
+          "sha256": "96c9494878a99c68b8276ab046128cb9644bbc01a01db9710fd2cad26309b364"
+        },
+        {
+          "agent": 7,
+          "file": "brain-056-07.bin.gz",
+          "bytes": 1362270,
+          "sha256": "ceca291c2d50d450372d0a9ea12ecf204a6fcabf6e380ad4fb0cc1354c19641a"
+        },
+        {
+          "agent": 8,
+          "file": "brain-056-08.bin.gz",
+          "bytes": 1368955,
+          "sha256": "3a6d0ae4d5438212712be84729a6d8e23d64d08b4f2fdbff8e1823baa9505926"
+        }
+      ]
+    },
+    "60": {
+      "recordingSha256": "d92d78191f01b5410128293b33db4bca493780d3cb69646bd101b17db711d8a5",
+      "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+      "frames": 574,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254013222888,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-060-02.bin.gz",
+          "bytes": 1364683,
+          "sha256": "f92156dc76ec4a05efdd1e346aecf068457ca62c592518033d5c231e889c3cdb"
+        },
+        {
+          "agent": 3,
+          "file": "brain-060-03.bin.gz",
+          "bytes": 1385666,
+          "sha256": "dfc57d821414291bcdf8e21eb449cb87eb8ad0944ae35db8a453e70942ca6716"
+        },
+        {
+          "agent": 4,
+          "file": "brain-060-04.bin.gz",
+          "bytes": 1401295,
+          "sha256": "7df5bfbb8c6db1cfd795f3b6245c3cf001abe14e5b5885b0cab6a6af9a4db6dd"
+        },
+        {
+          "agent": 5,
+          "file": "brain-060-05.bin.gz",
+          "bytes": 1370446,
+          "sha256": "92461915e616f58464b79b0f9da2673efb701efd695fa8f00c9f03bb18af6031"
+        },
+        {
+          "agent": 6,
+          "file": "brain-060-06.bin.gz",
+          "bytes": 1375730,
+          "sha256": "d5ff546b3229acbfa4507b8537523c42a654bf2d235abeddcfcd59115db100f4"
+        },
+        {
+          "agent": 7,
+          "file": "brain-060-07.bin.gz",
+          "bytes": 1376642,
+          "sha256": "608edebd776627ddba86a9382447aebad0edc3e834a8916937aca8047ec91709"
+        },
+        {
+          "agent": 8,
+          "file": "brain-060-08.bin.gz",
+          "bytes": 1383662,
+          "sha256": "837db4083b3cd9dab7ee353fb2367ea31029cccbc63589ff7aae02e000970746"
+        }
+      ]
+    },
+    "61": {
+      "recordingSha256": "02a7fa0eec2c9fd9d01e2b09f66e9460890e1101045050d45efab2c22d526e38",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 765,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925426902608,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-061-02.bin.gz",
+          "bytes": 1718922,
+          "sha256": "75d08d22b45b82884f7cebd82db392372a24695b8d946c5ba36d438c10d6c4f4"
+        },
+        {
+          "agent": 3,
+          "file": "brain-061-03.bin.gz",
+          "bytes": 1756229,
+          "sha256": "b9c972b536551f07930aaf15a1bb35fea4e49230cd6760cb2bc58fba6c5b1b0d"
+        },
+        {
+          "agent": 4,
+          "file": "brain-061-04.bin.gz",
+          "bytes": 1786496,
+          "sha256": "955491552915ee9aa7c74a69d2311ca92aab5913873862086004b2c57dc7a02a"
+        },
+        {
+          "agent": 5,
+          "file": "brain-061-05.bin.gz",
+          "bytes": 1724174,
+          "sha256": "40bf299c813fbae070fbed677c27a61edd721ad95f01c4e04265e8712b56c549"
+        },
+        {
+          "agent": 6,
+          "file": "brain-061-06.bin.gz",
+          "bytes": 1739096,
+          "sha256": "ee1b9f0b46346776e4f8949303e65a78637fa7e1d6a942beb482c7c51e33b27c"
+        },
+        {
+          "agent": 7,
+          "file": "brain-061-07.bin.gz",
+          "bytes": 1742707,
+          "sha256": "37efcf7418b03607a96c7f47130c0c60c51ad00c7256aae3f2a345cdd5d849d3"
+        },
+        {
+          "agent": 8,
+          "file": "brain-061-08.bin.gz",
+          "bytes": 1750726,
+          "sha256": "10e1a649de3e1cdbaf6ae11a157ee0b2b4e3066d24e993b37b7c2d850021e433"
+        }
+      ]
+    },
+    "64": {
+      "recordingSha256": "24e6f4c30f6e6cc7de0e1538f3897d3b9bae4a23f16db7c1552b835fab1e8bef",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 777,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259253871110004,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-064-02.bin.gz",
+          "bytes": 1747112,
+          "sha256": "43a6c03587385bc9ab6dd6e3a8142b856d390e975848ad90f7412df44a9f534e"
+        },
+        {
+          "agent": 3,
+          "file": "brain-064-03.bin.gz",
+          "bytes": 1779000,
+          "sha256": "07a19d499dd8b3d4b5b7cbb759759efd17ed5dede613bd133f84041d550e19c5"
+        },
+        {
+          "agent": 4,
+          "file": "brain-064-04.bin.gz",
+          "bytes": 1801313,
+          "sha256": "29fe1a5132ed2b195582b9c2dfb130e0d7042ac79c8cfe37de8142d1f06e6c9a"
+        },
+        {
+          "agent": 5,
+          "file": "brain-064-05.bin.gz",
+          "bytes": 1750619,
+          "sha256": "015437c84110f7d1fd1d6c55072f1af2d21120800f8431a305f66d40922cb626"
+        },
+        {
+          "agent": 6,
+          "file": "brain-064-06.bin.gz",
+          "bytes": 1763017,
+          "sha256": "d61936a76b57d1ec8fd62ac70880a7cd072ab220dd9f56f0a01f0ce8d6db8d27"
+        },
+        {
+          "agent": 7,
+          "file": "brain-064-07.bin.gz",
+          "bytes": 1774415,
+          "sha256": "294966ae86b6041d3de21517754a631d223d3b5c194e0b497a976690f131b6f2"
+        },
+        {
+          "agent": 8,
+          "file": "brain-064-08.bin.gz",
+          "bytes": 1778470,
+          "sha256": "3a5615c26bde3733937c1c54abb3bcfc46f96c377bd8d8df0eb0a43cac886f7a"
+        }
+      ]
+    },
+    "67": {
+      "recordingSha256": "9203af5fc66fd8a680ae52ff6ef1a29660c9489276e553a7c6f91932aeae0be5",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 770,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254638519577,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-067-02.bin.gz",
+          "bytes": 1723972,
+          "sha256": "38303c10d28392370a9a3df795a8a86cd859866c99b2267a872af49d482063f7"
+        },
+        {
+          "agent": 3,
+          "file": "brain-067-03.bin.gz",
+          "bytes": 1760413,
+          "sha256": "4a840ee2f2214fe2d03f16fb435622686a437582cdcf92b1697ff9d08de7ef7e"
+        },
+        {
+          "agent": 4,
+          "file": "brain-067-04.bin.gz",
+          "bytes": 1786213,
+          "sha256": "7ca4987602e1c04fceecdee1c27472da4327797395b56e19917f14ca812ba0da"
+        },
+        {
+          "agent": 5,
+          "file": "brain-067-05.bin.gz",
+          "bytes": 1729524,
+          "sha256": "58edefeaad93899ecaa9dd18faa5be999bfda210f1c4ac1ec3c9333a3baf661f"
+        },
+        {
+          "agent": 6,
+          "file": "brain-067-06.bin.gz",
+          "bytes": 1743157,
+          "sha256": "e1b510684224c1f57108e53cce5afe064b6c43e08137fbd0d246e60da801904a"
+        },
+        {
+          "agent": 7,
+          "file": "brain-067-07.bin.gz",
+          "bytes": 1746738,
+          "sha256": "e81c3051df967672a0446b3257553ecc3d7890277079d33b4dc3a5eef6e80ce8"
+        },
+        {
+          "agent": 8,
+          "file": "brain-067-08.bin.gz",
+          "bytes": 1753842,
+          "sha256": "d1062724b156d81acf2283c377daf99ce1797ebcb41975584bb1a9ffd2f030b8"
+        }
+      ]
+    },
+    "70": {
+      "recordingSha256": "f78b2a38dfdaa6f58cfa355adad6de56be2e6a88f8203fc4defaba887d154b07",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 781,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259252648939202,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-070-02.bin.gz",
+          "bytes": 1759915,
+          "sha256": "e2a1a5fce68d209301f537f1cb48ad0b22b4ac8d774d9110bd1b9156cfc39df0"
+        },
+        {
+          "agent": 3,
+          "file": "brain-070-03.bin.gz",
+          "bytes": 1791199,
+          "sha256": "4d8f4cc84702185207735f76b7aa79210523ada6ba19422d7764d7c70016e3bd"
+        },
+        {
+          "agent": 4,
+          "file": "brain-070-04.bin.gz",
+          "bytes": 1816562,
+          "sha256": "54a9efcca3e1c7224864a42537c70e0e4e55d45443552d9b8868b7af4a1a002f"
+        },
+        {
+          "agent": 5,
+          "file": "brain-070-05.bin.gz",
+          "bytes": 1765496,
+          "sha256": "b60e17de4843314c052328601ffcb2a0f4016773ea3a8a171928b9daccc06302"
+        },
+        {
+          "agent": 6,
+          "file": "brain-070-06.bin.gz",
+          "bytes": 1777969,
+          "sha256": "14f7a2f0ba24ded7e9c4861559eddcea149d3e5ced5976c84b42761c5ab22baf"
+        },
+        {
+          "agent": 7,
+          "file": "brain-070-07.bin.gz",
+          "bytes": 1789451,
+          "sha256": "e46ed85a1fb350657a1757a56a2543112ec27db64cab73e4215c50d8e6306be8"
+        },
+        {
+          "agent": 8,
+          "file": "brain-070-08.bin.gz",
+          "bytes": 1793329,
+          "sha256": "2c09a9e957dfe304fdee92431aef024209cf8aa055aced037138a01a6483b8d5"
+        }
+      ]
+    },
+    "73": {
+      "recordingSha256": "1d7fa9db31bb921435ac734767084aff48436d90d016123a0ab6d9d27432eb61",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 770,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925426902608,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-073-02.bin.gz",
+          "bytes": 1725619,
+          "sha256": "fbafbf397185cedb918773f06e75fbaf7f201fc0d42f1d520cb827e3c324d11b"
+        },
+        {
+          "agent": 3,
+          "file": "brain-073-03.bin.gz",
+          "bytes": 1762943,
+          "sha256": "ad1fd911c905ba824ef48f1ee8c50f47367775b8f266f9cd27fa0a75e496c804"
+        },
+        {
+          "agent": 4,
+          "file": "brain-073-04.bin.gz",
+          "bytes": 1788103,
+          "sha256": "7deaa88f8e06fee50dbe89a0c88d52cb95149fdf32a3e431ba4867e8889a378c"
+        },
+        {
+          "agent": 5,
+          "file": "brain-073-05.bin.gz",
+          "bytes": 1731751,
+          "sha256": "6a2c5c2513fa3172b98296fa2562ad4f1a199edc5fc3257b3e55029fd4a3ed8b"
+        },
+        {
+          "agent": 6,
+          "file": "brain-073-06.bin.gz",
+          "bytes": 1745808,
+          "sha256": "453d564d28326ae3c8e8cc53ee04b81478c9a9e6c2fe3cdc6633d20f5d05d714"
+        },
+        {
+          "agent": 7,
+          "file": "brain-073-07.bin.gz",
+          "bytes": 1748235,
+          "sha256": "b2cb63bf5d189d42ded7691d2bd65ce39e1341263b1f7b0af63cb4617429d5e4"
+        },
+        {
+          "agent": 8,
+          "file": "brain-073-08.bin.gz",
+          "bytes": 1756572,
+          "sha256": "df9bfe4ada2e4f4689fb94742627f2fc85f5905d42e8c2e0be909fea6d30f1df"
+        }
+      ]
+    },
+    "76": {
+      "recordingSha256": "a6a3ccc3ddf4c810838b81a3a71c29a56523a5ee3c3a173857fa23dbc013b0fd",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 781,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254212180925,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-076-02.bin.gz",
+          "bytes": 1758094,
+          "sha256": "16743f8bae8bc46e82cda8247ccecb5e1eb92fae469ea05575bcd39c167b2689"
+        },
+        {
+          "agent": 3,
+          "file": "brain-076-03.bin.gz",
+          "bytes": 1788131,
+          "sha256": "bd1d7c5a6ea36f7ff7d7633b0dbad3bf1039fd8e0b3dcc995272bda1fae8488e"
+        },
+        {
+          "agent": 4,
+          "file": "brain-076-04.bin.gz",
+          "bytes": 1813796,
+          "sha256": "6bbec25f7ae354442d1c6d7b610676df12ad7bc09f164c72b4c0a3baee63e911"
+        },
+        {
+          "agent": 5,
+          "file": "brain-076-05.bin.gz",
+          "bytes": 1759161,
+          "sha256": "5b8467cc174c1e82657df9098f47b99d35fb3d2a91af26ddd828852888c35056"
+        },
+        {
+          "agent": 6,
+          "file": "brain-076-06.bin.gz",
+          "bytes": 1772794,
+          "sha256": "b0876b43741118621945172ba2166f74ef6c68fb65421a151f2b14a2710ddad6"
+        },
+        {
+          "agent": 7,
+          "file": "brain-076-07.bin.gz",
+          "bytes": 1784453,
+          "sha256": "5f22d7557cc9ba9d86d3ece57c16445a50da21672edd03541f441ab560f701ca"
+        },
+        {
+          "agent": 8,
+          "file": "brain-076-08.bin.gz",
+          "bytes": 1788945,
+          "sha256": "0bdb736fa27f35f90ba92bcc5ce296646764e175e9a533dad77b4ea18b2406e5"
+        }
+      ]
+    },
+    "80": {
+      "recordingSha256": "74daabd46730b89d9bccb9af75717ec4c420a1adc3ff33c854a66ba30a428c67",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 784,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925435429381,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-080-02.bin.gz",
+          "bytes": 1764587,
+          "sha256": "193729c607106ba84ff5de38fffffd609dd8a9d6b3a6b654f942507d738980f3"
+        },
+        {
+          "agent": 3,
+          "file": "brain-080-03.bin.gz",
+          "bytes": 1797859,
+          "sha256": "b876ebda72b6da791c296a431a85f9da33fd19db576fb0edb2e4321aab8c7b02"
+        },
+        {
+          "agent": 4,
+          "file": "brain-080-04.bin.gz",
+          "bytes": 1822621,
+          "sha256": "be6fb881a79174b87dd638b425a4011dfaa6659cb6d8df9024ce0964b70c5633"
+        },
+        {
+          "agent": 5,
+          "file": "brain-080-05.bin.gz",
+          "bytes": 1771091,
+          "sha256": "24a25828a71b59126f54b916d22afb091c2269ee003f718311f491cda922bb39"
+        },
+        {
+          "agent": 6,
+          "file": "brain-080-06.bin.gz",
+          "bytes": 1784521,
+          "sha256": "bf0c42a620cb1e4b972ed15daf2838e7f256610223ec53cd5b5d3943ba51081d"
+        },
+        {
+          "agent": 7,
+          "file": "brain-080-07.bin.gz",
+          "bytes": 1794741,
+          "sha256": "da6fc37473724a7f3699f25b7c3bb55b23980fab3c4ea3041d80f779e611f612"
+        },
+        {
+          "agent": 8,
+          "file": "brain-080-08.bin.gz",
+          "bytes": 1799870,
+          "sha256": "f8abfd1c6a28358d0028b4dc4c3fe06e2ea3799415a62e835c667c657a84a821"
+        }
+      ]
+    },
+    "81": {
+      "recordingSha256": "cfdfef80230189b06afbd7a8a8b6fba4ac6947a8f7199c9896c34498ab5746cc",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 975,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254638519577,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-081-02.bin.gz",
+          "bytes": 2208141,
+          "sha256": "a792ef6526dad03275b4478b1860fd9e4d26900a7b7a774d4f7d059e2382c940"
+        },
+        {
+          "agent": 3,
+          "file": "brain-081-03.bin.gz",
+          "bytes": 2263406,
+          "sha256": "178e6f9e8ffd2f635535cf1d157ec3cadb9d50a68335dc58772a0f97f5bd4af8"
+        },
+        {
+          "agent": 4,
+          "file": "brain-081-04.bin.gz",
+          "bytes": 2301177,
+          "sha256": "4a4a7f46430dcf72560eb2e748b277dde6fdee66b590666fd0254e4e6e0ce3bd"
+        },
+        {
+          "agent": 5,
+          "file": "brain-081-05.bin.gz",
+          "bytes": 2216046,
+          "sha256": "18f64b618d5fd0a8cae609e0ba219b00d6acf91d51a60ebe46a75169c2e012f6"
+        },
+        {
+          "agent": 6,
+          "file": "brain-081-06.bin.gz",
+          "bytes": 2237327,
+          "sha256": "724cd7ecb9c9444a64a6b4f61b088cf974a294e93cf88addc0b480ff1f63cafc"
+        },
+        {
+          "agent": 7,
+          "file": "brain-081-07.bin.gz",
+          "bytes": 2238064,
+          "sha256": "bd9bce7e8bc764f6ad2b500931c1dde247f2d2f8d8aee280b73c2e65766fd895"
+        },
+        {
+          "agent": 8,
+          "file": "brain-081-08.bin.gz",
+          "bytes": 2255127,
+          "sha256": "d046770bb5c97bd25525af81064a3d79369736781013fca073c3bfe3b828622f"
+        }
+      ]
+    },
+    "84": {
+      "recordingSha256": "4ffd55f69a31a9f9112dd47a9e1491b547b1be0a191290878bc41d18dd778fe4",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 981,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254126913195,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-084-02.bin.gz",
+          "bytes": 2229593,
+          "sha256": "8dd5a94c6aac3dc465389273f9f37fe89fad09c99603291371bbdea105198454"
+        },
+        {
+          "agent": 3,
+          "file": "brain-084-03.bin.gz",
+          "bytes": 2279856,
+          "sha256": "31aa56b17abf4489e729ba799ef7a7e2c87b0558857cecad9296682ba73b0206"
+        },
+        {
+          "agent": 4,
+          "file": "brain-084-04.bin.gz",
+          "bytes": 2321655,
+          "sha256": "760952af4e50e62f14df79f5a8b422fe1d5f77fd232b6c90385451dbcd01c849"
+        },
+        {
+          "agent": 5,
+          "file": "brain-084-05.bin.gz",
+          "bytes": 2233049,
+          "sha256": "206d0486a6b5f050147a79ad280a55254805459b2a1e39bcbac2997ad42a452e"
+        },
+        {
+          "agent": 6,
+          "file": "brain-084-06.bin.gz",
+          "bytes": 2256370,
+          "sha256": "1349c862bbea15eb7319598717b6eddcff11509eeca8b7484b6d753e00cc9642"
+        },
+        {
+          "agent": 7,
+          "file": "brain-084-07.bin.gz",
+          "bytes": 2259280,
+          "sha256": "bdc40261aa89e9520271cf26358dcf3baa2339fa6d4a6eb90614551fb5ffeacd"
+        },
+        {
+          "agent": 8,
+          "file": "brain-084-08.bin.gz",
+          "bytes": 2275004,
+          "sha256": "66a19e220edd5a3db05d58ffd5dfb98667cdbc9b8b7874c7f3f7c718efce6762"
+        }
+      ]
+    },
+    "87": {
+      "recordingSha256": "15b3d9c64e4ec1e1c9aa4bf36ec37099e55ad8c4e9807ea63cd5c212b09ac633",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 986,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254382716386,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-087-02.bin.gz",
+          "bytes": 2236308,
+          "sha256": "3b03e6ebcc1ad1857abc3306a22341f1e41da8396a89be9a69ce8a3bf6e7db3e"
+        },
+        {
+          "agent": 3,
+          "file": "brain-087-03.bin.gz",
+          "bytes": 2279174,
+          "sha256": "36a44036d581ab80c63ab801f0b82792745df7787031282688f4692443ce5682"
+        },
+        {
+          "agent": 4,
+          "file": "brain-087-04.bin.gz",
+          "bytes": 2317908,
+          "sha256": "af92df5b2c77e6016b83a743c2ae9fc33bd6d6110b0d7cb06d31c9e51c11467c"
+        },
+        {
+          "agent": 5,
+          "file": "brain-087-05.bin.gz",
+          "bytes": 2238531,
+          "sha256": "f703d53c72e9a3e62661f676e3f9fb3762f36878d746956dfd7575edf0cfcb96"
+        },
+        {
+          "agent": 6,
+          "file": "brain-087-06.bin.gz",
+          "bytes": 2258759,
+          "sha256": "78e34db94b18a8272bd775ce16448eab72d3b39523ed495438252ad75b238c71"
+        },
+        {
+          "agent": 7,
+          "file": "brain-087-07.bin.gz",
+          "bytes": 2264633,
+          "sha256": "ea45788e15632a2912446e1b72baca6c9728dede57bb8bdbd4f8d8d11fd2e332"
+        },
+        {
+          "agent": 8,
+          "file": "brain-087-08.bin.gz",
+          "bytes": 2277540,
+          "sha256": "d2bb36375e4453172763a8e182245b9ab4ee4c891e5f3e5a87f220aec1afbe86"
+        }
+      ]
+    },
+    "90": {
+      "recordingSha256": "67a337b7b6966592c5aff66b3bb00861aa430f5374d58fe42df912b328e21e3a",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 987,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925389953258,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-090-02.bin.gz",
+          "bytes": 2248277,
+          "sha256": "d63a077a096d810b815920f474059baa7643fd8e8b8b95fddd483d498a4d7921"
+        },
+        {
+          "agent": 3,
+          "file": "brain-090-03.bin.gz",
+          "bytes": 2295089,
+          "sha256": "578f015b6eb4b094de5856985cc8f8fff16b5d3ccec4cf51c153263fb2e9baa7"
+        },
+        {
+          "agent": 4,
+          "file": "brain-090-04.bin.gz",
+          "bytes": 2335801,
+          "sha256": "2abaae2e09f69a22085bc96fe70560ab56ec2b09364d0d3a94e9cf4f15010f3e"
+        },
+        {
+          "agent": 5,
+          "file": "brain-090-05.bin.gz",
+          "bytes": 2250963,
+          "sha256": "f74df442a4df0f787fa8b58375905489cba108bfb11365cef50e03bc3b7e7364"
+        },
+        {
+          "agent": 6,
+          "file": "brain-090-06.bin.gz",
+          "bytes": 2274334,
+          "sha256": "10e9ac92e7501b2f0361f372ec4f006f92c8f6a1f88184b2af3a16cbc48f52f2"
+        },
+        {
+          "agent": 7,
+          "file": "brain-090-07.bin.gz",
+          "bytes": 2278003,
+          "sha256": "1e1e5ff89d4d1c9ffd69cf548e29869409836dc60e3160644cd3c61cdd9fdc3c"
+        },
+        {
+          "agent": 8,
+          "file": "brain-090-08.bin.gz",
+          "bytes": 2292387,
+          "sha256": "077e786a8da0b1b81a5cf9213a6229479dae53e2a896c715b0c2bac377e40395"
+        }
+      ]
+    },
+    "93": {
+      "recordingSha256": "5898006096c99df081abc653d4574e6b42a02b635c2ead1288844f555953f7a7",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 1003,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925372899712,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-093-02.bin.gz",
+          "bytes": 2281074,
+          "sha256": "5e93c9c6be2cafdb0512ad29ee9847b4742ad73e0267027d499134e23575e983"
+        },
+        {
+          "agent": 3,
+          "file": "brain-093-03.bin.gz",
+          "bytes": 2323653,
+          "sha256": "dc438c73c3e49cda866d5819e56111c9b895c5ef07e6a5e845de2d7d200a35a0"
+        },
+        {
+          "agent": 4,
+          "file": "brain-093-04.bin.gz",
+          "bytes": 2362394,
+          "sha256": "e2951ed767cfcf70c7d556c7a70171de1a186963839d5d94702935140ee287fa"
+        },
+        {
+          "agent": 5,
+          "file": "brain-093-05.bin.gz",
+          "bytes": 2281361,
+          "sha256": "72852d461c68b5b1064e3d528b6618fb6e27fc3418c173bf881ecd11e71cc7c8"
+        },
+        {
+          "agent": 6,
+          "file": "brain-093-06.bin.gz",
+          "bytes": 2300183,
+          "sha256": "51dd4acf59a100201de23a2184d0263d91c5af65eef56f1e5cef60b7a18689c4"
+        },
+        {
+          "agent": 7,
+          "file": "brain-093-07.bin.gz",
+          "bytes": 2312980,
+          "sha256": "42e03bd5acca8e0d22f4351737868108abaf396bbc77528fd0071ec6777898ba"
+        },
+        {
+          "agent": 8,
+          "file": "brain-093-08.bin.gz",
+          "bytes": 2323804,
+          "sha256": "b313ad2565f5af79ab37f5fb6f8b32b6a405610a65beccd1cc0f746b5b21a3d9"
+        }
+      ]
+    },
+    "96": {
+      "recordingSha256": "f1bd6d12546fcd9a0361e2fb97a12cd92e820526b8aa4aac8b2b71b03f86988f",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 993,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925407006804,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-096-02.bin.gz",
+          "bytes": 2261844,
+          "sha256": "88e572d4c10d51bbb5542ddafc1a022b78adf5f850a64a82e198f75b3a0a9140"
+        },
+        {
+          "agent": 3,
+          "file": "brain-096-03.bin.gz",
+          "bytes": 2307236,
+          "sha256": "b9baf65ce41c14046050c7ddca2abbd4cedd6132ca50b1468f3c01f6d5a8459c"
+        },
+        {
+          "agent": 4,
+          "file": "brain-096-04.bin.gz",
+          "bytes": 2345589,
+          "sha256": "bb9383b392c79e4dfa8a940a0ea2394409453c45dfd23b2adaf3ec36ebffacb7"
+        },
+        {
+          "agent": 5,
+          "file": "brain-096-05.bin.gz",
+          "bytes": 2263492,
+          "sha256": "d4619c5fade1307789cfd95106515ea409b1bf3c0fa57a5cbdeda5f7e4b2fbb4"
+        },
+        {
+          "agent": 6,
+          "file": "brain-096-06.bin.gz",
+          "bytes": 2284597,
+          "sha256": "904eec14df706f3d000f730d0733312ab9857e6ef04dcbb62b35568b48d15b0c"
+        },
+        {
+          "agent": 7,
+          "file": "brain-096-07.bin.gz",
+          "bytes": 2290622,
+          "sha256": "a12d66fe28974959b50f33f70baf9f4155ab825a8600e952e779948d03df4d12"
+        },
+        {
+          "agent": 8,
+          "file": "brain-096-08.bin.gz",
+          "bytes": 2302973,
+          "sha256": "386c09f0cc48f434ca7c7426dd06a1c0d7793eabcfa1c33b13672a55c97bffe4"
+        }
+      ]
+    },
+    "98": {
+      "recordingSha256": "7c50ddd4c24374d12cecd0d0b63e83d081d6aa99a6962105032ad2a4f48d4493",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 990,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.000015259254496406693,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-098-02.bin.gz",
+          "bytes": 2241844,
+          "sha256": "91747bba34ce3c4ba5e21f6dd13a1954019e862261bbe01c17e6871d4b3aeba4"
+        },
+        {
+          "agent": 3,
+          "file": "brain-098-03.bin.gz",
+          "bytes": 2286893,
+          "sha256": "b975a52a85585823387b0996a79f46f5ff033305254b1c2504de615078de73f5"
+        },
+        {
+          "agent": 4,
+          "file": "brain-098-04.bin.gz",
+          "bytes": 2326655,
+          "sha256": "5b86d7548d2e226477424665f6d9d7b293d66eadb675e46ca0be48cde3c3ca1a"
+        },
+        {
+          "agent": 5,
+          "file": "brain-098-05.bin.gz",
+          "bytes": 2241277,
+          "sha256": "a37d5f0f3c90d542a1e2898157eaa2e6dcc8eb08c0fae13852464b9dee85dcdb"
+        },
+        {
+          "agent": 6,
+          "file": "brain-098-06.bin.gz",
+          "bytes": 2264831,
+          "sha256": "42614e766fc76803d90db23476bea07a5c575ccf346ce29122175a409627d968"
+        },
+        {
+          "agent": 7,
+          "file": "brain-098-07.bin.gz",
+          "bytes": 2270604,
+          "sha256": "9b04dd3dd8d9490dde00833b705c6e2c32a7bf355255767403214a55c5b9a318"
+        },
+        {
+          "agent": 8,
+          "file": "brain-098-08.bin.gz",
+          "bytes": 2284858,
+          "sha256": "1e03052d139bb235c29023e1b45d687bf220c0d219521396d419169a34a516f0"
+        }
+      ]
+    },
+    "100": {
+      "recordingSha256": "5dc555d40323d73dd9dae4921e5c0eaf9951e390e571c1f18ca4a945cc7424cf",
+      "weightsSha256": "e8fac4388178f82b50199719a28e643ddfccb43979b10eeff266996390fc3be2",
+      "frames": 999,
+      "poseMaxError": 0,
+      "agent01MaxDisplayError": 0.00001525925426902608,
+      "agents": [
+        {
+          "agent": 2,
+          "file": "brain-100-02.bin.gz",
+          "bytes": 2256946,
+          "sha256": "ef4d4e02988f75fb733eb912289acf6867f231b91d1bd6fe7e5afce5bdc93b88"
+        },
+        {
+          "agent": 3,
+          "file": "brain-100-03.bin.gz",
+          "bytes": 2300310,
+          "sha256": "34c90a17f0d04c66898337ad9c0045c8923c8db678b7feb5aa9068cbb710f31d"
+        },
+        {
+          "agent": 4,
+          "file": "brain-100-04.bin.gz",
+          "bytes": 2341812,
+          "sha256": "c46fea905908095613332523881b682fb226bf5f7577048f9ec4ad19408a5e06"
+        },
+        {
+          "agent": 5,
+          "file": "brain-100-05.bin.gz",
+          "bytes": 2256351,
+          "sha256": "72c1e794e4e318508700e8afdc830bef86f9d3afa949e8c9a5e338d5e3cf9866"
+        },
+        {
+          "agent": 6,
+          "file": "brain-100-06.bin.gz",
+          "bytes": 2278676,
+          "sha256": "dccf30099ebe103b41eb5e5bda8eeadf12faefbf7bc1163f2fc41469af248a47"
+        },
+        {
+          "agent": 7,
+          "file": "brain-100-07.bin.gz",
+          "bytes": 2285300,
+          "sha256": "9d2b8d14d6fd782139a52fa254ce07b4d5eec4ab10f895cb8cf39ed1c5e655b0"
+        },
+        {
+          "agent": 8,
+          "file": "brain-100-08.bin.gz",
+          "bytes": 2297007,
+          "sha256": "4e46e27a01f3494d70edce743c4d42db776a4fba9c07d8b1772e8749c5abd17f"
+        }
+      ]
+    }
+  }
+}

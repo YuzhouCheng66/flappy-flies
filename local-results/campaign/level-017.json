@@ -1,0 +1,157 @@
+{
+  "type": "accepted",
+  "level": 17,
+  "attempt": 1,
+  "seed": 1017001,
+  "success": true,
+  "ticks": 175,
+  "stage": 1,
+  "contacts": 0,
+  "minClearance": 0.21941488981246948,
+  "pathLength": 2.2387417931754454,
+  "rotationRad": 0.4601110089570284,
+  "peakRotationDegrees": 10.580107312095969,
+  "seconds": 0.9032122999999992,
+  "finalState": [
+    1.038631558418274,
+    0.005278878845274448,
+    0.021988917142152786,
+    0.03167622536420822,
+    0.008827039040625095,
+    0.05704449862241745
+  ],
+  "layout": {
+    "seed": 1017001,
+    "level": 17,
+    "attempt": 1,
+    "difficulty": "campaign",
+    "wall_x": [
+      0
+    ],
+    "gap_y": [
+      0
+    ],
+    "apertures": [
+      1.9159942204784601
+    ],
+    "initial": [
+      -1.0546200309237466,
+      -0.16293008148111404,
+      -0.03963855598215014,
+      0,
+      0,
+      0
+    ],
+    "goals": [
+      [
+        1.05,
+        0,
+        0
+      ]
+    ],
+    "player_dock_degrees": 13.141414141414142,
+    "narrow_count": 0
+  },
+  "schema": "campaign-level-v1",
+  "file": "level-017.bin.gz",
+  "sha256": "9ecc65e84d3a970a7f11f3654bbb9db53de9bf1adc3f4ce01dba81db271b2eca",
+  "bytes": 470664,
+  "uncompressedBytes": 800676,
+  "maxBrainDisplayError": 0.000015259137740013945,
+  "playerTimeLowerBound": 5.586550068855286,
+  "timingStatus": "pending executable human reference; not an optimality claim",
+  "header": {
+    "level": 17,
+    "layout": {
+      "seed": 1017001,
+      "level": 17,
+      "attempt": 1,
+      "difficulty": "campaign",
+      "wall_x": [
+        0
+      ],
+      "gap_y": [
+        0
+      ],
+      "apertures": [
+        1.9159942204784601
+      ],
+      "initial": [
+        -1.0546200309237466,
+        -0.16293008148111404,
+        -0.03963855598215014,
+        0,
+        0,
+        0
+      ],
+      "goals": [
+        [
+          1.05,
+          0,
+          0
+        ]
+      ],
+      "player_dock_degrees": 13.141414141414142,
+      "narrow_count": 0
+    },
+    "world_x": 9.399999999999999,
+    "player_dock_angle": 0.2293609451358205,
+    "dt": 0.08,
+    "brainCount": 2048,
+    "sender": [
+      0,
+      1,
+      1,
+      4,
+      2,
+      3,
+      2,
+      5,
+      4,
+      5,
+      4,
+      6,
+      4,
+      7,
+      5,
+      6,
+      5,
+      7,
+      6,
+      7
+    ],
+    "receiver": [
+      1,
+      0,
+      4,
+      1,
+      3,
+      2,
+      5,
+      2,
+      5,
+      4,
+      6,
+      4,
+      7,
+      4,
+      6,
+      5,
+      7,
+      5,
+      7,
+      6
+    ],
+    "sweeps": 4,
+    "weightsSha256": "679bddbc191c34b8cbdf230e75263a378a718759db8c833f6a426901f6cf4a57",
+    "checkpointSha256": "d6e98e76ba8f8d45406cd40934a7fa6f9049565a137cb9df35a4b44925f717c3",
+    "model": {
+      "neurons": 165122,
+      "agents": 8,
+      "steps": 4,
+      "precision": "f32",
+      "kernel": "tile16"
+    },
+    "sourceSimulationSeconds": 14
+  }
+}
