@@ -1,6 +1,7 @@
 {
-  "date": "2026-09-17T15:18:51.883Z",
+  "date": "2026-09-17T15:22:55.550Z",
   "checkpoint": "d6e98e76ba8f8d45406cd40934a7fa6f9049565a137cb9df35a4b44925f717c3",
+  "sourceHashEncoding": "SHA-256 of UTF-8 source with LF newlines",
   "sourceHashes": {
     "gpu-model.mjs": "74d54579a63206a7446f1baa943a1f3b226d0e2d63a13dbb2636191aad03b5a4",
     "engine.mjs": "10e762619a8a202553c9aabf1a6054a92e9b854016172a07adc894b8f4c6da14",
@@ -789,6 +790,28 @@
             20.905984
           ]
         }
+      }
+    ],
+    "interruptedRollouts": [
+      {
+        "type": "rollout",
+        "seed": 91000,
+        "ticks": 85,
+        "success": false,
+        "stage": 0,
+        "contacts": 0,
+        "minClearance": 0.0029850006103515625,
+        "maxAngle": 1.0025055408477783,
+        "seconds": 49.356,
+        "state": [
+          -0.0326717384159565,
+          -0.014371070079505444,
+          0.9779202938079834,
+          0.13525435328483582,
+          -0.0721745565533638,
+          0.01244752574712038
+        ],
+        "reason": "Explicitly stopped for kernel profiling, not a terminal failure"
       }
     ],
     "parity": {

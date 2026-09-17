@@ -1,6 +1,6 @@
 # Flappy Flies
 
-[**Play in your browser →**](https://yuzhoucheng66.github.io/flappy-flies/)
+[**Play in your browser →**](https://yuzhoucheng.com/flappy-flies/)
 
 Race eight connectome-based flies carrying a T through four narrow gates.
 **WASD / arrows** move; **Q / E** rotate. **Switch** swaps the two views.
