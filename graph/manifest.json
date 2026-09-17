@@ -1,0 +1,261 @@
+{
+  "schema": "flappy-flies-graph-gzip-delta-u32-count-u16-v1",
+  "source_sha256": "eff4093bf53c4dd17d7ee4f2f838f6ae5ede70570f9a91317dd8824cca5c771d",
+  "source_bytes": 309401316,
+  "neurons": 165122,
+  "edges": 25563197,
+  "chunks": [
+    {
+      "file": "graph-000000-a60282625fae.bin.gz",
+      "row_start": 0,
+      "rows": 8192,
+      "edges": 4367297,
+      "bytes": 10019300,
+      "sha256": "a60282625fae62a70d081ed19830509b36165d80a416046485a85b952bda2559",
+      "columns_sha256": "7289c630c0ad9c8db02614cfd6702c68acb18d52b8b892fc2ced6e0e1d92f7a2",
+      "counts_sha256": "9d9e9f6a140c4e112bd6cc8bae90ed91bacc0a7823d23ba03e0fc0725d42da7f",
+      "weights_sha256": "b8d33ac9046c03d88560d33520b2bbb84edcfcadf1dbacd9f567974c8242322b"
+    },
+    {
+      "file": "graph-008192-90cf61ecfba7.bin.gz",
+      "row_start": 8192,
+      "rows": 8192,
+      "edges": 2315136,
+      "bytes": 5616279,
+      "sha256": "90cf61ecfba74f0158d6eee9bfe383068d7f1fa61e30203c6a57ed8192539ee3",
+      "columns_sha256": "57439a41bd470a3e7b7c8864ae953a4e2b6e8766c1d7b9945d70053e4f68f120",
+      "counts_sha256": "f227557464b4014b6cdfafc4c6efaaedece306e7dce1de35d4c728e4c615cf13",
+      "weights_sha256": "b859ca73ac0455fa7b94d60b18e41abafde1d21c0bb4bc2e12a44984c256bca3"
+    },
+    {
+      "file": "graph-016384-ee2069ce8fe6.bin.gz",
+      "row_start": 16384,
+      "rows": 8192,
+      "edges": 1680825,
+      "bytes": 4152191,
+      "sha256": "ee2069ce8fe6469dbf48398ea0caaecbd1726ec634714a973d4afaed1cf9663f",
+      "columns_sha256": "1c53ddbd81fad1e4e51a23eddd2f2fc7eefdecc05d5ce701bbbfa2c5efe1e6fd",
+      "counts_sha256": "ae04eec1f73bfe3fefed7584d3b15b3d5b75e58d97ffc7f00e0f453ed63e1bd5",
+      "weights_sha256": "4d0456c8ad913f37052094988627bba003ed327e248a2d70110dddc67c3a6352"
+    },
+    {
+      "file": "graph-024576-8167ea8d147e.bin.gz",
+      "row_start": 24576,
+      "rows": 8192,
+      "edges": 1424075,
+      "bytes": 3549425,
+      "sha256": "8167ea8d147e5f887b1eb6f54eeaea43ac5e9e9b1d98fdd535832a60f0e6f631",
+      "columns_sha256": "180f1c81a7be3fede773a10108682f2c16ceff6fba79225bdbac0e88eccf1eb5",
+      "counts_sha256": "a82acfe4b48b1bed0433668ff9ee8fc2d46e5df7047f9f0468f6b7d8298bfe72",
+      "weights_sha256": "1fae4caa4c89f598dda88ac0f365c39673660c07640d3f7b1a92eb49d0997bcc"
+    },
+    {
+      "file": "graph-032768-2bde580eab84.bin.gz",
+      "row_start": 32768,
+      "rows": 8192,
+      "edges": 1283982,
+      "bytes": 3211873,
+      "sha256": "2bde580eab848466762394e5f2268b5a6a476108608b8b643d99b7bd8944fefd",
+      "columns_sha256": "a5858c3b7d05b4db2d76646a0ff99a95464683da8af5f8c50c9dde8edb65cc35",
+      "counts_sha256": "6b3311cb17dbaad8ade4b36dbbbf9040053db518a270860a63cca7e46fa54471",
+      "weights_sha256": "0f2b3b5506ca4fd0105bbf99ef32b27319ca620b467705ee9720aabd69bace6d"
+    },
+    {
+      "file": "graph-040960-f6add719d3ca.bin.gz",
+      "row_start": 40960,
+      "rows": 8192,
+      "edges": 1172739,
+      "bytes": 2945925,
+      "sha256": "f6add719d3ca1c2b130f85ab29878a85f9e63ce267e66d7972342a7aabb365f0",
+      "columns_sha256": "aef59496114d64356c607c9ee747d4d167c4b7c9a755a5f8db30a5fe1676c77b",
+      "counts_sha256": "19e8328e85bda1b4754875a86d78a9ced5e4ffb79fe17d855baaee14d26d61ed",
+      "weights_sha256": "d7d0c1e8ac9f2b76659f6296dec8ba265bee3ae3bebeff4c422ef75790a36436"
+    },
+    {
+      "file": "graph-049152-795283e037ed.bin.gz",
+      "row_start": 49152,
+      "rows": 8192,
+      "edges": 1077284,
+      "bytes": 2720165,
+      "sha256": "795283e037ed9d4709b3c9d182f33d4316dbcc091fab60255cfcd7574bf70680",
+      "columns_sha256": "7a328e2539a31e404c39062e9484ef0a5339af04f9c2963383227b4b0d9a125d",
+      "counts_sha256": "551062f559419bd3eca916f64dc09de064d76f5c32f7c05b999d2663e0fadceb",
+      "weights_sha256": "180367e6e11b4b4a0c630b3f1f50a7c6bf2b2c9fca0348f296ba0963038e6e33"
+    },
+    {
+      "file": "graph-057344-172f7486552c.bin.gz",
+      "row_start": 57344,
+      "rows": 8192,
+      "edges": 967017,
+      "bytes": 2455687,
+      "sha256": "172f7486552cb347e834cb331c5eec0780cc5314952eeaa5698535189a24a3b7",
+      "columns_sha256": "e35f5d9f15a7f4ec4744e2419b390c6b9293d78469f1a1a14be663d6e654e6bb",
+      "counts_sha256": "0f1c088183c2e2ad287fa0ec5d77291519203299c899bf6278ad7a84bc9d6449",
+      "weights_sha256": "d6d33da9fc8c5ff0b588e6964ae872239b010c6ab8d42009a8d2a7e26cbbc659"
+    },
+    {
+      "file": "graph-065536-3dc7273f6ddb.bin.gz",
+      "row_start": 65536,
+      "rows": 8192,
+      "edges": 829575,
+      "bytes": 2130356,
+      "sha256": "3dc7273f6ddbe533664916f719e71849ca49ee82767dd96d70a3bd7c36b0d819",
+      "columns_sha256": "42262087aa4835cb1c729dae78cf27239e8630a10559f7328c7b033b1e05ba67",
+      "counts_sha256": "4ad375ad0f634e7a0385efd8d3931719232b5be4a3ad8076635d34e59e1ce50b",
+      "weights_sha256": "a12ec0dc9e67ff854723374bc2778c7a6c7d860582fc1150b5152ed6466936a1"
+    },
+    {
+      "file": "graph-073728-64a5026d714d.bin.gz",
+      "row_start": 73728,
+      "rows": 8192,
+      "edges": 763866,
+      "bytes": 1978127,
+      "sha256": "64a5026d714de912693df59b8d853c8dcd3d0fdf9441261194edb8504929fd10",
+      "columns_sha256": "e29034ba68810cb50fbd8cc91294485f566f135c4bd4232cac9453e1ee620072",
+      "counts_sha256": "8b0b65d5cdc25f173be3437362613fdf9967fb2b7d4a0306051956ae339447c4",
+      "weights_sha256": "d27f29fa5a6dc3509d9564f9a8605d21aa0e8be92d346f49fd92a41d825cd655"
+    },
+    {
+      "file": "graph-081920-e099e93016b3.bin.gz",
+      "row_start": 81920,
+      "rows": 8192,
+      "edges": 702823,
+      "bytes": 1829380,
+      "sha256": "e099e93016b324e93e4516ad7f5119500e49a3e2bbf826422b714048b1b5e6e3",
+      "columns_sha256": "cc1ad6e214072c538feb78dd52cab0dc4343ac4d49fb6772a04d04a5bbe48b08",
+      "counts_sha256": "cc2daad971a6bb662610e17c3590162f6b66b73571a05c65d0927839c0560e1a",
+      "weights_sha256": "eea4d272eb7812a1f08d48e9ec1a71f76c98e68993ed51f3d8b29d690e4758b3"
+    },
+    {
+      "file": "graph-090112-27959db2794f.bin.gz",
+      "row_start": 90112,
+      "rows": 8192,
+      "edges": 668584,
+      "bytes": 1746912,
+      "sha256": "27959db2794f6e853927989a72c56ae307d6bd03777df127cd845d25376ae287",
+      "columns_sha256": "065951978c266ab83f3a5b1ca933fc452aba37cc0246bc0561bbb1678e77bc9b",
+      "counts_sha256": "4b1ddabb068f3f13cd207e9a9fbcb47a0ba67a1cf258c88cb19c8ae8ce959f04",
+      "weights_sha256": "85dde06140bc9340f8ed2f3c2a2442ad583c7eb4880272f7bfc5070bb688d80c"
+    },
+    {
+      "file": "graph-098304-ca50ce53170a.bin.gz",
+      "row_start": 98304,
+      "rows": 8192,
+      "edges": 670417,
+      "bytes": 1739267,
+      "sha256": "ca50ce53170a056c2ca87f1266388b11d243a68a13c8940bab5df94c4e8b439f",
+      "columns_sha256": "1d74c7c41873f4cace3244223be04a5697a5a6796d5598bfe68983f92e4492e0",
+      "counts_sha256": "b98f3e07f21abba8efb4321e5de510370eceb3ac5eea261f844c1e8a74bf45cb",
+      "weights_sha256": "64a994cc7189daa6908590a6733ef0e20af3d6dc7b690bd6c5cec6f4e2409683"
+    },
+    {
+      "file": "graph-106496-51b81a8866a1.bin.gz",
+      "row_start": 106496,
+      "rows": 8192,
+      "edges": 626542,
+      "bytes": 1626211,
+      "sha256": "51b81a8866a130388117a6b8851e5bbf407918aec536fae823bc208c6bbbc84d",
+      "columns_sha256": "2cc585344d17c720f73c7b13a00754c68a685675a77ec6e085a500521c6135cc",
+      "counts_sha256": "f1021bbd6d722508b360033ee977d0b053024c00355a12b1e321506b5d628103",
+      "weights_sha256": "5cbbe641382c8dfd2de04474665029bac11094aadaf176c5791cfd6c7718fcdf"
+    },
+    {
+      "file": "graph-114688-3d19af19d7e3.bin.gz",
+      "row_start": 114688,
+      "rows": 8192,
+      "edges": 476563,
+      "bytes": 1240926,
+      "sha256": "3d19af19d7e3ae72bc2b4613d0deffc5a24899b8422729a0eee03046e5a40e64",
+      "columns_sha256": "21dc90510fa3e41b62ddbf3f618436752dd3ff214df6c86c6d847fadb92bbde2",
+      "counts_sha256": "9b93c1f50078df0a6b736adfdd09c1053cd6c66732cebb25430a136ebaa13df7",
+      "weights_sha256": "1044fa02ddc1930eeb9269215208a5d3b7718e740c4d19d7cc3a4025770b73c4"
+    },
+    {
+      "file": "graph-122880-973ac8e9ecd6.bin.gz",
+      "row_start": 122880,
+      "rows": 8192,
+      "edges": 1667483,
+      "bytes": 4079505,
+      "sha256": "973ac8e9ecd652a9e2d5078b61d864365ddcd2edc0693e7079ee8db7ece23a23",
+      "columns_sha256": "363060fe11fe35e19434e4991fd23d9b771a47119dc21bdd6b8c87f17188a26f",
+      "counts_sha256": "ed611baa2417d73426c5d2934238750748d0c268cfeef1b2c542a1cecc18f327",
+      "weights_sha256": "0bfab13688aa55c6504a61e062bfffa3b280c85f900dc3af06cc6410cccfef40"
+    },
+    {
+      "file": "graph-131072-cf15f3703595.bin.gz",
+      "row_start": 131072,
+      "rows": 8192,
+      "edges": 1141529,
+      "bytes": 2877925,
+      "sha256": "cf15f3703595500d00ec72d5f4df2d9ced8f13b3bce85602f0738a555a7712e6",
+      "columns_sha256": "78b7e8388fa700aeb16ac6de7aa97d30a404ec1c9835fe67cac0061b5ebb0e76",
+      "counts_sha256": "a94f6c4f4d1a606e690af448da5c9f137bc0d074d950b2587476a1c29a2eea28",
+      "weights_sha256": "2314177157f1d7160db5a0d35c464f8d5fbbcdd7cd9eeb7fdb35535a6a3f7474"
+    },
+    {
+      "file": "graph-139264-b761432db6d3.bin.gz",
+      "row_start": 139264,
+      "rows": 8192,
+      "edges": 1870212,
+      "bytes": 4377318,
+      "sha256": "b761432db6d37337e95cec386e8ad6909f1c13b9eb03b933d6d9e53681d91cda",
+      "columns_sha256": "8829ba4eb658c5735776de042c1edc57a5134e2c16305a562829218e760cc2ee",
+      "counts_sha256": "a5fd0f74bfff1d0d35c76b28306bce5a16c87562741f7fbd0d642c0df25b1e2c",
+      "weights_sha256": "bec8b1e7ded0082bcbe3a9cdf7bc761acb80ffb120444866995f7d9e6a243692"
+    },
+    {
+      "file": "graph-147456-4113da11867d.bin.gz",
+      "row_start": 147456,
+      "rows": 8192,
+      "edges": 969523,
+      "bytes": 2334430,
+      "sha256": "4113da11867d4101db9df89442fa40f065307f22c98b71d99b914d054a68e422",
+      "columns_sha256": "e378066166db846cf963eb785c032db61dca36c40a1db4369b27e52ed13230e4",
+      "counts_sha256": "1e8c1afe96ea0335f4376c219591e1edc5c6e671a4dcbac1a048f7e29eebde1d",
+      "weights_sha256": "6db1eb1c8789bf12b824b6086c3b7df2275a1ad4d6ddef577b4293b378162802"
+    },
+    {
+      "file": "graph-155648-9459cbe1bf64.bin.gz",
+      "row_start": 155648,
+      "rows": 8192,
+      "edges": 838870,
+      "bytes": 2005913,
+      "sha256": "9459cbe1bf647d92ce23c9a3422ee53babee3fd54e08b8eb7973af8bed5bcef0",
+      "columns_sha256": "44a38a7d34bc814060ad170feb2dccb9d88d9de70dc825789a62b39e49c5a1cd",
+      "counts_sha256": "03cfc50d6412e8d3f059ab3dea6aef584fdd9eed2ce205c96fd79f7506c9b99b",
+      "weights_sha256": "ac6a6553a3407998bef85fc9fc0a7fbd54ad50beef7dc9fe2bf30a5d4bcc7399"
+    },
+    {
+      "file": "graph-163840-5224341d359b.bin.gz",
+      "row_start": 163840,
+      "rows": 1282,
+      "edges": 48855,
+      "bytes": 123722,
+      "sha256": "5224341d359befbed20e9190f4399cb24ec56d690b4fe165620e54ff8ea720c3",
+      "columns_sha256": "a7358a2eec7c88589ab9d7a342ad66bb8b58b8dcacc80f41413a616d32701b4c",
+      "counts_sha256": "29cd5126d190595ae7296397885778d63810f6ae882d988e2a872376af34e0ff",
+      "weights_sha256": "b62de6d2c158417f4af64788e5abf2408b5d6e00124e8b008521f34508801ab1"
+    }
+  ],
+  "lossless": true,
+  "pruned_edges": 0,
+  "inference_validation_report": "../validation.json",
+  "encoding": "gzip; 32-byte header; u32 row degrees; row-relative u32 column deltas; u16 counts",
+  "weight_reconstruction": "float32(0.5 * float32(count / float32(sum_of_row_counts)))",
+  "attribution": "MaleCNS v1.0, FlyEM/HHMI Janelia, Cambridge, MRC LMB, Google Research; CC BY 4.0",
+  "data_url": "https://male-cns.janelia.org/download/",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "optional_provenance_ids": {
+    "file": "body-ids.bin.gz",
+    "bytes": 257086,
+    "sha256": "47c4cac8bb815f0f69762fa76f0e3371a4d7aa62e9d44a3669142d280b2ce9c2"
+  },
+  "graph_download_bytes": 62760837,
+  "reduction_percent": 79.71539429392732,
+  "checks": {
+    "all_source_columns_equal": true,
+    "all_source_counts_equal": true,
+    "all_normalized_float32_weights_bitwise_equal": true
+  },
+  "seconds": 26.09926209997502
+}

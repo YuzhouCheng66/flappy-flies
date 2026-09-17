@@ -1,0 +1,37 @@
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#13253b;color:#e7ede6;font-family:"Segoe UI",Arial,sans-serif}canvas{display:block;width:100%;height:100%}header{position:fixed;top:26px;left:36px;right:26px;display:flex;align-items:center;gap:24px;z-index:2}.wordmark{font-size:18px;letter-spacing:2px;font-weight:800;color:#f3e6ce;text-decoration:none;white-space:nowrap}.wordmark span{font-weight:300;color:#b8cfcc;margin-left:7px}.wordmark i{display:inline-block;width:5px;height:5px;background:#92eed0;margin-left:12px;border-radius:50%;box-shadow:0 0 12px #9cf0b4}.controls{display:flex;gap:6px;align-items:center;margin:auto;padding:5px;border:1px solid #87b8c124;background:#1023398a;border-radius:10px;box-shadow:0 8px 24px #07162920;backdrop-filter:blur(10px)}button,select,input{font:inherit;font-size:12px;letter-spacing:.2px;color:#cad9da;background:#20394d;border:1px solid #7fa2ab24;border-radius:5px;height:32px;outline:none}button{padding:0 14px;cursor:pointer;transition:background .15s}button:hover,select:hover{background:#365466}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #abecd2;outline-offset:2px}button:disabled{opacity:.5;cursor:wait}button.primary{background:#c4edce;color:#193831;border-color:#c4edce;min-width:67px;font-weight:650}input{width:79px;padding:0 8px;appearance:textfield}input::-webkit-inner-spin-button{appearance:none}select{padding:0 9px;cursor:pointer}.live{font-size:9px;letter-spacing:1.6px;color:#a3c4c2;white-space:nowrap}.live b{display:inline-block;width:5px;height:5px;border-radius:50%;background:#97f0c6;margin-right:7px;box-shadow:0 0 8px #96d2bc77}#score{position:fixed;top:107px;left:37px;letter-spacing:1px;color:#e3e8d5;font-size:30px;font-weight:350;font-variant-numeric:tabular-nums;text-shadow:0 2px 10px #142b35}#score .divider,#total{color:#a1c2c1;font-size:19px;margin-left:8px}small{display:block;font-size:8px;letter-spacing:2px;color:#a2c3c1;margin-top:6px}#brainlabel{position:fixed;top:143px;left:calc(73.8% + 35px);right:45px;font-size:10px;letter-spacing:1.7px;color:#bddfd6}#brainlabel span{float:right;font-size:9px;letter-spacing:1px;color:#99d7c8}#brainlabel small{letter-spacing:.4px;font-size:9px;margin-top:8px;color:#719da9}#status{position:fixed;bottom:103px;left:38px;font-size:12px;letter-spacing:.5px;color:#f4dac0;text-shadow:0 2px 8px #142737}footer{position:fixed;bottom:24px;left:38px;right:28px;display:flex;justify-content:space-between;font-size:10px;color:#aac6c4;letter-spacing:.5px}footer span:last-child{font-size:8px;letter-spacing:1.5px}footer em{color:#d5d9b8;font-style:normal;margin:0 7px}@media(max-width:1000px){header{left:20px;right:20px;top:22px;gap:12px}.wordmark{font-size:13px;letter-spacing:1px}.live{display:none}.controls{margin-right:0;gap:4px}button{padding:0 10px}#brainlabel{left:calc(73.8% + 28px);right:33px;font-size:8px;letter-spacing:.5px}#brainlabel small{font-size:8px}#score{left:25px}footer{left:25px;right:25px}footer span:last-child{display:none}#status{left:25px}}@media(max-height:600px){#brainlabel{top:136px}#brainlabel small{display:none}}
+/* Bright arcade palette. Geometry and inference are unaffected. */
+html,body{background:#4fceff;color:#253471}
+.wordmark{color:#253471;text-shadow:0 1px #ffffff80}.wordmark span{color:#386498}.wordmark i{background:#fff265;box-shadow:0 0 12px #fffa78}
+.controls{background:#effbffe6;border-color:#ffffffa0;box-shadow:0 7px 0 #388cc526,0 12px 30px #355acc14}
+button,select,input{color:#354b85;background:#d8efff;border-color:#acd8ed}
+button:hover,select:hover{background:#c1e3ff}
+button.primary{background:#7956e8;color:#fff;border-color:#7956e8;box-shadow:0 2px 0 #5134b9}
+.live{color:#365984}.live b{background:#7956e8;box-shadow:none}
+#score{color:#253471;font-weight:600;text-shadow:0 1px #ffffff90}#score .divider,#total{color:#386c9b}
+#score small{color:#3678a0;text-shadow:none;font-weight:600}
+#brainlabel{color:#efdcff}#brainlabel span{color:#81ffd2}#brainlabel small{color:#b1a6df}
+#status{color:#5130a3;text-shadow:0 1px #ffffffc0;font-weight:600}
+footer{color:#276d8f}footer em{color:#7046c7}
+#score{top:84px;font-size:23px}#score small{display:none}
+#record{position:fixed;right:37px;bottom:26px;width:32px;height:32px;padding:0;border:1px solid #ffffffaa;background:#f2f8ffce;border-radius:50%;box-shadow:0 3px 10px #38549e25;z-index:3;display:grid;place-items:center}
+#record span{width:10px;height:10px;background:#ef558c;border-radius:50%}
+#record.recording span{border-radius:2px;box-shadow:0 0 9px #ff558d}
+body.capturing .wordmark,body.capturing #score,body.capturing #brainlabel,body.capturing footer{visibility:hidden}
+#brainlabel{left:calc(var(--stage-split,73.8%) + 28px);right:32px;letter-spacing:.65px}
+.wordmark span{color:#254775;font-weight:600}
+/* Race layout: two fifths for neural activity and the second live arena. */
+header{top:16px;left:20px;right:16px;gap:14px}.controls{margin-left:auto;margin-right:0}.live{display:none}
+#score{display:none}#brainlabel{top:108px;left:calc(var(--stage-split) + 21px);right:28px;pointer-events:none;font-size:10px}
+#brainlabel small{font-size:9px;margin-top:6px}#brainlabel span{font-size:9px}
+#status{bottom:44px;left:28px;font-size:11px;max-width:45vw;pointer-events:none}#status a{pointer-events:auto}
+footer{bottom:12px;left:20px;font-size:9px}footer span:last-child{display:none}
+#keys{position:fixed;bottom:11px;left:calc(var(--stage-split) + 6px);right:50px;display:flex;justify-content:center;gap:14px;font-size:10px;font-weight:750;color:#364780;white-space:nowrap;pointer-events:none}
+#record{bottom:7px;right:15px;width:24px;height:24px}#record span{width:8px;height:8px}
+#switch[aria-pressed="true"]{background:#fff0a3;border-color:#e4c652}
+#victory[hidden]{display:none}#victory{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:#251d5170;backdrop-filter:blur(6px)}
+.victory-card{text-align:center;animation:win-in .3s ease-out;padding:38px 42px;border-radius:28px;background:linear-gradient(145deg,#ffffffef,#eee4ffd9);box-shadow:0 15px 0 #41278325,0 30px 100px #24163d60;border:2px solid #ffffffc0}
+.race-over{color:#7853c2;font-size:12px;letter-spacing:5px;font-weight:800}#winner{margin:10px 0 26px;font-size:clamp(44px,9vw,112px);letter-spacing:-3px;line-height:1;color:#49328d;text-shadow:0 4px #bea2eb}
+#victory[data-winner="you"] #winner{color:#967010;text-shadow:0 4px #f6d86f}.victory-card button{height:42px;padding:0 28px;font-size:14px}
+@keyframes win-in{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:none}}
+@media(max-width:820px){header{top:8px;left:14px;right:14px;display:grid;grid-template-columns:1fr;gap:6px}.wordmark{font-size:13px}.controls{justify-self:center;grid-column:1/-1;margin:0;padding:4px}.controls button{padding:0 10px}.controls input{width:71px}#brainlabel{font-size:8px;right:26px}#brainlabel span{font-size:7px}#brainlabel small{font-size:8px}#keys{font-size:8px;gap:6px}footer{font-size:8px}}
+@media(max-height:600px){#brainlabel{top:108px}#brainlabel small{display:block}}

@@ -1,0 +1,12 @@
+{
+  "name": "flappy-flies",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full connectome-based fly inference and Sheaf-GBP in the browser",
+  "scripts": {
+    "test": "node --test tests/engine.test.mjs tests/graph.test.mjs",
+    "build": "node tools/build.mjs",
+    "test:gpu": "node tests/native-webgpu.mjs"
+  },
+  "devDependencies": {"webgpu": "0.6.1"}
+}
